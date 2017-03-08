@@ -25,11 +25,11 @@ Coding
 - Fold all: Ctrl + Shift + NumPad /
 - Unfold all: Ctrl + NumPad *
 - Comment/Uncomment: Ctrl + /
-- Rename variable: Alt + Shift + R(**R** ename)
+- **Rename variable**: Alt + Shift + R(**R** ename)
 - Find usage: Ctrl + G
 - Go to definition: F3
 - Go to Implementation: Ctrl + T
-- Look document: Ctrl + Shift + Space
+- **Look document**: Ctrl + Shift + Space
 
 Python Specified
 
@@ -40,8 +40,10 @@ Python Specified
 
 Run
 -------------------------------------------------------------------------------
-- Run script as main: Alt + Shift + X (e **X** ecute)
+- **Choose a script to run as main**: Alt + Shift + X (e **X** ecute)
 - Debug script as main: Alt + Shift + D (**D** ebug)
+- **Run this script as main**: Ctrl + Shift + F10
+
 
 Project Management
 -------------------------------------------------------------------------------
@@ -53,4 +55,4 @@ Project Management
 - Project View: Alt + 1
 - Favorite: Alt + 2
 - Structure: Alt + 7 (可以右击窗口标题栏, 选择Move To -> Right, 将其放在旁边)
-- Terminal: Alt + F12 (用于 ``pip install``)
+- **Terminal**: Alt + F12 (用于 ``pip install``)
