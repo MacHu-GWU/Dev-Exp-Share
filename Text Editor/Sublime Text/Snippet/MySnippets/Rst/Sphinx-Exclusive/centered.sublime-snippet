@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Centered Boldfaced Line of Text</description>
+    <tabTrigger>centered</tabTrigger>
+    <content><![CDATA[
+.. centered:: ${1:message}
+
+
+]]></content>
+</snippet>

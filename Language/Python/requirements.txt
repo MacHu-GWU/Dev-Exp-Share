@@ -1,0 +1,24 @@
+requests        # HTTP for Humans
+bs4             # parse html tag
+lxml            # xml engine
+
+sqlalchemy      # Sql
+pymongo         # mongodb drive
+mongoengine     # mongodb orm
+
+# My Personal
+dataIO          # one line json, pickle, textfile IO
+superjson       # extensible json IO
+loggerFactory   # logger utilities
+crawlib         # crawler library
+selenium_spider # webbrowser simulator
+dupefilter      # duplication filter framework
+constant2       # constant, config management
+sfm             # set of tools
+pathlib_mate    # extended pathlib library
+pymongo_mate    # extended pymongo library
+pandas_mate     # extended pandas library
+inspect_mate    # extended inspect library, for meta programming
+docfly          # extended sphinx doc tools
+apipool         # multiple api management
+rolex           # datetime library

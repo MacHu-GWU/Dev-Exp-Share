@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Makefile Code</description>
+    <tabTrigger>codemakefile</tabTrigger>
+    <content><![CDATA[
+.. code-block:: Makefiles
+
+    ${1:code}
+
+]]></content>
+</snippet>

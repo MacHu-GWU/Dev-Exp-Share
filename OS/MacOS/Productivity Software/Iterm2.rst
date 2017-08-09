@@ -1,0 +1,3 @@
+- Clean Up Line: ``Ctrl + A`` + ``Ctrl + K``
+- Cancel the Current Command: ``Ctrl + C``
+- Copy Text: Just Click

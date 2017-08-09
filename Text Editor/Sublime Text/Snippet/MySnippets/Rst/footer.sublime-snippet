@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Footer of the page</description>
+    <tabTrigger>footer</tabTrigger>
+    <content><![CDATA[
+.. footer:: ${1:Footer of the page}
+
+
+]]></content>
+</snippet>

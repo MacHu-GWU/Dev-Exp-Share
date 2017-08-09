@@ -1,0 +1,8 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Link anywhere</description>
+    <tabTrigger>linkanywhere</tabTrigger>
+    <content><![CDATA[
+`${1:Text} <${2:Target}_>`_
+]]></content>
+</snippet>

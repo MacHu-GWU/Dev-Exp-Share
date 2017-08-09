@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text</scope>
+    <description>Header 2</description>
+    <tabTrigger>h2</tabTrigger>
+    <content><![CDATA[
+${1:header2}
+------------------------------------------------------------------------------
+
+]]></content>
+</snippet>

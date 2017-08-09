@@ -1,0 +1,11 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>Python Shebang</description>
+    <tabTrigger>shebangpython</tabTrigger>
+    <content><![CDATA[
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+]]></content>
+</snippet>

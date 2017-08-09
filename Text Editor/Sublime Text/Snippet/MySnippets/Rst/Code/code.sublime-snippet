@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Syntax Highlighted Code</description>
+    <tabTrigger>code</tabTrigger>
+    <content><![CDATA[
+.. code-block:: ${1:language}
+
+    ${2:code}
+
+]]></content>
+</snippet>

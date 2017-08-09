@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Image</description>
+    <tabTrigger>image</tabTrigger>
+    <content><![CDATA[
+.. image:: ${1:url}
+
+
+]]></content>
+</snippet>

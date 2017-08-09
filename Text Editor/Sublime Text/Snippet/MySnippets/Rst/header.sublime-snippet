@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Header of the page</description>
+    <tabTrigger>header</tabTrigger>
+    <content><![CDATA[
+.. header:: ${1:Header of the page}
+
+
+]]></content>
+</snippet>

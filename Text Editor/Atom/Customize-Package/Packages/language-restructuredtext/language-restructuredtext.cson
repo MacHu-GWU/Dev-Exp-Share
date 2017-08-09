@@ -1,0 +1,75 @@
+'.text.restructuredtext':
+  'image':
+    'prefix': 'image'
+    'body': '.. image:: ${1:path}\n$0'
+  'link':
+    'prefix': 'link'
+    'body': '\\`${1:Title} <${2:http://link}>\\`_$0'
+  'code block':
+    'prefix': 'code'
+    'body': '.. code-block:: ${1:language}\n\n\t${2:<code>}'
+
+  # Regular Restructuredtext
+  'header 1':
+    'prefix': 'header1'
+    'body': '${1:header1}\n==============================================================================$0\n'
+  'header 2':
+    'prefix': 'header2'
+    'body': '${1:header2}\n------------------------------------------------------------------------------$0\n'
+  'header 3':
+    'prefix': 'header3'
+    'body': '${1:header3}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$0\n'
+  'header 4':
+    'prefix': 'header4'
+    'body': '${1:header4}\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++$0\n'
+  'header 5':
+    'prefix': 'header5'
+    'body': '${1:header5}\n******************************************************************************$0\n'
+  'header 6':
+    'prefix': 'header6'
+    'body': '${1:header6}\n##############################################################################$0\n'
+  'header 7':
+    'prefix': 'header7'
+    'body': '${1:header7}\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^$0\n'
+
+  'footer':
+    'prefix': 'footer'
+    'body': '.. [#] ${1:Description}'
+  'link to directives':
+    'prefix': 'linkany'
+    'body': '\\`${1:Text} <${2:Target}_>\\`_'
+  'list table':
+    'prefix': 'ltable'
+    'body': '.. list-table:: ${1:Title}\n\t:widths: 10 10 10\n\t:header-rows: 1\n\n\t* - item1\n\t  - item2\n\t  - item3\n'
+  'table of content':
+    'prefix': 'toc'
+    'body': '.. contents::'
+  'auto number sections':
+    'prefix': 'sectnum'
+    'body': '.. sectnum::\n\t:depth: 3\n\t:prefix: The\n\t:surfix: Section:\n\t:start: 1'
+  'include external':
+    'prefix': 'include'
+    'body': '.. include:: ${1:path}'
+
+  # Python Sphinx Exclusive
+  'note':
+    'prefix': 'note'
+    'body': '.. note::\n\n\t${1:message}'
+  'warning':
+    'prefix': 'warning'
+    'body': '.. warning::\n\n\t${1:message}'
+  'version added':
+    'prefix': 'versionadded'
+    'body': '.. versionadded:: ${1:version}\n\n\t${2:message}'
+  'version changed':
+    'prefix': 'versionchanged'
+    'body': '.. versionchanged:: ${1:version}\n\n\t${2:message}'
+  'deprecated':
+    'prefix': 'deprecated'
+    'body': '.. deprecated:: ${1:version}\n\n\t${2:message}'
+  'seealso':
+    'prefix': 'seealso'
+    'body': '.. seealso::\n\n\t${1:message}'
+  'hlist':
+    'prefix': 'hlist'
+    'body': '.. hlist::\n\t:columns: 3\n\n\t* item1\n\t* item2\n\t* item3'

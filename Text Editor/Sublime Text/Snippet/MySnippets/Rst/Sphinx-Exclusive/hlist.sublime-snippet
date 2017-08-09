@@ -1,0 +1,15 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Horizontal Compact List</description>
+    <tabTrigger>hlist</tabTrigger>
+    <content><![CDATA[
+.. hlist::
+    :columns: ${1:n_columns}
+
+    * ${2:item1}
+    * ${3:item2}
+    * ${4:item3}
+
+
+]]></content>
+</snippet>

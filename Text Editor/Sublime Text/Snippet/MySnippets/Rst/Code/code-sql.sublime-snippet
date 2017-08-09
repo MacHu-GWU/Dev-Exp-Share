@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>SQL Code</description>
+    <tabTrigger>codesql</tabTrigger>
+    <content><![CDATA[
+.. code-block:: SQL
+
+    ${1:code}
+
+]]></content>
+</snippet>

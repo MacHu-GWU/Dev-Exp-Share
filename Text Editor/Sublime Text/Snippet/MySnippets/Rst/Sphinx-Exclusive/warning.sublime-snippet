@@ -1,0 +1,12 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Warning</description>
+    <tabTrigger>warning</tabTrigger>
+    <content><![CDATA[
+.. warning::
+
+    ${1:message}
+
+
+]]></content>
+</snippet>

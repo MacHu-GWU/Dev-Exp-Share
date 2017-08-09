@@ -1,0 +1,11 @@
+<snippet>
+    <scope>source.shell</scope>
+    <description>Bash Shebang</description>
+    <tabTrigger>shebangbash</tabTrigger>
+    <content><![CDATA[
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+
+]]></content>
+</snippet>

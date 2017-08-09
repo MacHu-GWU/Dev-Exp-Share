@@ -1,0 +1,19 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>List Table</description>
+    <tabTrigger>ltable</tabTrigger>
+    <content><![CDATA[
+.. list-table:: ${1:Title of the table}
+    :widths: 10 10 10
+    :header-rows: 1
+
+    * - ${2:Header1}
+      - ${3:Header2}
+      - ${4:Header3}
+    * - ${5:Value1}
+      - ${6:Value2}
+      - ${7:Value3}
+
+
+]]></content>
+</snippet>

@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>CoffeeScript Code</description>
+    <tabTrigger>codecoffeescript</tabTrigger>
+    <content><![CDATA[
+.. code-block:: coffeescript
+
+    ${1:code}
+
+]]></content>
+</snippet>

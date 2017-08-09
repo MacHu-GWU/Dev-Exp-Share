@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Jinja2 Code</description>
+    <tabTrigger>codejinja2</tabTrigger>
+    <content><![CDATA[
+.. code-block:: jinja
+
+    ${1:code}
+
+]]></content>
+</snippet>

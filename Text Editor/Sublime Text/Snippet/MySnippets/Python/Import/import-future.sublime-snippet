@@ -1,0 +1,13 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>from __future__ import xxx</description>
+    <tabTrigger>impfuture</tabTrigger>
+    <content><![CDATA[
+from __future__ import (
+  print_function, unicode_literals, absolute_import,
+  division, generators,
+)
+
+
+]]></content>
+</snippet>

@@ -1,0 +1,3 @@
+Run Script in Atom
+==============================================================================
+只要安装这款插件 `Script <https://atom.io/packages/script>`_，就可以在Atom中运行脚本了。例如: bash, python ...

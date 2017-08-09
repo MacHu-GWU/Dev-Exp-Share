@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Windows Batch File Code</description>
+    <tabTrigger>codebatch</tabTrigger>
+    <content><![CDATA[
+.. code-block:: batch
+
+    ${1:code}
+
+]]></content>
+</snippet>

@@ -1,0 +1,12 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Version Added</description>
+    <tabTrigger>versionadded</tabTrigger>
+    <content><![CDATA[
+.. versionadded:: ${1:verion}
+
+    ${2:message}
+
+
+]]></content>
+</snippet>

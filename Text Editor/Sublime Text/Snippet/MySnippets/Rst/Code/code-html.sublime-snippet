@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Html Code</description>
+    <tabTrigger>codehtml</tabTrigger>
+    <content><![CDATA[
+.. code-block:: html
+
+    ${1:code}
+
+]]></content>
+</snippet>

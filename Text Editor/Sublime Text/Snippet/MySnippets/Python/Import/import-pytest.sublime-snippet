@@ -1,0 +1,16 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>import pytest</description>
+    <tabTrigger>imppytest</tabTrigger>
+    <content><![CDATA[
+import pytest
+from pytest import approx
+
+
+
+if __name__ == "__main__":
+	import os
+
+	pytest.main([os.path.basename(__file__), "--tb=native", "-s"])
+]]></content>
+</snippet>

@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Includee External File</description>
+    <tabTrigger>include</tabTrigger>
+    <content><![CDATA[
+.. include:: ${1:path}
+
+
+]]></content>
+</snippet>

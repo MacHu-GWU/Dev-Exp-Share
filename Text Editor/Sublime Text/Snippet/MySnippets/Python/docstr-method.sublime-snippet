@@ -1,0 +1,18 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>Doc String for Method</description>
+    <tabTrigger>docstrmethod</tabTrigger>
+    <content><![CDATA[
+"""
+${1:title}
+
+${2:description}
+
+:param parameter1: parameter1_description.
+:type parameter1: parameter1_type
+
+:returns: return_description
+:rtype: return_type
+"""
+]]></content>
+</snippet>

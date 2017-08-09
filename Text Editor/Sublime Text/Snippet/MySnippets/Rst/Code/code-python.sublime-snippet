@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Python Code</description>
+    <tabTrigger>codepython</tabTrigger>
+    <content><![CDATA[
+.. code-block:: python
+
+    ${1:code}
+
+]]></content>
+</snippet>

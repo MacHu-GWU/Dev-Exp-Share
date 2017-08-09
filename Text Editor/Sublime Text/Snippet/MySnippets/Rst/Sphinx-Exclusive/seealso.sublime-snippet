@@ -1,0 +1,12 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>See Also</description>
+    <tabTrigger>seealso</tabTrigger>
+    <content><![CDATA[
+.. seealso::
+
+    ${1:message}
+
+
+]]></content>
+</snippet>

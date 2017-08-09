@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Bash Code</description>
+    <tabTrigger>codebash</tabTrigger>
+    <content><![CDATA[
+.. code-block:: bash
+
+    ${1:code}
+
+]]></content>
+</snippet>

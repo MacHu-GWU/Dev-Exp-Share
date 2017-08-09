@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text</scope>
+    <description>Header 7</description>
+    <tabTrigger>h7</tabTrigger>
+    <content><![CDATA[
+${1:header7}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+]]></content>
+</snippet>

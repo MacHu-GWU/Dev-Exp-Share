@@ -1,0 +1,12 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Deprecated</description>
+    <tabTrigger>deprecated</tabTrigger>
+    <content><![CDATA[
+.. deprecated:: ${1:verion}
+
+    ${2:message}
+
+
+]]></content>
+</snippet>

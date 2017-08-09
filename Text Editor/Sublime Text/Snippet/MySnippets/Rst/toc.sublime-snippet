@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Table of content</description>
+    <tabTrigger>toc</tabTrigger>
+    <content><![CDATA[
+.. contents::
+
+
+]]></content>
+</snippet>

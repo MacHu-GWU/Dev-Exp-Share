@@ -1,0 +1,14 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Styled Image</description>
+    <tabTrigger>imagestyled</tabTrigger>
+    <content><![CDATA[
+.. image:: ${1:url}
+    :alt: ${2:Image Not Found}
+    :height: ${3:600} px
+    :width: ${4:800} px
+    :align: ${5:left right or center}
+
+
+]]></content>
+</snippet>

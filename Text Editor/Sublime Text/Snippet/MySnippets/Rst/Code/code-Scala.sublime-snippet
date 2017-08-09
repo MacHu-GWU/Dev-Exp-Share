@@ -1,0 +1,11 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Scala Code</description>
+    <tabTrigger>codescala</tabTrigger>
+    <content><![CDATA[
+.. code-block:: scala
+
+    ${1:code}
+
+]]></content>
+</snippet>

@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Footnote</description>
+    <tabTrigger>footnote</tabTrigger>
+    <content><![CDATA[
+.. [#] ${1:description}.
+
+
+]]></content>
+</snippet>

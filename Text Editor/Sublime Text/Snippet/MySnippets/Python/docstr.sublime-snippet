@@ -1,0 +1,10 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>Add Doc String</description>
+    <tabTrigger>docstr</tabTrigger>
+    <content><![CDATA[
+"""
+${1:docstring}
+"""
+]]></content>
+</snippet>

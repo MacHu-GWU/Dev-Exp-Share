@@ -1,0 +1,8 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Link to url</description>
+    <tabTrigger>link</tabTrigger>
+    <content><![CDATA[
+`${1:Text} <${2:Target}>`_
+]]></content>
+</snippet>

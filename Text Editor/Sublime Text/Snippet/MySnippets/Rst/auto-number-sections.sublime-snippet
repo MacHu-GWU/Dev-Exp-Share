@@ -1,0 +1,14 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Auto Number Sections</description>
+    <tabTrigger>sectnum</tabTrigger>
+    <content><![CDATA[
+.. sectnum::
+    :depth: 3
+    :prefix: ${1:Prefix}
+    :surfix: ${2:Surfix}
+    :start: 1
+
+
+]]></content>
+</snippet>

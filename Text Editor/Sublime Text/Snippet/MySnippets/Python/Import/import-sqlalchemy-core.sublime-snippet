@@ -1,0 +1,12 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>import numpy, pandas</description>
+    <tabTrigger>impsqlalchemycore</tabTrigger>
+    <content><![CDATA[
+from sqlalchemy import create_engine, MetaData, Table, Column
+from sqlalchemy import String, Integer, Float, Date, DateTime, LargeBinary
+from sqlalchemy import select, and_, or_, not_, func
+
+
+]]></content>
+</snippet>
