@@ -278,7 +278,7 @@ Navigation
 
     * - Previous/Next Tab (上/下 一个标签)
       - Ctrl + PageUp/PageDown
-      - Cmd + Alt + Left/Right
+      - Cmd + Alt + Left/Right or Ctrl + PageUp/PageDown
       -
 
     * - Previous/Next Cursor (上/下 一个游标所在)

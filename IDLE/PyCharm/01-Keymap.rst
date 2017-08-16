@@ -260,8 +260,8 @@ Navigation
       - Linux
 
     * - Previous/Next Tab (上/下 一个标签)
-      - Alt + Left/Right
-      - Shift + Cmd + ``[`` / ``]``
+      - Alt + Left/Right or Ctrl + PageUp / Ctrl + PageDown (User Settings)
+      - Shift + Cmd + ``[`` / ``]`` or Ctrl + PageUp / Ctrl + PageDown (User Settings)
       -
 
     * - Previous/Next Cursor (上/下 一个游标所在)
@@ -289,7 +289,7 @@ Menu
 
     * - Settings (设定)
       - Ctrl + Alt + S
-      - Cmd + ,
+      - Cmd + ``,``
       -
 
     * - Pluggin (插件)

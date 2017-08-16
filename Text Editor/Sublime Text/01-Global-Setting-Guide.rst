@@ -230,5 +230,32 @@ MacOS:
         { "keys": ["super+shift+alt+l"], "command": "lower_case" },
         { "keys": ["super+shift+alt+t"], "command": "title_case" },
         { "keys": ["super+shift+alt+s"], "command": "swap_case" },
+
+        // Previous Tab, Next Tab
+        { "keys": ["ctrl+pageup"], "command": "prev_view" },
+        { "keys": ["ctrl+pagedown"], "command": "next_view" },
     ]
 
+
+Fix weird behavor of ``Home`` and ``End`` key in MacOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In MacOS, the Home and End keys to **move the cursor to the beginning and end of the file**, instead of beginning and end of lines as the default functionality in Windows and Linux.
+
+Here's the Solution
+
+.. code-block:: javascript
+
+    [
+        // Fix Home and End Behavior in MacOS
+        { "keys": ["home"], "command": "move_to", "args": {"to": "bol"} },
+        { "keys": ["end"], "command": "move_to", "args": {"to": "eol"} },
+        { "keys": ["shift+end"], "command": "move_to", "args": {"to": "eol", "extend": true} },
+        { "keys": ["shift+home"], "command": "move_to", "args": {"to": "bol", "extend": true } },
+
+        { "keys": ["ctrl+home"], "command": "move_to", "args": {"to": "bof"} },
+        { "keys": ["ctrl+end"], "command": "move_to", "args": {"to": "eof"} },
+        { "keys": ["ctrl+shift+home"], "command": "move_to", "args": {"to": "bof", "extend": true} },
+        { "keys": ["ctrl+shift+end"], "command": "move_to", "args": {"to": "eof", "extend": true} },
+    ]
+
+Reference: https://coderwall.com/p/upolqw/fix-sublime-text-home-and-end-key-usage-on-mac-osx
