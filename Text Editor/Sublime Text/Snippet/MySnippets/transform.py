@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
+r"""
 Author: Sanhe Hu
 CopyRight: MIT 2017
 
@@ -11,42 +11,65 @@ Where to put snippet:
 
 Sublime Text
 ------------
-MacOS:
-
 put this ``MySnippets`` folder under:
 
-``/Users/<your-username>/Library/Application Support/Sublime Text 3/Packages/User/``
+- Windows: ``C:\Users\<your-username>\AppData\Roaming\Sublime Text 3\Packages\User\``
+- MacOS: ``/Users/<your-username>/Library/Application Support/Sublime Text 3/Packages/User/``
 
 
 Atom
 ----
 Open ``Atom`` -> ``Snippet``, edit this file.
 
+- Window: ``C:\Users\<your-username>\.atom/snippets.cson``.
+- MacOS: ``/Users/<your-username>/.atom/snippets.cson``.
+- Linux: ``Unknown``.
+
 Ref: https://github.com/atom/snippets
 
 
 PyCharm
 -------
-MacOS:
-
 create a xml file ``<Template-Group-Name>.xml``, let's say ``User.xml``, edit
-this file and put it under 
-``/Users/<your-username>/Library/Preferences/PyCharmCE2<version>/templates``.
+this file and put it under
 
+- Window: ``C:\Users\<your-username>\.PyCharm<version>\config\templates``.
+- MacOS: ``/Users/<your-username>/Library/Preferences/PyCharmCE2<version>/templates``.
+- Linux: ``/.PyCharmXX/config/templates``.
+
+Ref: https://www.jetbrains.com/help/pycharm/project-and-ide-settings.html
 """
 
 from __future__ import (
     print_function, unicode_literals, absolute_import,
     division, generators,
 )
+import os
+import shutil
+import platform
 import re
 import lxml.etree as ET
 from pathlib_mate import Path
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup
+
+is_Windows, is_MacOS, is_Linux = False, False, False
+
+system_name = platform.system()
+if system_name == "Windows":
+    is_Windows = True
+elif system_name == "Darwin":
+    is_MacOS = True
+elif system_name == "Linux":
+    is_Linux = True
+else:
+    raise Exception("Unknown Operation System!")
+
+user_dir = os.path.expanduser("~")
 
 
 def read(path):
     """
+
     Read utf-8 pure text file.
     """
     with open(path, "rb") as f:
@@ -62,6 +85,9 @@ def write(content, path):
 
 
 snippet_dir = Path(__file__).parent
+"""
+Source snippet directory.
+"""
 
 
 def reset_test_file():
@@ -70,6 +96,7 @@ def reset_test_file():
     """
     for p in snippet_dir.select_file(lambda p: p.fname == "test"):
         write(" ", p.abspath)
+
 
 reset_test_file()
 
@@ -135,6 +162,13 @@ atom_tpl = \
 {list_of_snippet_cson}
 """.strip()
 
+pycharm_scope_mapper = {
+    "source.python": "Python",
+    "source.shell": "Bash",
+    "text.restructuredtext": "OTHER",
+    "text": "OTHER",
+}
+
 
 def indent_n_space(text, n):
     """
@@ -144,12 +178,74 @@ def indent_n_space(text, n):
     return "\n".join([indent + line for line in text.split("\n")])
 
 
-pycharm_scope_mapper = {
-    "source.python": "Python",
-    "source.shell": "Bash",
-    "text.restructuredtext": "OTHER",
-    "text": "OTHER",
-}
+def find_sublime_snippets_dir():
+    r"""
+    Find Sublime snippets directory.
+
+    put this ``MySnippets`` folder under:
+
+    - Windows: ``C:\Users\<your-username>\AppData\Roaming\Sublime Text 3\Packages\User\``
+    - MacOS: ``/Users/<your-username>/Library/Application Support/Sublime Text 3/Packages/User/``
+    """
+    if is_Windows:
+        return Path(user_dir,
+            "AppData", "Roaming",
+            "Sublime Text 3", "Packages", "User").abspath
+    elif is_MacOS:
+        return Path(user_dir,
+            "Library", "Application Support",
+            "Sublime Text 3", "Packages", "User").abspath
+    elif is_Linux:
+        raise NotImplementedError
+
+
+def find_atom_snippets_dir():
+    r"""
+    Find Atom snippets directory.
+
+    Open ``Atom`` -> ``Snippet``, edit this file.
+
+    - Window: ``C:\Users\<your-username>\.atom/snippets.cson``.
+    - MacOS: ``/Users/<your-username>/.atom/snippets.cson``.
+    - Linux: ``Unknown``.
+    """
+    return Path(user_dir, ".atom").abspath
+
+
+def find_pycharm_snippets_dir():
+    r"""
+
+    Find PyCharm snippets directory.
+
+    create a xml file ``<Template-Group-Name>.xml``, let's say ``User.xml``, edit
+    this file and put it under
+
+    Window: ``C:\Users\<your-username>\.PyCharm<version>\config\templates``.
+
+    MacOS: ``/Users/<your-username>/Library/Preferences/PyCharmCE2<version>/templates``.
+
+    Linux: ``/.PyCharmXX/config/templates``.
+
+    Ref: https://www.jetbrains.com/help/pycharm/project-and-ide-settings.html
+    """
+    l = list()
+    if is_Windows:
+        for p in Path(user_dir).select_dir(
+            filters=lambda p: p.basename.startswith(".PyCharm"),
+            recursive=False):
+            l.append(Path(p, "config", "templates").abspath)
+    elif is_MacOS:
+        preference_dir = Path(user_dir, "Library", "Preferences")
+        for p in Path(preference_dir).select_dir(
+            filters=lambda p: p.basename.startswith("PyCharm"),
+            recursive=False):
+            l.append(Path(p, "templates").abspath)
+    elif is_Linux:
+        for p in Path("/").select_dir(
+            filters=lambda p: p.basename.startswith(".PyCharm"),
+            recursive=False):
+            l.append(Path(p, "config", "templates").abspath)
+    return l
 
 
 class Snippet(object):
@@ -330,8 +426,53 @@ class Snippet(object):
                 value="true",
             )
 
-        xml = ET.tostring(templateSet, pretty_print=True)
+        xml = ET.tostring(
+            templateSet, pretty_print=True, encoding="utf-8").decode("utf-8")
         return xml
+
+    @classmethod
+    def write_sublime_snippet(cls):
+        """
+        Write to Sublime Snippet.
+        """
+        src = snippet_dir.abspath
+        dst = Path(find_sublime_snippets_dir(), snippet_dir.basename).abspath
+
+        try:
+            shutil.rmtree(dst)
+        except:
+            pass
+
+        try:
+            shutil.copytree(src, dst)
+        except Exception as e:
+            print("Failed to write Sublime snippet! %r" % e)
+
+    @classmethod
+    def write_atom_snippet(cls, snippet_list):
+        """
+        Write Sublime Snippet to PyCharm Live Templates XML.
+        """
+        cson = cls.to_atom_snippet(snippet_list)
+        abspath = Path(find_atom_snippets_dir(), "snippet.cson").abspath
+        try:
+            write(cson, abspath)
+        except Exception as e:
+            print("Failed to write Atom snippet! %r" % e)
+
+
+    @classmethod
+    def write_pycharm_snippet_xml(cls, snippet_list, group_name):
+        """
+        Write Sublime Snippet to PyCharm Live Templates XML.
+        """
+        for p in find_pycharm_snippets_dir():
+            xml = cls.to_pycharm_snippet(snippet_list, group_name)
+            abspath = Path(p, "%s.xml" % group_name).abspath
+            try:
+                write(xml, abspath)
+            except Exception as e:
+                print("Failed to write PyCharm snippet! %r" % e)
 
     @classmethod
     def from_sublime_snippet_xml(cls, xml, fname):
@@ -368,8 +509,12 @@ if __name__ == "__main__":
         snippet = Snippet.from_sublime_snippet_xml(xml, p.fname)
         snippet_list.append(snippet)
 
-    cson = Snippet.to_atom_snippet(snippet_list)
-    print(cson)
+    Snippet.write_sublime_snippet()
+    Snippet.write_atom_snippet(snippet_list)
+    Snippet.write_pycharm_snippet_xml(snippet_list, "User")
 
-    xml = Snippet.to_pycharm_snippet(snippet_list)
+    # cson = Snippet.to_atom_snippet(snippet_list)
+    # print(cson)
+
+    # xml = Snippet.to_pycharm_snippet(snippet_list)
     # print(xml)

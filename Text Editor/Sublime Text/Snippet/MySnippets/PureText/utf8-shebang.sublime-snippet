@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text</scope>
+    <description>Utf8 Encoding Shebang</description>
+    <tabTrigger>utf8shebang</tabTrigger>
+    <content><![CDATA[
+# -*- coding: utf-8 -*-
+
+
+]]></content>
+</snippet>

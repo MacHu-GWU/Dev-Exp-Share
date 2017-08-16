@@ -1,0 +1,15 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>Run unittest in this direcotry</description>
+    <tabTrigger>testall</tabTrigger>
+    <content><![CDATA[
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+if __name__ == "__main__":
+    import pytest
+
+    pytest.main(["-s", "--tb=native"])
+
+]]></content>
+</snippet>

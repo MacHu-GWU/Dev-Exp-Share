@@ -22,10 +22,6 @@ If your python are installed from `HomeBrew <https://brew.sh/>`_, it should be a
 
 Linux:
 
-- TODO ...
-
-virtualenv
-
 - ``<path-to-your-virtualenv-folder>``
 
 

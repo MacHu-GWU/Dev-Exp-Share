@@ -3,192 +3,268 @@
 
 PyCharm Shortcut Key
 ==============================================================================
-PyCharm允许用户选择沿用其他几款流行的IDLE的快捷键设置。
-
-- Windows下我个人比较喜欢 ``Eclipse Mode`` 的设置, 学习成本较低。
-- MacOS下我使用默认。
+使用Default默认的Keymap。在此基础上做一些个性化的修改。
 
 
-Windows
-------------------------------------------------------------------------------
-Go to ``Setting`` (Ctrl + Alt + S) -> ``Keymap``, then you can see list of shortcut keys.
-
-
-Editor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Delete current line: Ctrl + D (**D** elete)
-- Delete word to end: Ctrl + Delete
-- Delete word to start: Ctrl + BackSpace
-- Duplicate entire lines: Ctrl + Alt + Down
-- Split a new line: Ctrl + Enter
-- Start a new line: Shift + Enter
-
-
-Cursor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Jump between matching brace: Ctrl + Shift + P
-- Jump to last cursor position: Alt + Left
-- Jump to next cursor position: Alt + Right
-
-
-Coding
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Fold all: Ctrl + Shift + NumPad /
-- Unfold all: Ctrl + NumPad *
-- Comment/Uncomment: Ctrl + /
-- **Rename variable**: Alt + Shift + R(**R** ename)
-- Find usage: Ctrl + G
-- Go to definition: F3
-- Go to Implementation: Ctrl + T
-- **Look document**: Ctrl + Shift + Space
-
-Python Specified
-
-- Auto PEP8 reformat: Ctrl + Alt + L
-- Auto Organize Import: Ctrl + Alt + O (**O** rganize)
-- Surround with： Ctrl + Shift + Z (通常用于增加一个 ``if`` 或者 ``try ... except``)
-
-
-Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- **Choose a script to run as main**: Alt + Shift + X (e **X** ecute)
-- Debug script as main: Alt + Shift + D (**D** ebug)
-- **Run this script as main**: Ctrl + Shift + F10
-
-
-Project Management
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- New file: Alt + Insert
-- Rename file: Alt + Shift + R (**R** ename)
-- Copy: Ctrl + C
-- Cut: Ctrl + X
-- Paste: Ctrl + V
-- Project View: Alt + 1
-- Favorite: Alt + 2
-- Structure: Alt + 7 (可以右击窗口标题栏, 选择Move To -> Right, 将其放在旁边)
-- **Terminal**: Alt + F12 (用于 ``pip install``)
-
-
-MacOS
-------------------------------------------------------------------------------
-
-
-Execute
+Execute (运行)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. list-table:: Execute
-    :widths: 10 10
+    :widths: 20 20 20 20
     :header-rows: 1
 
     * - Description
-      - Shortcut
+      - Windows
+      - MacOS
+      - Linux
 
-    * - Run Current File
-      - Ctrl + R
+    * - Run Last Executed File (运行上一次运行过的文件)
+      - Shift + F10
+      -
+      -
 
-    * - Choose a File to Run
-      - Ctrl + Alt + R
+    * - Choose a File to Run (选择一个文件运行)
+      - Alt + Shift + F10 (2 is the current file)
+      -
+      -
 
-    * - Copy Absolute Path
+    * - Show in Explorer (Windows)/Finder (MacOS)/File Manager (Linux)
+      - Ctrl + Shift + S
+      -
+      -
+
+    * - Open in Sublime Text External Tool (将文件在Sublime中打开)
+      - Ctrl + Shift + S
+      -
+      -
+
+    * - Copy Absolute Path (复制绝对路径)
       - Shift + Cmd + C
+      -
+      -
 
 
-Edit
+
+Programming (编程语言环境中)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. list-table:: Edit
-    :widths: 10 10
+.. list-table:: Programming
+    :widths: 20 20 20 20
     :header-rows: 1
 
     * - Description
-      - Shortcut
+      - Windows
+      - MacOS
+      - Linux
 
-    * - Fold All
-      - Shift + Cmd + ``-``
+    * - Comment/Uncomment (注释/取消注释)
+      - Ctrl + ``/``
+      -
+      -
 
-    * - UnFold All
-      - Shift + Cmd + ``+``
+    * - Indent/Unindent (缩进/取消缩进)
+      - Tab/Shift + Tab
+      -
+      -
 
-    * - Comment / Uncomment
-      - Cmd + ``/``
+    * - Fold/Unfolde (折叠/反折叠代码)
+      - Ctrl + ``+``/``-`` or Ctrl + Alt + ``+``/``-`` (Recursively)
+      -
+      -
 
-    * - Find
-      - Cmd + F
+    * - Find (查找)
+      - Ctrl + Shift + R
+      -
+      -
 
-    * - Replace
-      - Cmd + R
+    * - Find in Project/Directory (在项目/文件夹中查找)
+      - Ctrl + F
+      -
+      -
 
-    * - Find Usage
+    * - Replace (替换)
+      - Ctrl + R
+      -
+      -
+
+    * - Replace in Project/Directory (在项目/文件夹中替换)
+      - Ctrl + Shift + R
+      -
+      -
+
+    * - Find Usage (在项目中查找用例)
       - Alt + F7
+      -
+      -
 
-    * - Find Usage in File
-      - Cmd + F7
+    * - Find Usage in File (在本文件中查找用例)
+      - Ctrl + F7
+      -
+      -
 
-    * - View Definition
-      - Alt + Space / Cmd + Y (Choose to View / Edit the Source)
+    * - Go to Declaration (到第一次的声明处)
+      - Ctrl + B
+      -
+      -
 
-    * - Go to Implementation
-      - Alt + Cmd + B
+    * - Go to Implementation (到实现处, 可能有多个)
+      - Ctrl + Alt + B
+      -
+      -
 
-    * - View Document
-      - F1
+    * - View Definition (快速查看定义)
+      - Ctrl + Shift + I
+      -
+      -
 
+    * - View Document (快速查看文档)
+      - Ctrl + Q
+      -
+      -
 
-Cursor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    * - Pep8 Reformat (Pep8风格化代码)
+      - Ctrl + Alt + L
+      -
+      -
 
-.. list-table:: Cursor
-    :widths: 10 10
-    :header-rows: 1
+    * - Optimize Import (自动整理Import)
+      - Ctrl + Alt + O
+      -
+      -
 
-    * - Description
-      - Shortcut
-
-    * - New Line
-      - Shift + Enter
-
-    * - Navigate to Previous/Next Function
-      - Ctrl + Up/Down (Has to disable MacOS's shortcut ``Mission Control`` and ``Application Window``)
-
-    * - Move Line Up/Down
-      - Shift + Alt + Up/Down
-
-    * - Move Method/Class Up/Down
-      - Shift + Cmd + Up/Down
-
-    * - Jump to Previous/Next Cursor Location
-      - Cmd + ``[`` / ``]``
-
-
-Refactor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. list-table:: Refactor
-    :widths: 10 10
-    :header-rows: 1
-
-    * - Description
-      - Shortcut
-
-    * - Rename Variable
+    * - Rename Variable (重命名变量)
       - Shift + F6
+      -
+      -
 
-    * - Reformat Code (autopep8)
-      - Alt + Cmd + L
+General Editing (普通文本编辑)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    * - Optimize Import
-      - Alt + Cmd + O
-
-
-.. list-table:: User Defined
-    :widths: 10 10
+.. list-table:: General Editing
+    :widths: 20 20 20 20
     :header-rows: 1
 
     * - Description
-      - Shortcut
+      - Windows
+      - MacOS
+      - Linux
 
-    * - Open in Finder
-      - Shift + O
+    * - New Line (另起一行, 光标跳到下一行)
+      - Shift + Enter
+      -
+      -
 
-    * - Open With Sublime (Config it in ``External Tools``)
-      - Shift + Cmd + S (User's Setting)
+    * - Split Line (将光标以后的内容放到下一行)
+      - Ctrl + Enter
+      -
+      -
+
+    * - Join Line (连接多行)
+      - Ctrl + J
+      -
+      -
+
+    * - Search and Multiple Edit (搜索后同时编辑, 类似Sublime)
+      - Ctrl + F -> Alt + Enter
+      -
+      -
+
+    * - Multiple Line Edit (多行同时编辑, 类似Sublime)
+      - Alt + Click/Drag or Press Ctrl Twice + Up/Down to select lines
+      - Cmd + Click/Drag or Press Alt Twice + Up/Down to select lines
+      - Alt + Click/Drag or Press Ctrl Twice + Up/Down to select lines
+
+    * - Previous/Next Cursor Location (Navigate Back/Next 上/下一个光标的位置)
+      - Ctrl + Alt + Left/Right
+      -
+      -
+
+    * - Navigate to Previous/Next Method (上/下一个函数)
+      - Alt + Up/Down
+      - Ctrl + Up/Down (Has to disable MacOS's shortcut ``Mission Control`` and ``Application Window``)
+      -
+
+    * - Move Line Up/Down (移动一行的位置)
+      - Shift + Alt + Up/Down
+      - Shift + Alt + Up/Down
+      -
+
+    * - Move Method/Class Up/Down (移动整个函数和类的位置)
+      - Ctrl + Shift +
+      - Shift + Cmd + Up/Down
+      -
+
+    * - Duplicate Line (复制粘贴该行)
+      - Ctrl + D
+      -
+      -
+
+    * - Delete Line (删除该行)
+      - Ctrl + Alt + D
+      -
+      -
+
+    * - Undo/Redo (撤销上一次的改动/重复下一次的改动)
+      - Ctrl + Z / Ctrl + Y
+      -
+      -
+
+    * - Move Caret to Matching Bracket (光标在匹配的括号间跳转)
+      - Ctrl + Shift + M
+      -
+      -
+
+    * - Desc
+      -
+      -
+      -
+
+    * - Desc
+      -
+      -
+      -
+
+
+
+
+Menu
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: Menu
+    :widths: 20 20 20 20
+    :header-rows: 1
+
+    * - Description
+      - Windows
+      - MacOS
+      - Linux
+
+    * - Settings (设定)
+      - Ctrl + Alt + S
+      -
+      -
+
+    * - Previous/Next Tab (上/下一个标签)
+      - Alt + Left/Right
+      -
+      -
+
+    * - Close Current Tab (关闭当前标签)
+      - Ctrl + W
+      -
+      -
+
+    * - Bookmark Here (为某处添加书签)
+      - F11
+      -
+      -
+
+    * - Show ALl Bookmark (浏览所有的书签)
+      - Shift + F11
+      -
+      -
+
+    * - Terminal
+      - Alt + F12
+      -
+      -
