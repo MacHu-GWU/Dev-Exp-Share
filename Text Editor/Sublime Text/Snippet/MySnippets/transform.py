@@ -41,7 +41,7 @@ Ref: https://www.jetbrains.com/help/pycharm/project-and-ide-settings.html
 """
 
 from __future__ import (
-    print_function, unicode_literals, absolute_import,
+    print_function, absolute_import,
     division, generators,
 )
 import os
@@ -466,9 +466,13 @@ class Snippet(object):
         """
         Write Sublime Snippet to PyCharm Live Templates XML.
         """
-        for p in find_pycharm_snippets_dir():
+        for pycharm_snippet_dir in find_pycharm_snippets_dir():
             xml = cls.to_pycharm_snippet(snippet_list, group_name)
-            abspath = Path(p, "%s.xml" % group_name).abspath
+            abspath = Path(pycharm_snippet_dir, "%s.xml" % group_name).abspath
+            try:
+                os.makedirs(pycharm_snippet_dir)
+            except:
+                pass
             try:
                 write(xml, abspath)
             except Exception as e:
