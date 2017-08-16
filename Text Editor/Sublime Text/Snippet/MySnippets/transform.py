@@ -444,9 +444,11 @@ class Snippet(object):
             pass
 
         try:
+            print("Copy Snippet to %s ..." % dst)
             shutil.copytree(src, dst)
+            print("    Success!")
         except Exception as e:
-            print("Failed to write Sublime snippet! %r" % e)
+            print("    Failed to write Sublime snippet! %r" % e)
 
     @classmethod
     def write_atom_snippet(cls, snippet_list):
@@ -456,9 +458,11 @@ class Snippet(object):
         cson = cls.to_atom_snippet(snippet_list)
         abspath = Path(find_atom_snippets_dir(), "snippet.cson").abspath
         try:
+            print("Copy Snippet to %s ..." % abspath)
             write(cson, abspath)
+            print("    Success!")
         except Exception as e:
-            print("Failed to write Atom snippet! %r" % e)
+            print("    Failed to write Atom snippet! %r" % e)
 
 
     @classmethod
@@ -474,9 +478,11 @@ class Snippet(object):
             except:
                 pass
             try:
+                print("Copy Snippet to %s ..." % abspath)
                 write(xml, abspath)
+                print("    Success!")
             except Exception as e:
-                print("Failed to write PyCharm snippet! %r" % e)
+                print("    Failed to write PyCharm snippet! %r" % e)
 
     @classmethod
     def from_sublime_snippet_xml(cls, xml, fname):

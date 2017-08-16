@@ -330,6 +330,11 @@ IDLE
       - Ctrl + Shift + S
       -
 
+    * - Open in Bash (使用运行)
+      - Shift + `````
+      - Shift + `````
+      -
+
     * - Open in Default Application (使用默认的App打开)
       -
       -
