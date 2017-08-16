@@ -206,3 +206,29 @@ Keymap设置控制着键盘操作的行为。``Menu`` -> ``Preference`` -> ``Key
             ]
         },
     ]
+
+
+自定义一些系统没有预设，但又很有用的快捷键
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Windows:
+
+.. code-block:: javascript
+
+    [
+        { "keys": ["ctrl+shift+alt+u"], "command": "upper_case" },
+        { "keys": ["ctrl+shift+alt+l"], "command": "lower_case" },
+        { "keys": ["ctrl+shift+alt+t"], "command": "title_case" },
+        { "keys": ["ctrl+shift+alt+s"], "command": "swap_case" },
+    ]
+
+MacOS:
+
+.. code-block:: javascript
+
+    [
+        { "keys": ["super+shift+alt+u"], "command": "upper_case" },
+        { "keys": ["super+shift+alt+l"], "command": "lower_case" },
+        { "keys": ["super+shift+alt+t"], "command": "title_case" },
+        { "keys": ["super+shift+alt+s"], "command": "swap_case" },
+    ]
+
