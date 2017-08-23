@@ -1,0 +1,6 @@
+# Database
+sqlalchemy      # Sql, relation database system orm
+pymongo         # mongodb drive
+mongoengine     # mongodb orm
+sqlitedict      # sqlite backed dictionary
+tinydb          # simple json backed database

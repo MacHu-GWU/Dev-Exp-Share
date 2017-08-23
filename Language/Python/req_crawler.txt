@@ -1,0 +1,8 @@
+# Crawler
+requests        # HTTP for Humans
+bs4             # parse html tag
+selenium        # fake webbrowser activity
+scrapy          # crawler framework
+
+crawlib
+selenium_spider

@@ -1,0 +1,8 @@
+# DataIO
+lxml            # xml engine
+PyYAML          # yaml IO
+ujson           # ujson
+jsonpickle      # complex object json IO
+
+dataIO          # json, pickle, textfile
+superjson       # extensible json IO framework

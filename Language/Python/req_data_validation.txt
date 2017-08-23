@@ -1,0 +1,4 @@
+# Data Validation
+attrs==17.2.0
+marshmallow==2.13.6
+cerberus==1.1

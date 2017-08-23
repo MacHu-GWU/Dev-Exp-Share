@@ -41,7 +41,7 @@ General
 
     * - Rename File (重命名文件名)
       - Shift + F6
-      - Shift + F6
+      - Shift + F6, Alt + R (应对苹果外接键盘F5,F6有别的功能的问题)
       -
 
     * - Quit (退出程序)
@@ -465,5 +465,5 @@ Python
 
     * - Rename Variable (重命名变量)
       - Shift + F6
-      - Shift + F6
+      - Shift + F6, Alt + R (应对苹果外接键盘F5,F6有别的功能的问题)
       -
