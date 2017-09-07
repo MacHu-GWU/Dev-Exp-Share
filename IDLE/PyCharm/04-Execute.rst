@@ -44,5 +44,5 @@ Execute in Bash
 ------------------------------------------------------------------------------
 1. Set up external tools: ``Preference`` -> ``Tools`` -> ``External Tools`` -> ``Add new one`` click ``+`` sign.
 2. Config executable: ``Name``: name for this tool, I use ``Run with Bash``, ``Description``: any description text, ``Program``: The executable file (.exe for Windows, usually using git-bash.exe, /bin/bash for MacOS), ``Parameters``: ``$FileName$`` (you can select from macro), ``Working Directory``: ``$FileDir$``, click ``OK``.
-3. Assign a Keymap: ``Preference`` -> ``Keymap`` -> Search ``Sublime Text`` -> Add a keymap, I use ``Shift + ```.
-4. Try it out: select a file in project view, press ``Shift + ```.
+3. Assign a Keymap: ``Preference`` -> ``Keymap`` -> Search ``Run with Bash`` -> Add a keymap, I use ``Shift + ```.
+4. Try it out: select a file in project view, press Ctrl + Shift + `````.

@@ -1,7 +1,7 @@
 <snippet>
     <scope>text.restructuredtext</scope>
     <description>Styled Image</description>
-    <tabTrigger>imagestyled</tabTrigger>
+    <tabTrigger>imgstyled</tabTrigger>
     <content><![CDATA[
 .. image:: ${1:url}
     :alt: ${2:Image Not Found}

@@ -1,0 +1,8 @@
+<snippet>
+    <scope>source.python</scope>
+    <description>Doc String for Method</description>
+    <tabTrigger>nocover</tabTrigger>
+    <content><![CDATA[
+# pragma: no cover
+]]></content>
+</snippet>

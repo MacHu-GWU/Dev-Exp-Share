@@ -1,8 +1,14 @@
 # Data Science
+
+# Core
 numpy
 pandas
 scipy
+
+# Machine Learning
 scikit-learn
+
+# Visualization
 matplotlib
 seaborn
 bokeh

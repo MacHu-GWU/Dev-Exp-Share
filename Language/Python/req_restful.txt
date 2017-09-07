@@ -1,3 +1,3 @@
 # Restful API
-flask-restless
-eve
+flask-restless      # RDB restless api server
+eve                 # MongoDB restless api server

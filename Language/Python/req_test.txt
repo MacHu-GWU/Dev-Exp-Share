@@ -1,4 +1,6 @@
 # Unittest
 mock            # mock
 pytest          # unittest framework
+pytest-cov      # coverage.py integration with pytest
+coveralls       # integration with coveralls.io
 tox             # automate testing

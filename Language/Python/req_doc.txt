@@ -1,7 +1,10 @@
 # Documentation
 sphinx==1.6.3
+
+# Themes
 sphinx_rtd_theme
 sphinx_bootstrap_theme
 cloud_sptheme
 
+# Tool
 docfly
