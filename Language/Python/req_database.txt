@@ -1,6 +1,33 @@
-# Database
+#--- SQL ---
 sqlalchemy      # Sql, relation database system orm
+sqlitedict      # sqlite backed dictionary
+
+# SQL
+# Postgres
+psycopg2
+py-postgresql
+
+# MySQL
+PyMySQL
+mysql-connector-python
+
+# MSSQL
+pymssql
+
+# ORM
+pony
+peewee
+
+#--- Non SQL ---
+tinydb          # simple json backed database
+
+# MongoDB
 pymongo         # mongodb drive
 mongoengine     # mongodb orm
-sqlitedict      # sqlite backed dictionary
-tinydb          # simple json backed database
+mongomock       # mock mongodb
+
+# Redis
+redis           # redis drive
+
+
+

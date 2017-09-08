@@ -1,0 +1,4 @@
+fuzzywuzzy          # Fuzzy String Match
+python-Levenshtein  # string distance
+parse               # reverse of str.format
+Whoosh              # Pure Python full text search engine

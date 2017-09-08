@@ -1,0 +1,4 @@
+# Performance Profiler
+line_profiler
+memory_profiler
+psutil

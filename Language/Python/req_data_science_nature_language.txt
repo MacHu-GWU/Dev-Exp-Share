@@ -1,0 +1,3 @@
+nltk            # Natural Language Tool Kits
+textblob        # Make nltk way easier to use
+spacy           # Industrial-Strength Natural Language Processing

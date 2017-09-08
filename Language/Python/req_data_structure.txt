@@ -1,0 +1,9 @@
+queuelib                # Queue
+sortedcontainers        # Sorted Containers
+collections-extended    # bag, setlist, bijection, RangeMap
+attrdict                # attribute styled dict
+cyordereddict           # C-Implement OrderedDict
+orderedset
+ordered-set
+BTrees
+simhash

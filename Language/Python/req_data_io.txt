@@ -1,8 +1,20 @@
 # DataIO
-lxml            # xml engine
-PyYAML          # yaml IO
-ujson           # ujson
-jsonpickle      # complex object json IO
 
-dataIO          # json, pickle, textfile
+# Json
+ujson           # ultra fast json
+json_tricks     # Json support numpy.array
+jsonpickle      # complex object json IO
 superjson       # extensible json IO framework
+
+# Xml
+lxml            # xml engine
+
+# YAML
+PyYAML          # yaml IO
+
+# DataFrame
+tablib==0.11.5  # IO for tabulate data
+
+# Other
+dataIO          # json, pickle, textfile
+

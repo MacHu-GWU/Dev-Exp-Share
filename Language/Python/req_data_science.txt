@@ -8,7 +8,11 @@ scipy
 # Machine Learning
 scikit-learn
 
+# Stats
+statsmodels
+
 # Visualization
 matplotlib
 seaborn
 bokeh
+folium              # Make beautiful maps with Leaflet.js & Python

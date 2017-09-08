@@ -1,0 +1,2 @@
+haversine       # coordinate distance
+geopy           # geo API client

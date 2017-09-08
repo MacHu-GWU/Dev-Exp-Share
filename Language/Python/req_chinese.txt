@@ -1,0 +1,2 @@
+pinyin      # Chinese Pin Yin
+jieba       # Chinese Tokenizer
