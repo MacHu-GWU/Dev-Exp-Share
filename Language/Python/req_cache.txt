@@ -1,3 +1,0 @@
-cachetools          # Cache tools
-diskcache           # Disk and file backed cache
-pylibmc             # Quick and small memcached client for Python

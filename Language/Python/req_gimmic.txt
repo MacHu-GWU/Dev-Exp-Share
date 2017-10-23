@@ -1,2 +1,0 @@
-PyUserInput         # Mouse Keyboard Macro
-pyperclip           # Clipboard Copy Paste

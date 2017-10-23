@@ -1,6 +1,0 @@
-# Unittest
-mock            # mock
-pytest          # unittest framework
-pytest-cov      # coverage.py integration with pytest
-codecov         # integration with codecov.io
-tox             # automate testing

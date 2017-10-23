@@ -1,2 +1,0 @@
-# Meta Programming
-inspect_mate    # extended inspect library, for meta programming
