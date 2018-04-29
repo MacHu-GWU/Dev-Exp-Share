@@ -87,6 +87,10 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# Pycharm Stuff
+.idea
+
+
 # =========================
 # Operating System Files
 # =========================

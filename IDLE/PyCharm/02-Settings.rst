@@ -1,7 +1,7 @@
 PyCharm Settings
 ==============================================================================
 
-Use Ctrl + Alt + S to call settings.
+Use ``Ctrl + Alt + S`` (Windows) ``Cmd + ,`` (MacOS) to call settings.
 
 
 Open File with Associated application

@@ -16,6 +16,19 @@ My Favorite Pluggin
 ------------------------------------------------------------------------------
 
 
+Markdown Support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markdown Syntax Highlight and Preview.
+
+- https://plugins.jetbrains.com/plugin/7793-markdown-support
+
+
+Makefile Support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Makefile Syntax Highlight.
+
+- https://plugins.jetbrains.com/plugin/9333-makefile-support
+
 
 BashSupport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
