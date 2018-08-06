@@ -33,6 +33,7 @@ General
     * - Open (打开文件/文件夹)
       - Ctrl + O
       - Cmd + O
+      -
 
     * - Save (保存改动)
       - Ctrl + S
