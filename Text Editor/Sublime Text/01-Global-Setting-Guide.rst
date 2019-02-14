@@ -59,6 +59,7 @@ My favorite setting:
             "RestructuredText", //
             "Vintage", // Vintage is a vi mode editing package for Sublime Text. It allows you to combine vi's command mode with Sublime Text's features, including multiple selections.
         ],
+        "open_files_in_new_window": false, // 强制在新 Tab 而不是新窗口打开文件
     }
 
 - ref: http://docs.sublimetext.info/en/latest/reference/settings.html
