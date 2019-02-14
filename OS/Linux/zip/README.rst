@@ -71,3 +71,8 @@ Frequently Used Options
 
 - include these only: ``-i *.py *.txt *.rst``
 - exclude theses: ``-x *.zip *.json *.pk``
+
+Becareful with ``*``, sometime you need to add escape char ``\`` before that. For example:
+
+- exclude ``.json`` file: ``zip mydir.zip mydir -r -x \*.json``
+- exclude the ``pip`` folder: ``zip site-package.zip site-package -r -x pip\*``

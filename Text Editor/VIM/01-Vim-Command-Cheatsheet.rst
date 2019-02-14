@@ -39,9 +39,6 @@ Reference:
       - move cursor right (can't cross line)
 
 
-
-
-
 .. list-table:: Title of the table
     :widths: 10 10
     :header-rows: 1

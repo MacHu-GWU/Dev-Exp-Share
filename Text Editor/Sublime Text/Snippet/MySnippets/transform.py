@@ -526,5 +526,5 @@ if __name__ == "__main__":
     # cson = Snippet.to_atom_snippet(snippet_list)
     # print(cson)
 
-    # xml = Snippet.to_pycharm_snippet(snippet_list)
-    # print(xml)
+    xml = Snippet.to_pycharm_snippet(snippet_list)
+    print(xml)
