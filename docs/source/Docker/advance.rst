@@ -47,15 +47,6 @@
       - ``docker ps -a``
       - Value3
 
-
-
-
-
-
-
-
-
-
 当 container 被 ``docker container stop <id>`` 关闭时, 如果不加 ``-rm`` 参数, container 是不会被从磁盘上真正删除的, 同时被这些未被删除的 container 所 mount 的 volume 也无法被 ``docker volumn rm <id>`` 所删除.
 
 - 查看所有在本地的 container, 包括已停止的 (see all containers on the Docker host, including stopped containers): ``docker ps -a``
