@@ -1,0 +1,4 @@
+boto3
+sqlalchemy
+psycopg2-binary
+sqlalchemy_mate==0.0.8
