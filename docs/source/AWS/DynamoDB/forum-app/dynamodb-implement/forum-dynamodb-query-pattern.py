@@ -11,6 +11,14 @@ t_users = sa.Table(
     sa.Column("security_group_id", sa.Integer),
 )
 
+t_posts = sa.Table(
+    "posts", metadata,
+    sa.Column("post_id", sa.Integer),
+    sa.Column("comment_id", sa.)
+)
+
+
+
 t_security_group_and_action = sa.Table(
     "security_group_and_action", metadata,
     sa.Column("security_group_id", sa.Integer),

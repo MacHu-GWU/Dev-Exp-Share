@@ -14,14 +14,17 @@ find 10 most recent commented post
 .. code-block:: SQL
 
     SELECT
-        T.post_id
+        T.post_id,
+        T.nth
     FROM (
         SELECT
-            comment.post_id
-            max(comment.create_at) as last_comment_create_at
-        FROM comment
+            post.post_id,
+            post.nth,
+            max(post.create_at) as last_comment_create_at
+        FROM post
         WHERE
-            comment.create_at >= :one_day_before_now
+            post.board_id = :board_id
+            AND post.create_at >= :one_day_before_now
         GROUP BY comment.post_id
     ) T
     ORDER BY T.last_comment_create_at DESC
@@ -33,11 +36,12 @@ find all comment of a post
 
 .. code-block:: SQL
 
+    -- page 2
     SELECT *
-    FROM comment
-    WHERE comment.post_id = :post_id
-    ORDER BY comment.comment_id ASC
-    SKIP 100
+    FROM post
+    WHERE post.post_id = :post_id
+    ORDER BY post.create_time ASC
+    SKIP 10
     LIMIT 10
 
 

@@ -18,29 +18,26 @@ user
 
 post
     post_id, primary_key
+    nth, primary_key
     title
     content
     author_id
     create_at
     update_at
+    board_id
 
-comment
-    post_id, primary_key
-    comment_id, primary_key
-    user_id
-    body
-    create_at
-    update_at
 
 security_group
 
     security_group_id, primary_key
     description
 
+
 action
 
     action_id, primary_key
     description
+
 
 security_group_action
 
