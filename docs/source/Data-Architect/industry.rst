@@ -1,3 +1,7 @@
+
+Full Application
+------------------------------------------------------------------------------
+
 1. Reddit (Forum Application)
 2. Nest (Internet of Things)
 3. Spotify (Music Stream App)
@@ -10,3 +14,9 @@
 10. Walmart (Wholesales)
 11. USCIS (Government Service)
 12. Slack (Messenger App)
+
+
+Micro Service
+------------------------------------------------------------------------------
+1. Leadboard
+2. Observation
