@@ -1,0 +1,70 @@
+Kinesis
+==============================================================================
+
+.. contents::
+
+
+Important Concept
+-----------------
+
+Reference: https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html
+
+- Kinesis Stream:
+    - Shard
+    - Producer
+        - PutRecords API: Synchronous, immediately available after captured, need manually implement retry, batch.
+        - Kinesis Producer Library (Java): Asynchronous, High Performance (high concurrence), but with larger delay
+    - Consumer
+- Kinesis Firehose (Delivery Stream):
+- Kinesis Analytics: 每隔一段时间, 对近期 Stream 中的数据用 SQL 进行分析, 然后将结果汇总, 传给 Destination, 可以是 Kinesis Stream, Firehose, Lambda.
+
+
+
+FAQ
+---
+
+Reference: https://aws.amazon.com/kinesis/data-streams/faqs/
+
+- Q: Is the order of what consumer received is same as the order produced?
+- A: Yes, It provides ordering of records, as well as the ability to read and/or replay records in the same order to multiple Amazon Kinesis Applications
+
+
+Note
+----
+
+- Firehose 触发的 Lambda, 只专注于数据处理, 并返回处理后的 Binary Output, 并不负责将 Output Load 到 S3 / Redshift 中. Firehouse 自带将 Output 写入 S3 / Redshift / Elasticsearch / Splunk 的功能.
+- Kinesis Stream Consumer 将数据按照 X Min / Y KB (取最先达成的那个) 的限制进行打包交给 Lambda 函数处理. 每一个 Shard 会独立于彼此进行运作, 将数据打包. 也就是说, 有多少个 Shard, 就会同时触发多少个 Lambda.
+- Difference Between Kinesis Stream vs SQS.
+    - Kinesis can scale way larger than SQS by adding sharding.
+    - Kinesis usually send batch records to process, but SQS usually consume record one by one.
+    - There's no subscription model and topic broker in kinesis.
+- Yes, each shard can only have one processor at a given moment (per application).
+
+
+Data life cycle in Kinesis Stream Pipeline
+------------------------------------------------------------------------------
+
+raw -> Data Stream -> Firehose Delivery Stream -> output -> S3 / Redshift / Elastic Search / Splunk
+
+
+Firehose 触发的 Lambda, 并不直接将 Output Load 到 S3 / Redshift 中, 而是只输出 Binary Output
+------------------------------------------------------------------------------
+
+Firehose 需要
+
+
+
+Firehouse 的输出可以跟哪些 AWS 服务对接?
+------------------------------------------------------------------------------
+
+- AWS S3: 将输出或 原封不动, 或 进行格式转换, 或 用Lambda进行处理后存到 S3 里.
+- AWS Redshift: 将输出用 Copy 命令 Load 到 Redshift 上.
+- AWS Elasticsearch Service: 将输出 Load 到 Elasticsearch 上.
+- AWS Splunk: 将输出 Load 到 Splunk 日志服务器上.
+
+
+
+Sharding
+--------
+
+Kinesis Stream Consumer 将数据按照 X Min / Y KB (取最先达成的那个) 的限制进行打包交给 Lambda 函数处理. 每一个 Shard 会独立于彼此进行运作, 将数据打包.

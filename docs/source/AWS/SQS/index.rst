@@ -57,3 +57,8 @@ Limit
 ------------------------------------------------------------------------------
 
 
+Only-Once Delivery
+------------------
+
+Standard Queue 不能保证 only-once delivery, 但是 FIFO Queue 可以保证.
+

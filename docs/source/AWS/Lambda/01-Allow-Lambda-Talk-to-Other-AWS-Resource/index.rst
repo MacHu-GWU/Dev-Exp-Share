@@ -16,3 +16,18 @@ Allow Lambda Talk to Other AWS Resource
 通常, 我们会将不同的 AWS 资源放在不同的 VPC 网络之下. 一是为了方便控制, 二是为了安全, 一个被攻击了, 其他的不会受到影响. 我们用 vpc_ec2, vpc_rds, vpc_lambda 来表示.
 
 那么, 我们也要为3个资源各配置一个 Security Group, sg_ec2, sg_rds, sg_lambda. 然后再 Inbound / Outbound 中把各自都加上即可.
+
+
+
+Lambda talk to RDS
+------------------
+
+
+Lambda talk to S3
+-----------------
+
+
+Lambda talk to
+--------------
+
+
