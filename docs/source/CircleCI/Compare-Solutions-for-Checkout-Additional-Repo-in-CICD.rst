@@ -73,14 +73,16 @@ Reference:
 - Generate a new SSH key and adding to your SSH agent: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key
 
 
-Solution 4 (Not Secure)
+Solution 4 (Doable)
 ------------------------------------------------------------------------------
 
 Use bash script to use ssh agent to create a temp key pair in CICD system, add the public key to Github repo via Github Oauth API, and use that key pair to ssh git clone the repo.
 
+Since you could set Personal Access Token to ``admin:public_key`` only, so you can securely use that token in your CICD system to dynamically upload public_key.
+
 Con:
 
-- In order to use GitHub Oauth API, you have to grant your CICD a Github API access, which is equivalent to be able to admin access your other GitHub Repo.
+- Still much setup in your CICD scripts.
 
 Reference:
 
