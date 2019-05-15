@@ -68,3 +68,15 @@ Sharding
 --------
 
 Kinesis Stream Consumer 将数据按照 X Min / Y KB (取最先达成的那个) 的限制进行打包交给 Lambda 函数处理. 每一个 Shard 会独立于彼此进行运作, 将数据打包.
+
+
+Kinesis Producer Library (KPL)
+------------------------------------------------------------------------------
+
+Reference: https://docs.aws.amazon.com/streams/latest/dev/developing-producers-with-kpl.html
+
+KPL 是一个 SDK 开发者工具, 相比 AWS SDK 里的 Kinesis PutRecord 命令而言, 额外提供了这些功能:
+
+- Async PutRecord: 异步, 提高性能.
+- Collection: 将多个 Record 打入 Buffer.
+- Aggregation / Batch: 将多个 Record 进行 Aggregation, 然后一起发送. 将收到的批量 Record 批量 Batch 处理.
