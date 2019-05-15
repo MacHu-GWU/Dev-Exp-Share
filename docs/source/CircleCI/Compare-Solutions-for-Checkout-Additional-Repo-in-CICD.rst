@@ -15,7 +15,7 @@ Solution 1 (Recommended)
 ------------------------------------------------------------------------------
 
 1. sign up a github account for Enquizit, let's say, username = MyORG-Machine
-2. create an personal oauth access token with full access of everything in MyORG-Machine
+2. create an personal oauth access token (Account Settings -> Developer Settings) with full access of everything in MyORG-Machine
 3. MyORG-Machine as collaborator to the repo we need machine user access, and only grant MyORG-Machine read only access to that repo.
 
 Pro:
