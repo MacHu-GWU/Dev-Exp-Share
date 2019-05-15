@@ -1,3 +1,5 @@
+.. _compare-solution-for-checkout-additional-repo-in-cicd:
+
 Compare Solutions for Checkout Additional Repo in CI/CD
 ==============================================================================
 
@@ -29,7 +31,7 @@ Con:
 Reference:
 
 - Machine User: https://developer.github.com/v3/guides/managing-deploy-keys/#machine-users
-- nable Your Project to Check Out Additional Private Repositories: https://circleci.com/docs/2.0/gh-bb-integration/#enable-your-project-to-check-out-additional-private-repositories
+- Enable Your Project to Check Out Additional Private Repositories: https://circleci.com/docs/2.0/gh-bb-integration/#enable-your-project-to-check-out-additional-private-repositories
 
 
 Solution 2 (We have to trust 3rd party CICD)

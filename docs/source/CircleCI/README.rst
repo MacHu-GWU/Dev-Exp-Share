@@ -3,10 +3,14 @@
 CircleCI Reference
 ==============================================================================
 
+.. contents::
+
 docs:
 
 - config.yml reference: https://circleci.com/docs/2.0/configuration-reference
 - list of built-in docker images: https://circleci.com/docs/2.0/circleci-images
+
+CircleCI 免费账户支持私有仓库的测试. 免费账户的唯一缺点就是一次同时只能并行运行一个测试.
 
 
 SSH to Job Instance to debug
@@ -58,5 +62,18 @@ Use Docker Command
 Checkout Additional Private Repository
 ------------------------------------------------------------------------------
 
-Reference: https://circleci.com/docs/2.0/gh-bb-integration/#enable-your-project-to-check-out-additional-private-repositories
+1. 另外创建一个 Machine User GitHub 账号, 名字最好是用你的主 GitHub 账号 或是 Organization 账号加上 ``Machine`` 后缀. 比如我的是 ``MacHu-GWU-Machine``.
+2. 在 Machine User Account 里创建一个 Personal Access Token, 并给予 Repo 的全部权限. (Account Settings -> Developer Settings -> Personal Access Token)
+3. 在你的 additional private repo 里, 将 Machine User 账户添加为 Collaborator.
+4. 然后再你的主 Private Repo 的 CICD 中, 使用 ``git clone "https://${PERSONAL_ACCESS_TOKEN}@github.com/${GITHUB_ACCOUNT}/${REPO}``, 即可将其他的私有仓库 Checkout 了.
+5. 注意不要将这个 Personal Access Token Check in 到你的代码仓库中, 而要用安全的方法在你的 CICD 系统中引用它. 比如 CircleCI 提供了 Context, 可以将这些密码信息放入环境变量.
+
+这样的好处是: 即使这个 Token 泄露, 也只会影响到添加了 Collaborator 的 Private 仓库.
+
+详细分析请参考 :ref:`compare-solution-for-checkout-additional-repo-in-cicd` 一文.
+
+Reference:
+
+- Machine User: https://developer.github.com/v3/guides/managing-deploy-keys/#machine-users
+- Enable Your Project to Check Out Additional Private Repositories: https://circleci.com/docs/2.0/gh-bb-integration/#enable-your-project-to-check-out-additional-private-repositories
 
