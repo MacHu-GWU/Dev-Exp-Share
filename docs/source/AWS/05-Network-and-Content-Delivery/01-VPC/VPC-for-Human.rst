@@ -54,6 +54,7 @@ Route Table 1, main table, 为 Internet Gateway 服务:
 1. 向 NAT Gateway 发起请求.
 2. NAT Gateway 通过 Internet Gateway 下载补丁包, 下载完毕后传给数据库服务器.
 
+这里
 
 **添加 Private Subnet**:
 
@@ -61,3 +62,9 @@ Route Table 1, main table, 为 Internet Gateway 服务:
 
 1. 进入 VPC -> Subnets, 点击 Create Subnets.
 2. 指定我们之前创建的 VPC, 选择一个与之前不同的 Availability Zone, 设置 IPv4 CIDR Block, 建议使用奇数作为 Private Subnet, 偶数作为 Public Subnet. 所以我们使用 10.0.3.0/16.
+
+
+理解 CIDR Block
+------------------------------------------------------------------------------
+10.10.1.148/32 指的是 10.10.1.148 这一具体的 IP 地址.
+10.10.1.0/28 指的是 10.10.1.0 - 10.10.1.15 之间的全部 IP 地址.
