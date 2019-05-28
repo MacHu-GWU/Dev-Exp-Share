@@ -7,14 +7,29 @@ Route 53
 2. 将通往你域名的流量, 正确地 Route 到你位于 AWS 上的 Resource, 例如 EC2, Load Blancer.
 3. 检查你的 AWS 资源 的健康度. 隔一段时间 Ping 一次, 如果 Ping 不通, 则写入 CloudWatch, 并触发 SNS 通知.
 
-帮助你理解 CNAME
+**重要概念**:
 
+- Domain Name: google.com
+- Top Level Domain (TLD): .com / .gov 这类的后缀
+- Subdomain: google.com / maps.google.com / images.google.com 这类的共享一个根域名的域名.
+- Domain Registrar: 一些特定的国际大公司, 有权利帮你注册某些域名.
+- Domain Registry: 域名拥有者, 也就是找 Registrar 花钱注册了该域名的公司或人.
+- Name Servers: 具体的某台服务器, 用于将你的 Domain Name 翻译成 IP 地址
+- Authoritative Name Server: 根服务器, 负责某个区域, 比如北美, 亚洲的域名解析.
+- DNS Resolver: 通常是 ISP (Internet Service Provider) 互联网服务提供商管理的服务器, 位于用户和 Name Server 之间.
+- DNS Query: 查询一个 domain name 的过程.
+- DNS Record: 一系列具体的 domain name 到 IP 的对应关系. 相当于是多个 ``A Record``
+- Time to Live (TTL): DNS Server 上 DNS Query 的缓存持续时间.
+- A Record:
+    - CNAME (Canonical Name 权威的) Record: 规范的名字, 用于将多个域名导向同一个 EC2 或是 ELB. 例如 maps.google.com 和 mail.google.com 导向同一个 EC2.
+    - Alias Record: AWS Route 53 的自定义 映射.
+- Zone Apex: Root Domain, google.com, amazon.com
+- Routing Policy: A setting for domain that determine how Route 53 responds to DNS queries and route the traffic.
 
-Type of Record Set:
+**Type of Record Set**:
 
 - IPv4 Address
 - CNAME
-
 
 
 Route 53 能将流量导向哪些 AWS 服务

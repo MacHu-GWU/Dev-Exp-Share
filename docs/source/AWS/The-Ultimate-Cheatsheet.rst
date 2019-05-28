@@ -241,15 +241,139 @@ CloudWatch
 VPC (Virtual Private Cloud)
 ------------------------------------------------------------------------------
 
+- VPC
+- Subnet
+- Route Table
+- Internet Gateway
+- NAT Gateway
+- Network Control List: Stateless, inbound 和 outbound 都要验证, 一个没有验证成功都不行. 有 Rule Number 的概念, 从小到大依次验证, 小的成功了, 大的就不用管了. 作用于 Subnet 级别.
+- Security Group: Stateful, 比如发起者是位于公网的用户, 那么只用考虑 inbound, 一旦连接建立, 就不用管 outbound 了. 作用于 EC2, Lambda, RDS, 等 AWS Resource 级别.
+- VPC Peering: 连接两个 VPC. 但无法连接 3 个, 只能将它们两两连接.
+- VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 S3, 而是在 VPC 内, 通过 Amazon Network 访问 S3.
+- VPC FlowLog: 记录了所有的网络端口通信细节 (不包括数据本身), **主要用于 Debug**.
 
 
 Database
 ------------------------------------------------------------------------------
 
 
-
 Route 53
 ------------------------------------------------------------------------------
+
+Route 53
+==============================================================================
+
+**Route 53 是干什么的**:
+
+1. 注册域名.
+2. 将通往你域名的流量, 正确地 Route 到你位于 AWS 上的 Resource, 例如 EC2, Load Blancer.
+3. 检查你的 AWS 资源 的健康度. 隔一段时间 Ping 一次, 如果 Ping 不通, 则写入 CloudWatch, 并触发 SNS 通知.
+
+**重要概念**:
+
+- Domain Name: google.com
+- Top Level Domain (TLD): .com / .gov 这类的后缀
+- Subdomain: google.com / maps.google.com / images.google.com 这类的共享一个根域名的域名.
+- Domain Registrar: 一些特定的国际大公司, 有权利帮你注册某些域名.
+- Domain Registry: 域名拥有者, 也就是找 Registrar 花钱注册了该域名的公司或人.
+- Name Servers: 具体的某台服务器, 用于将你的 Domain Name 翻译成 IP 地址
+- Authoritative Name Server: 根服务器, 负责某个区域, 比如北美, 亚洲的域名解析.
+- DNS Resolver: 通常是 ISP (Internet Service Provider) 互联网服务提供商管理的服务器, 位于用户和 Name Server 之间.
+- DNS Query: 查询一个 domain name 的过程.
+- DNS Record: 一系列具体的 domain name 到 IP 的对应关系. 相当于是多个 ``A Record``
+- Time to Live (TTL): DNS Server 上 DNS Query 的缓存持续时间.
+- A Record:
+    - CNAME (Canonical Name 权威的) Record: 规范的名字, 用于将多个域名导向同一个 EC2 或是 ELB. 例如 maps.google.com 和 mail.google.com 导向同一个 EC2.
+    - Alias Record: AWS Route 53 的自定义 映射.
+- Record Set, 多个 Record:
+    - Type of Record Set:
+        - IPv4 Address: xxx.xxx.xxx.xxx
+        - CNAME: 规范的名字, 用于将多个域名导向同一个 EC2 或是 ELB. 例如 maps.google.com 和 mail.google.com
+- Zone Apex: Root Domain, google.com, amazon.com
+- Routing Policy: A setting for domain that determine how Route 53 responds to DNS queries and route the traffic.
+
+
+**一些例子**:
+
+- 你有一个 S3 Bucket 开启了 Static Website Hosting, http://example-bucket.com.s3-website-us-east-2.amazonaws.com, 你想将你的域名 www.example-bucket.com 连接上你的 Static Website. **IPv4 Address with Alias**
+- 你有 4 个 EC2, 被放在了 Load Balancer 背后. 你想将你通往你域名 www.example-web-application.com 的流量导向 Load Balancer. **IPv4 Address with Alias**
+- 你有一个 RDS, endpoint 是 example-a1b2c3d4xyz.us-west-1.rds.amazonaws.com. 你用 Route53 注册了一个域名. **CNAME without Alias**
+- 你有一个公司的域名 www.example.com, 想要用 Route 53 作为 DNS provider, 并将其导向到 CDN 上. **Create an Alias record which point to CloudFront Distribution**.
+
+
+**Route 53 能将流量导向哪些 AWS 服务**:
+
+Logging, Monitoring, and Tagging:
+
+- AWS CloudTrail
+- Amazon CloudWatch
+- Tag Editor
+
+Routing Traffic to Other AWS Resources:
+
+- Amazon API Gateway
+- Amazon CloudFront
+- EC2
+- Elastic Beanstalk
+- Elastic Load Balancer
+- RDS
+- S3
+- VPC
+- Workmail
+
+**Troubleshoot Server Not Found error**:
+
+- You didn't create a record for the domain or subdomain name
+- You created a record but specified the wrong value
+- The resource that you're routing traffic to is unavailable
+
+**Routing Policy**:
+
+- Simple routing policy – Use for a single resource that performs a given function for your domain, for example, a web server that serves content for the example.com website. 1 对 1 路由
+- Failover routing policy – Use when you want to configure active-passive failover. 如果第一个 Resource 不 Healthy, 则换下一个.
+- Geolocation routing policy – Use when you want to route traffic based on the location of your users. 你预先设定好, 哪个区域的用户被路由到哪里
+- Geoproximity routing policy – Use when you want to route traffic based on the location of your resources and, optionally, shift traffic from resources in one location to resources in another. 根据用户的位置, 自动选择路由到最近的 (或其他自定义规则) Resource
+- Latency routing policy – Use when you have resources in multiple AWS Regions and you want to route traffic to the region that provides the best latency. 当你的 App Host 在多个 Region 上时, 选择延迟最小的.
+- Multivalue answer routing policy – Use when you want Route 53 to respond to DNS queries with up to eight healthy records selected at random. 同时返回多个可路由的目的地.
+- Weighted routing policy – Use to route traffic to multiple resources in proportions that you specify. 加权路由, 给每个目的地加一个 Weight, 按概率取.
+
+**Route 53 的 Health Check 能检查哪些指标**:
+
+- Health checks that monitor an endpoint
+- Health checks that monitor other health checks (calculated health checks)
+- Health checks that monitor CloudWatch alarms
+
+**Monitor Health Check**:
+
+- To view the status of a health check on **route 53 console**
+- To **receive an Amazon SNS notification** when a health check status is unhealthy (console)
+- To view **CloudWatch alarm status** and edit alarms for Amazon Route 53 (console)
+- To view **Route 53 metrics on the CloudWatch console**
+
+
+Elastic Container Service (ECS)
+------------------------------------------------------------------------------
+
+What is ECS:
+
+- Run containers at scale
+- Flexible container placement
+- Integrated and extensible
+
+Features:
+
+- Task
+- Task Definition
+- Cluster
+
+Launch Type:
+
+- Fargate Launch Type: set configuration of your Container, AWS launch the EC2 you need and run container.
+- EC2 Launch Type: run container on EC2 Cluster you owned.
+
+Note:
+
+- You have root access to the OS of your container instance. enabling you to configure additional sotfware.
 
 
 Snowball
@@ -279,6 +403,27 @@ AWS Athena
 EFS (Elastic File System)
 ------------------------------------------------------------------------------
 
+一句话解释 EFS 的作用: 给 EC2 提供文件系统, 更重要的是, 给多个 EC2 提供 共享文件系统. 而一个 EBS 卷只能挂载到一个 EC2 上.
+
+- EFS: 给 VPC 内的 EC2 提供文件系统, 必须为 EFS 指定 VPC 配合使用.
+- Mount Target: 必须为 EFS 指定 Mount Target.
+- 1 Mount Target on each AZs, on one of the subnets
+- EFS has dedicated Network File System Port, restricted by Security Group
+- EFS has two encryption, storage encryption (at rest) and network transit encryption.
+    - storage encryption: can only be enabled on creation
+    - network transit encryption: enable EFS Mount Helper, detach and re-attach the same EFS to enable it.
+- Performance Mode:
+    - General: under 50 EC2, low latency
+    - Max IO: 50 ~ 1000+ EC2 sharing same EFS, higher latency
+- Throughput Mode:
+    - Burst:  是大多数时间很普通, 5MB/s, 一天能有 18 分钟提供 100MB/S 的速度
+    - Provisioned: Provisioned 适用于 100MB ~ 1TB /S 级别的速度
+
+EFS vs EBS:
+
+- EBS, 块存储, 文件被分为 64KB 大小的块存储.
+- EFS, 一个完整的 NTFS 文件系统.
+
 
 Elastic Cache
 ------------------------------------------------------------------------------
@@ -291,13 +436,52 @@ CloudFormation
 OpsWork
 ------------------------------------------------------------------------------
 
+- AWS OpsWork is a configuration management service that helps you configure and operate application in a cloud enterprise by using Puppet or Chef.
+- Help devops teams manage application and infrastructure.
+
 
 Direct Connect
 ------------------------------------------------------------------------------
 
+通过 Amazon 的 ISP (Internet Service Provider) 合作商, 例如 ATT, Comcast, Verizon, 为你的网络拉一条专线连接到 Amazon 的数据中心, 从而得到超高的网速.
+
+- 通过 Direct Connect 的数据传输费用比通过公网更低.
+- 常用于解决 私有数据中心 到 AWS VPC 的连接问题.
+
 
 AWS Lambda
 ------------------------------------------------------------------------------
+
+- Invoke Functions:
+    - Request and Response: 通过 AWS CLI 发送 Invoke 请求. 所有的 Request and Response 类型的 Invoke 都是同步的. 也就是说发起请求的客户端在收到回复之前, 无法做下面的事.
+- Event Triggered: 通过 Event 触发 Lambda 时, 根据不同的 Event 类型, 亚马逊预先定义了执行是用 Sync 还是 Async.
+    - Sync:
+        - Elastic Load Balancer
+        - Amazon Cognito
+        - Amazon Lex
+        - Amazon Alexa
+        - API Gateway
+        - CloudFront
+        - Kinesis Data Firehouse
+        - Poll-based AWS Service: Kinesis, DynamoDB, SQS.
+    - Async:
+        - S3
+        - Simple Notification Service
+        - Simple Email Service
+        - CloudFormation
+        - Cloudwatch Log
+        - Cloudwatch Events
+        - Code Commit
+        - AWS Config
+- Manage Concurrency:
+    - Account Level Concurrent Execution Limit (ALCEL): 1000 at same time by region
+    - Function Level Concurrent Execution Limit (FLCEL): 函数级别的限制是 Lambda 的一项功能, 默认是关闭的. 要注意的是, 函数级别的限制一旦设置, 会减少全局的 账号级别的限制. 例如默认的的 ALCEL 是 1000, 你给一个函数预留了 100, 那么 ALCEL 就只剩下 900 了.
+- Retry Behavior: 可以使用 Dead-Letter-Queue 保存出错的 Invoke
+    - Event sources that aren't stream-based:
+        - Synchronous invocation: X-Amz-Function-Error, error 200
+        - Asynchronous invocation: automatically retry the invocation twice, store failed invokation in dead letter queue
+    - Poll-based event sources that are stream-based: 由于对于 Poll-based Event, invokation records 是批量进行处理的, 如果1个 record 发生错误, lambda 会继续执行其他的 record, 直到处理完全部 records, 最长持续 7 天.
+    - Poll-based event sources that are not stream-based: 例如 SQS, 由于 SQS 同样也是一次 Batch 发送多个 records 给 lambda 进行处理, 如果 1 个 record 发生错误, lambda 会立刻返回.
 
 
 Elastic Beanstalk

@@ -15,12 +15,30 @@ Invokation Types
 
 - Request and Response: 通过 AWS CLI 发送 Invoke 请求. 所有的 Request and Response 类型的 Invoke 都是同步的. 也就是说发起请求的客户端在收到回复之前, 无法做下面的事.
 - Event Triggered: 通过 Event 触发 Lambda 时, 根据不同的 Event 类型, 亚马逊预先定义了执行是用 Sync 还是 Async.
-    - S3: Async
-    - Cognito: Sync
-    - Poll-based AWS Service (Kinesis, DynamoDB, SQS), Sync.
+    - Sync:
+        - Elastic Load Balancer
+        - Amazon Cognito
+        - Amazon Lex
+        - Amazon Alexa
+        - API Gateway
+        - CloudFront
+        - Kinesis Data Firehouse
+        - Poll-based AWS Service: Kinesis, DynamoDB, SQS.
+    - Async:
+        - S3
+        - Simple Notification Service
+        - Simple Email Service
+        - CloudFormation
+        - Cloudwatch Log
+        - Cloudwatch Events
+        - Code Commit
+        - AWS Config
 
-Reference: https://docs.aws.amazon.com/lambda/latest/dg/invocation-options.html
+Reference:
 
+- Invokation Types: https://docs.aws.amazon.com/lambda/latest/dg/invocation-options.html
+- Services That Invoke Lambda Functions Synchronously: https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html
+- Services That Invoke Lambda Functions Asynchronously: https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html
 
 
 Retry Behavior

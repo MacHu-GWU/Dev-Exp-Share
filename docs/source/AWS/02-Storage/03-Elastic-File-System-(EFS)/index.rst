@@ -1,3 +1,5 @@
+.. _efs:
+
 Elastic File System
 ==============================================================================
 
@@ -14,8 +16,6 @@ Elastic File System
 - EFS 的加密分两种, 存储加密和传输加密. 存储加密只能在创建 EFS 的时候启用. 传输加密则不是 EFS 本身的功能, 需要在启动 EC2 时使用 EFS Mount Helper, 断开再重新挂载同一个 EFS 即可使得传输加密生效, https://docs.aws.amazon.com/efs/latest/ug/encryption.html#encryption-in-transit
 - Performance Mode 有两种: General 和 Max IO. Max IO 是给 几十个上百个 EC2 分享同一个 EFS 时用的, 延迟高一些. General 比较快, 但是 IO 的容量不是特别大.
 - Throughput Mode 有两种: Burst 和 Provisioned, Burst 是大多数时间很普通, 5MB/s, 一天能有 18 分钟提供 100MB/S 的速度. Provisioned 适用于 100MB ~ 1TB /S 级别的速度.
-
-
 
 
 EFS vs EBS

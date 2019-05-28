@@ -1,5 +1,5 @@
 Direct Connect
-==============
+==============================================================================
 
 通过 Amazon 的 ISP (Internet Service Provider) 合作商, 例如 ATT, Comcast, Verizon, 为你的网络拉一条专线连接到 Amazon 的数据中心, 从而得到超高的网速.
 
