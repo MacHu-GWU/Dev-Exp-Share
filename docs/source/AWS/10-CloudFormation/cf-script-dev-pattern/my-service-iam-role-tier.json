@@ -1,0 +1,73 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {},
+    "Parameters": {
+        "ServiceName": {
+            "Type": "String",
+            "Description": "Specify your service name."
+        },
+        "Stage": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "StackName": {
+            "Type": "String",
+            "Description": "The main stack name."
+        },
+        "AWSAccountAlias": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "ResourceNamePrefix": {
+            "Type": "String",
+            "Description": "A prefix used in all aws resource name as prefix."
+        },
+        "S3BucketPrefix": {
+            "Type": "String",
+            "Description": "A prefix used for s3 bucket used by this stack, since s3 is a global service, the aws account alias is appended left."
+        }
+    },
+    "Resources": {
+        "LambdaExcutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": {
+                    "Fn::Sub": [
+                        "${ResourceNamePrefix}-lambda-basic-execution-role",
+                        {
+                            "ResourceNamePrefix": {
+                                "Ref": "ResourceNamePrefix"
+                            }
+                        }
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "LambdaExcutionRoleARN": {
+            "Description": "",
+            "Value": {
+                "Fn::GetAtt": [
+                    "LambdaExcutionRole",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}

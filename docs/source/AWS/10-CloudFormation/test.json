@@ -1,0 +1,12 @@
+// something
+{
+    "user_alice": {
+        "name": "Alice"
+    },
+    "user_bob": {
+        "parent": "user_alice",
+        "adsf": {
+            "adf": "asdf"
+        },
+    },
+}

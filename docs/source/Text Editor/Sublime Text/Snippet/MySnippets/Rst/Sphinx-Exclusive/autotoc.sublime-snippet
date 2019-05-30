@@ -1,0 +1,10 @@
+<snippet>
+    <scope>text.restructuredtext</scope>
+    <description>Auto Table of content</description>
+    <tabTrigger>autotoc</tabTrigger>
+    <content><![CDATA[
+.. autotoctree::
+    :maxdepth: 1
+
+]]></content>
+</snippet>

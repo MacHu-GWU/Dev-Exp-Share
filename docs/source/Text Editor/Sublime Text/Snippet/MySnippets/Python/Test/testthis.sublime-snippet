@@ -3,7 +3,6 @@
     <description>Run unittest in this file</description>
     <tabTrigger>testthis</tabTrigger>
     <content><![CDATA[
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import pytest

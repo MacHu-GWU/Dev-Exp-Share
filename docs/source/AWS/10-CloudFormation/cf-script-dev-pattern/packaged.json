@@ -1,0 +1,115 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {},
+    "Parameters": {
+        "ServiceName": {
+            "Type": "String",
+            "Description": "Specify your service name."
+        },
+        "Stage": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "StackName": {
+            "Type": "String",
+            "Description": "The main stack name."
+        },
+        "AWSAccountAlias": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "ResourceNamePrefix": {
+            "Type": "String",
+            "Description": "A prefix used in all aws resource name as prefix. It is <StackName>-<Stage>"
+        },
+        "S3BucketPrefix": {
+            "Type": "String",
+            "Description": "A prefix used for s3 bucket used by this stack, since s3 is a global service, the aws account alias is appended left."
+        }
+    },
+    "Resources": {
+        "S3Tier": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3.amazonaws.com/skymap-sandbox-cloudformation-script/my-service-dev/7f55348878118853172476c5d476533a.template",
+                "Parameters": {
+                    "ServiceName": {
+                        "Ref": "ServiceName"
+                    },
+                    "Stage": {
+                        "Ref": "Stage"
+                    },
+                    "StackName": {
+                        "Ref": "StackName"
+                    },
+                    "AWSAccountAlias": {
+                        "Ref": "AWSAccountAlias"
+                    },
+                    "ResourceNamePrefix": {
+                        "Ref": "ResourceNamePrefix"
+                    },
+                    "S3BucketPrefix": {
+                        "Ref": "S3BucketPrefix"
+                    }
+                }
+            }
+        },
+        "IamRoleTier": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://s3.amazonaws.com/skymap-sandbox-cloudformation-script/my-service-dev/587b9b373ec85e366c3df2ebf632e8aa.template",
+                "Parameters": {
+                    "ServiceName": {
+                        "Ref": "ServiceName"
+                    },
+                    "Stage": {
+                        "Ref": "Stage"
+                    },
+                    "StackName": {
+                        "Ref": "StackName"
+                    },
+                    "AWSAccountAlias": {
+                        "Ref": "AWSAccountAlias"
+                    },
+                    "ResourceNamePrefix": {
+                        "Ref": "ResourceNamePrefix"
+                    },
+                    "S3BucketPrefix": {
+                        "Ref": "S3BucketPrefix"
+                    }
+                }
+            }
+        },
+        "TheLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Sub": [
+                        "${ResourceNamePrefix}-converter",
+                        {
+                            "ResourceNamePrefix": {
+                                "Ref": "ResourceNamePrefix"
+                            }
+                        }
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Code": {
+                    "S3Bucket": "skymap-sandbox-cloudformation-script",
+                    "S3Key": "my-service-dev/lambda_handler.py.zip"
+                },
+                "Handler": "lambda_handler.handler",
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IamRoleTier",
+                        "Outputs.LambdaExcutionRoleARN"
+                    ]
+                }
+            },
+            "DependsOn": [
+                "S3Tier",
+                "IamRoleTier"
+            ]
+        }
+    }
+}

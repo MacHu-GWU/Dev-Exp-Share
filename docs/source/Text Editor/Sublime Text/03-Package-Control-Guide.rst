@@ -114,6 +114,34 @@ Homepage: https://packagecontrol.io/packages/MarkdownEditing
     }
 
 
+JsonComma (自动在 Json 中补全和删除不必要的逗号)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Homepage: https://github.com/math2001/JSONComma
+
+保存时自动检查和更正, 在全局 Package Setting 中设置 jsoncomma_on_save 为 True 即可::
+
+    {"jsoncomma_on_save": true}
+
+
+Pretty JSON (快捷键将 Json 格式化)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Homepage: https://packagecontrol.io/packages/Pretty%20JSON
+
+快捷键:
+
+- Windows: ctrl+alt+j
+- OS X: cmd+ctrl+j
+- Linux: ctrl+alt+j
+
+
+Json Key Value (让 Key Value 的颜色分开)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Homepage: https://packagecontrol.io/packages/JSON%20Key-Value
+
+
 Command Line
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Batch (Windows), Bash (MacOS), Shell Script (Linux)

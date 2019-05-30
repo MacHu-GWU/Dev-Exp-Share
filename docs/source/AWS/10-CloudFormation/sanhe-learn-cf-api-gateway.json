@@ -1,0 +1,64 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+    },
+    "Resources": {
+        "ApiGatewayRestApiSkymapMPL": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Name": "skymap-mpl",
+                "Description": "the skymap migration library api",
+                "Parameters": {
+                    "endpointConfigurationTypes": "REGIONAL"
+                }
+            },
+            "Metadata": {
+                "RandomStringToUpdateStack": "girNU^gMYYor"
+            }
+        },
+        "ApiGatewayResourceMPL": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "ApiGatewayRestApiSkymapMPL"
+                },
+                "ParentId": {
+                    "Fn::GetAtt": ["ApiGatewayRestApiSkymapMPL", "RootResourceId"]
+                },
+                "PathPart": "mpl"
+            },
+            "Metadata": {
+                "Comment": "/mpl doesn't have parent resource"
+            },
+            "DependsOn": [
+                "ApiGatewayRestApiSkymapMPL"
+            ]
+        },
+        "ApiGatewayMethodMPLGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "GET",
+                "Integration" : {
+                    "Type" : "AWS",
+                    "Uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:674896776027:function:skymap-mpl-dev-http_get_all_mpl_id_title/invocations",
+                    "IntegrationHttpMethod": "GET"
+                },
+                "OperationName" : "ListMPL",
+                "ResourceId" : {
+                    "Ref": "ApiGatewayResourceMPL"
+                },
+                "RestApiId": {
+                    "Ref": "ApiGatewayRestApiSkymapMPL"
+                }
+            },
+            "Metadata": {
+                "Example": "requests.get('https//<endpoint>/mpl')",
+                "Comment": "Get list of the mpl document id and title"
+            },
+            "DependsOn": [
+                "ApiGatewayResourceMPL"
+            ]
+        }
+    }
+}

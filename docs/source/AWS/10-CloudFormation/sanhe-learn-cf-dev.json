@@ -1,0 +1,48 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "6a817621-e196-44ca-a673-0c9ca28156db": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 80,
+                    "y": 50
+                },
+                "z": 0
+            }
+        }
+    },
+    "Resources": {
+        "bjoiqhweofk": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": "skymap-sandbox-sanhe-learn-cf-dev",
+                "Tags": [
+                    {
+                        "Key": "project",
+                        "Value": "sanhe-learn-cf"
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": "dev"
+                    }
+                ],
+                "AccessControl": "Private",
+                "PublicAccessBlockConfiguration": {
+                    "BlockPublicAcls" : true,
+                    "BlockPublicPolicy" : true,
+                    "IgnorePublicAcls" : true,
+                    "RestrictPublicBuckets" : true
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "6a817621-e196-44ca-a673-0c9ca28156db"
+                }
+            }
+        }
+    }
+}

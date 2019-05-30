@@ -1,0 +1,27 @@
+// 用于创建一个不包含任何 Parameter 的 Template 用于实验某一个单独的 Resource 的 Syntax
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "IAMRoleForLambdaBasicExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "learn-cloudformation-test-iam",
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                ]
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@
     <description>Run unittest in this direcotry</description>
     <tabTrigger>testall</tabTrigger>
     <content><![CDATA[
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 if __name__ == "__main__":

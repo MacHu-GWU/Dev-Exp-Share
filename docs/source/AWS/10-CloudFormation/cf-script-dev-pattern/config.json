@@ -1,0 +1,8 @@
+{
+    "ServiceName": "my-service",
+    "Stage": "dev",
+    "StackName": "my-service-dev",
+    "AWSAccountAlias": "skymap-sandbox",
+    "ResourceNamePrefix": "my-service-dev",
+    "S3BucketPrefix": "skymap-sandbox-my-service-dev"
+}

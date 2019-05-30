@@ -1,0 +1,47 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {},
+    "Parameters": {
+        "ServiceName": {
+            "Type": "String",
+            "Description": "Specify your service name."
+        },
+        "Stage": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "StackName": {
+            "Type": "String",
+            "Description": "The main stack name."
+        },
+        "AWSAccountAlias": {
+            "Type": "String",
+            "Description": "Specify your stage."
+        },
+        "ResourceNamePrefix": {
+            "Type": "String",
+            "Description": "A prefix used in all aws resource name as prefix."
+        },
+        "S3BucketPrefix": {
+            "Type": "String",
+            "Description": "A prefix used for s3 bucket used by this stack, since s3 is a global service, the aws account alias is appended left."
+        }
+    },
+    "Resources": {
+        "DestinationBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Fn::Sub": [
+                        "${S3BucketPrefix}-destination",
+                        {
+                            "S3BucketPrefix": {
+                                "Ref": "S3BucketPrefix"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
