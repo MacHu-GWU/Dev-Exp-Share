@@ -3,22 +3,33 @@
 Compare Solutions for Checkout Additional Repo in CI/CD
 ==============================================================================
 
+In many cases, you **need** the content of **another private repository to test the current repository**. For example, **your main repository is a public repo, but you need a secret config file from a private repository, how do you securely setup your CI/CD environment**?
+
 Assume:
 
-- your github organization account = MyORG
+- your github organization account = ``MyORG``
 
 Goal:
 
-1. Securely Checkout source code of additional repository with proper access (Read only preferred).
-2. The access method our CICD used should not be able to read / write other repository.
+1. Your main repo’s CI/CD environment should be able to check out the private repo.
+2. Anyone who has access to the public repo should not able to access anything from the private repo.
 
 
 Solution 1 (Recommended)
 ------------------------------------------------------------------------------
 
-1. sign up a github account for Enquizit, let's say, username = MyORG-Machine
-2. create an personal oauth access token (Account Settings -> Developer Settings) with full access of everything in MyORG-Machine
-3. MyORG-Machine as collaborator to the repo we need machine user access, and only grant MyORG-Machine read only access to that repo.
+Create a separate GitHub account as a Machine User, add this Machine User as a collaborator to the private repo you need to access to, and use the Machine User’s personal access token to check out the private repo in your CI/CD system.
+
+1. Sign up a Machine User Github account, let's say, username = ``MyORG-Machine``
+2. Create a personal OAuth access token (Account Settings -> Developer Settings) with full access of everything in MyORG-Machine
+3. Add MyORG-Machine as a collaborator to the private, and only grant MyORG-Machine read-only access to that repo.
+
+Code::
+
+    # check out your main repo
+    $ git clone "https://github.com/MyOrg/main-project.git"
+    # check out your private repo
+    $ git clone "https://${TOKEN}@github.com/MyOrg/main-project.git"
 
 Pro:
 
@@ -37,15 +48,15 @@ Reference:
 Solution 2 (We have to trust 3rd party CICD)
 ------------------------------------------------------------------------------
 
-1. Grant CICD GitHub User Key (in CircleCI, it is at ``project settings`` -> ``Checkout SSH Keys`` -> ``Authorize with GitHub```.
+You can grant CI/CD GitHub User Key of your GitHub account (in CircleCI, it is at ``Project settings`` -> ``Checkout SSH Keys`` -> ``Authorize with GitHub```. In other words, you grant your CI/CD system equivalent power as your GitHub Account.
 
 Pro:
 
-- convenient and fast.
+- Convenient and fast.
 
 Con:
 
-- It grants CICD system admin access to your GitHub Repo.
+- If your CI/CD environment been hacked, then the hacker can do everything you can do.
 
 Reference:
 
@@ -55,8 +66,8 @@ Reference:
 Solution 3 (Too much work)
 ------------------------------------------------------------------------------
 
-1. manually create a ssh key pair, paste the public key to ``Repository Setting`` -> ``Deploy Key`` -> ``Add new Key``.
-2. use a hacky way to include the private key into CICD system, put it at ``$HOME/.ssh.id_rsa_deploy_key`` or specify that key for ``git clone`` command.
+1. Manually create a ssh key pair, paste the public key to ``Repository Setting`` -> ``Deploy Key`` -> ``Add new Key``.
+2. Use a hacky way to include the private key into CICD system, put it at ``$HOME/.ssh.id_rsa_deploy_key`` or specify that key for ``git clone`` command.
 
 Reference:
 
@@ -89,4 +100,3 @@ Con:
 Reference:
 
 - Create Public Key via Github API: https://developer.github.com/v3/users/keys/#create-a-public-key
-

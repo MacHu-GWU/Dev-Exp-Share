@@ -1,3 +1,23 @@
+
+Connect to DynamoDB
+------------------------------------------------------------------------------
+
+- DynamoDB 不像 Relational Database 那样, 使用 Host, Port, Database, Username, Password 连接到数据库,
+- DynamoDB 是 Stateless 的, 不存在连接的概念, 完全使用 Https Request.
+- DynamoDB 使用 IAM Role, 然后创建 DynamoDB Boto3 Client 用于 API Call.
+    - 如果你想从本地机器上连接 DynamoDB: AWS User Profile
+    - 从 EC2 上: IAM role, ``boto3.client("dynamodb")``
+    - 从 Lambda 上: IAM role, ``boto3.client("dynamodb")``
+
+
+DynamoDB CRUD
+------------------------------------------------------------------------------
+
+- DynamoDB 使用 boto3 client 通过 API 进行 CRUD
+- API
+
+
+
 DynamoDB 有三种查询模式:
 
 1. get item: 直接定位到某一条记录, 只支持 primary key 列的查询.
