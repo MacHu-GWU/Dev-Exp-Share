@@ -1,0 +1,7 @@
+{
+    "ENVIRONMENT_NAME": "my-service-dev",
+    "NAMING_PREFIX": "my-service-dev",
+    "SERVICE_NAME": "my_service",
+    "SERVICE_NAME_SLUG": "my-service",
+    "STAGE": "dev"
+}
