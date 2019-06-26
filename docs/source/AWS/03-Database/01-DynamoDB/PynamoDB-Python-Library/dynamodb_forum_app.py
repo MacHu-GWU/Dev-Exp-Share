@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-
-"""
-
-import boto3
-from pprint import pprint
-
 import os
 import random
 from datetime import datetime

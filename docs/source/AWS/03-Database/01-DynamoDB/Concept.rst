@@ -41,3 +41,4 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-q
 Query 只能通过 Sort Key 进行查询, 只返回部分结果, 相当于 SQL 中的 WHERE 操作.
 
 Scan 则是强制扫描整个表, 然后用 filters 选择返回部分结果, 相当于你在客户端程序中返回了所有数据, 然后编程筛选数据. 性能开销大. 相当于 Select *, 然后再客户端中实现 if ... then ...
+
