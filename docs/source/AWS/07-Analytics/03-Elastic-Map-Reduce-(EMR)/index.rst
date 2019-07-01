@@ -61,4 +61,3 @@ EMR IAM roles
 - Be default, EMRFS uses the IAM role attached to the cluster to access to S3
 - EMR can be configured with a role that allows it to automatically scale to meet demand
 
-
