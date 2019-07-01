@@ -14,7 +14,7 @@ t_users = sa.Table(
 t_posts = sa.Table(
     "posts", metadata,
     sa.Column("post_id", sa.Integer),
-    sa.Column("comment_id", sa.)
+    sa.Column("comment_id", sa.Integer)
 )
 
 

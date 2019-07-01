@@ -1,0 +1,917 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "Description": "This VPC Stack creates a secure, and widely applicable virtual network for your micro service application. It includes 1 VPC, 1 Public Subnet with an Internet Gateway and a Nat Gateway. It also includes 3 Private Subnet across 3 Availability Zone for high availability. It also creates two route table, one for public subnet route Outbound traffic to the Internet Gateway, another one for private subnet, route Outbound traffic to the Nat Gateway associated with an Elastic IP Address. And all the Public and Private are associated with corresponding Route Table. For security reason, AWS recommend that DO NOT use default route table, and leave it doing-nothing as it is. And explicitly associate your subnet with your route table. This stack comes with two security group, one for SSH connection to EC2 on public subnet, another one for Postgres RDS connection from VPC to RDS on private subnet."
+    },
+    "Parameters": {
+        "EnvironmentName": {
+            "Type": "String",
+            "Description": "An environment name that will be prefixed to resource names"
+        },
+        "ServiceName": {
+            "Type": "String",
+            "Description": "The name of this micro service"
+        },
+        "Stage": {
+            "Type": "String",
+            "Description": "the stage of this environment, one of dev, test, stage, qa, prod"
+        },
+        "VpcCIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "SubnetPublic1CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        },
+        "SubnetPublic2CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        },
+        "SubnetPublic3CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        },
+        "SubnetPrivate1CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        },
+        "SubnetPrivate2CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        },
+        "SubnetPrivate3CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this Subnets"
+        }
+    },
+    "Resources": {
+        "VPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "VpcCIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    }
+                ]
+            }
+        },
+        "SubnetPublic1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPublic1CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "0",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/public1",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SubnetPublic2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPublic2CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "1",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/public2",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SubnetPublic3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPublic3CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "2",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/public3",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SubnetPrivate1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPrivate1CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "0",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/private1",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SubnetPrivate2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPrivate2CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "1",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/private2",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SubnetPrivate3": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": {
+                    "Ref": "SubnetPrivate3CIDR"
+                },
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        "2",
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/subnet/private3",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "InternetGateway": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/igw",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "VPCInternetgGatewayAttachment": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "DependsOn": [
+                "VPC",
+                "InternetGateway"
+            ]
+        },
+        "EIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "vpc"
+            },
+            "DependsOn": [
+                "VPCInternetgGatewayAttachment"
+            ]
+        },
+        "NatGateway": {
+            "Type": "AWS::EC2::NatGateway",
+            "Properties": {
+                "AllocationId": {
+                    "Fn::GetAtt": [
+                        "EIP",
+                        "AllocationId"
+                    ]
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPublic1"
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/ngw/public1",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "EIP"
+            ]
+        },
+        "RouteTablePublic": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/route-table/public",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "SubnetPublic1"
+            ]
+        },
+        "RouteTablePublicInternetGateway": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePublic"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePublic"
+            ]
+        },
+        "RouteTableAssociationForPublic1": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePublic"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPublic1"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePublic"
+            ]
+        },
+        "RouteTableAssociationForPublic2": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePublic"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPublic2"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePublic"
+            ]
+        },
+        "RouteTableAssociationForPublic3": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePublic"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPublic3"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePublic"
+            ]
+        },
+        "RouteTablePrivate": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/route-table/private",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "SubnetPrivate1",
+                "SubnetPrivate2",
+                "SubnetPrivate3"
+            ]
+        },
+        "RouteTablePrivateNatGateway": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePrivate"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "NatGatewayId": {
+                    "Ref": "NatGateway"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePublic"
+            ]
+        },
+        "RouteTableAssociationForPrivate1": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePrivate"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPrivate1"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePrivate"
+            ]
+        },
+        "RouteTableAssociationForPrivate2": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePrivate"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPrivate2"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePrivate"
+            ]
+        },
+        "RouteTableAssociationForPrivate3": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTablePrivate"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetPrivate3"
+                }
+            },
+            "DependsOn": [
+                "RouteTablePrivate"
+            ]
+        },
+        "SGForSSH": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Description": "Allow SSH in connection",
+            "Properties": {
+                "GroupDescription": "Only allow ssh in",
+                "GroupName": {
+                    "Fn::Sub": [
+                        "${EnvironmentName}/sg/for-ssh-from-anywhere",
+                        {
+                            "EnvironmentName": {
+                                "Ref": "EnvironmentName"
+                            }
+                        }
+                    ]
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/sg/for-ssh-from-anywhere",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SGForPostgresRDS": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Description": "Allow This Security Group to talk to any traffic from it self",
+            "Properties": {
+                "GroupDescription": "Allow This Security Group to talk to any traffic from it self",
+                "GroupName": {
+                    "Fn::Sub": [
+                        "${EnvironmentName}/sg/for-postgres-rds-from-self",
+                        {
+                            "EnvironmentName": {
+                                "Ref": "EnvironmentName"
+                            }
+                        }
+                    ]
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "env",
+                        "Value": {
+                            "Ref": "EnvironmentName"
+                        }
+                    },
+                    {
+                        "Key": "stage",
+                        "Value": {
+                            "Ref": "Stage"
+                        }
+                    },
+                    {
+                        "Key": "project",
+                        "Value": {
+                            "Ref": "ServiceName"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": [
+                                "${EnvironmentName}/sg/for-postgres-rds-from-self",
+                                {
+                                    "EnvironmentName": {
+                                        "Ref": "EnvironmentName"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "VPC"
+            ]
+        },
+        "SGForPostgresRDSInGress": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": {
+                    "Ref": "SGForPostgresRDS"
+                },
+                "IpProtocol": "tcp",
+                "FromPort": 5432,
+                "ToPort": 5432,
+                "SourceSecurityGroupId": {
+                    "Ref": "SGForPostgresRDS"
+                }
+            },
+            "DependsOn": [
+                "SGForPostgresRDS"
+            ]
+        }
+    },
+    "Outputs": {
+        "VPCId": {
+            "Value": {
+                "Ref": "VPC"
+            }
+        },
+        "EIPAllocationId": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "EIP",
+                    "AllocationId"
+                ]
+            }
+        },
+        "SubnetPublic1Id": {
+            "Value": {
+                "Ref": "SubnetPublic1"
+            }
+        },
+        "SubnetPublic2Id": {
+            "Value": {
+                "Ref": "SubnetPublic2"
+            }
+        },
+        "SubnetPublic3Id": {
+            "Value": {
+                "Ref": "SubnetPublic3"
+            }
+        },
+        "SubnetPrivate1Id": {
+            "Value": {
+                "Ref": "SubnetPrivate1"
+            }
+        },
+        "SubnetPrivate2Id": {
+            "Value": {
+                "Ref": "SubnetPrivate2"
+            }
+        },
+        "SubnetPrivate3Id": {
+            "Value": {
+                "Ref": "SubnetPrivate3"
+            }
+        },
+        "SGForPostgresRDSId": {
+            "Value": {
+                "Ref": "SGForPostgresRDS"
+            }
+        }
+    }
+}

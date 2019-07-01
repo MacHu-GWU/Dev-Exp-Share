@@ -1,0 +1,90 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {},
+    "Parameters": {
+        "EnvironmentName": {
+            "Type": "String",
+            "Description": "An environment name that will be prefixed to resource names"
+        },
+        "ServiceName": {
+            "Type": "String",
+            "Description": "The name of this micro service"
+        },
+        "Stage": {
+            "Type": "String",
+            "Description": "the stage of this environment, one of dev, test, stage, qa, prod"
+        },
+        "VpcCIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "SubnetPublic1CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "SubnetPrivate1CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "SubnetPrivate2CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "SubnetPrivate3CIDR": {
+            "Type": "String",
+            "Description": "Please enter the IP range (CIDR notation) for this VPC"
+        },
+        "ManualTrigger": {
+            "Type": "String",
+            "Description": "Manually change this value to trigger a cloudformation update",
+            "Default": "yGD85rdGQ^g3"
+        }
+    },
+    "Resources": {
+        "VPCTier": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "./01-vpc-tier.json",
+                "Parameters": {
+                    "EnvironmentName": {
+                        "Ref": "EnvironmentName"
+                    },
+                    "ServiceName": {
+                        "Ref": "ServiceName"
+                    },
+                    "Stage": {
+                        "Ref": "Stage"
+                    },
+                    "VpcCIDR": {
+                        "Ref": "VpcCIDR"
+                    },
+                    "SubnetPublic1CIDR": {
+                        "Ref": "SubnetPublic1CIDR"
+                    },
+                    "SubnetPrivate1CIDR": {
+                        "Ref": "SubnetPrivate1CIDR"
+                    },
+                    "SubnetPrivate2CIDR": {
+                        "Ref": "SubnetPrivate2CIDR"
+                    },
+                    "SubnetPrivate3CIDR": {
+                        "Ref": "SubnetPrivate3CIDR"
+                    }
+                }
+            }
+        },
+        "IamRoleTier": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "./02-iam-tier.json",
+                "Parameters": {
+                    "EnvironmentName": {
+                        "Ref": "EnvironmentName"
+                    }
+                }
+            }
+        }
+    },
+    "Outputs": {
+    }
+}

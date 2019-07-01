@@ -7,3 +7,14 @@ Tor Network
     - ``brew services start tor``
     - ``brew services restart tor``
     - ``brew services stop tor``
+
+
+在爬虫中使用 Tor Network 避免被 Ban IP
+------------------------------------------------------------------------------
+
+Tor Network 是一个在本地运行的服务, 你可以用 requests + pysocks, 将 http get url 发送到 Tor 的端口, Tor 会将你的请求经过几次路由后由洋葱网络上的朋友发出, 然后再将结果转发给你. **洋葱网络不适合需要登录的爬虫**.
+
+相关的 Python 库
+
+- requests + pysocks
+- scrapy + pysocks

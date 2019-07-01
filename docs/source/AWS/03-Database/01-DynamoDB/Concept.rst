@@ -1,9 +1,10 @@
 DynamoDB 重要概念
-================
+==============================================================================
+
 
 
 Primary Key
------------
+------------------------------------------------------------------------------
 DynamoDB 支持两种 Primary Keys:
 
 1. Partition Key
@@ -16,7 +17,7 @@ Primary Key 在当 Table 被创建后不能被更改.
 
 
 Secondary Index
----------------
+------------------------------------------------------------------------------
 
 reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-indexes-general.html
 
@@ -30,3 +31,14 @@ reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-i
 - Local Secondary Indexes (LSI): 就是用原来的 Partition Key, 但是用不同的 Attribute 做 Sort Key. 以供特殊的查询模式.
     - 与 Table 共用 Partition 的 RCU/WCU
     - 在 Table 创建后不能更改
+
+
+Query vs Scan
+------------------------------------------------------------------------------
+
+Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-query-scan.html
+
+Query 只能通过 Sort Key 进行查询, 只返回部分结果, 相当于 SQL 中的 WHERE 操作.
+
+Scan 则是强制扫描整个表, 然后用 filters 选择返回部分结果, 相当于你在客户端程序中返回了所有数据, 然后编程筛选数据. 性能开销大. 相当于 Select *, 然后再客户端中实现 if ... then ...
+

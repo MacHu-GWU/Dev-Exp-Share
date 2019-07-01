@@ -1,2 +1,70 @@
-pathlib_mate    # autopep8 your code
 twine>=1.5.0    # make distribution archive
+
+boto3
+
+# RDS
+SQLAlchemy==1.3.3
+sqlalchemy_mate==0.0.10
+
+psycopg2-binary==2.8.2
+mysql-connector-python==8.0.16
+
+# MongoDB
+pymongo==3.8.0
+mongoengine==0.17.0
+pymongo_mate==0.0.4
+mongoengine_mate==0.0.3
+
+# redis
+redis==3.2.1
+
+# class writing, data validation
+attrs==19.1.0
+attrs_mate==0.0.4
+marshmallow==2.19.2
+attrsmallow==0.0.1
+
+# file system
+pathlib_mate==0.0.15
+
+constant2==0.0.13
+invsearch==0.0.2
+
+# s3
+s3iotools==0.0.3
+pyarrow==0.13.0
+
+# aws
+pysecret==0.0.3
+
+requests==2.21.0
+beautifulsoup4==4.7.1
+
+pynamodb==3.4.0
+
+
+# date time
+rolex==0.0.8
+python-dateutil==2.8.0
+
+# misc
+compress==0.0.2
+loggerFactory==0.0.5
+sfm==0.0.17
+
+# common data transfer format
+superjson==0.0.13
+PyYAML==5.1
+
+# fuzzy string match
+fuzzywuzzy==0.17.0
+python-Levenshtein==0.12.0
+
+# data manipulate
+numpy==1.14.2
+pandas==0.19.2
+pandas_mate==0.0.3
+
+# excel read / write
+xlrd==1.2.0
+openpyxl==2.6.2

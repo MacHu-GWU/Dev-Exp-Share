@@ -1,0 +1,140 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "Description": "This IAM Stack creates related Customer Managed Policy and IAM Role for use (Primarily Lambda)."
+    },
+    "Parameters": {
+        "EnvironmentName": {
+            "Type": "String",
+            "Description": "An environment name that will be prefixed to resource names"
+        }
+    },
+    "Resources": {
+        "SecretManagerReadOnlyAccess": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Description": "We need lambda to read db connection information from secret manager, but AWS only has built-in ``SecretsManagerReadWrite``, and we don't want to grant lambda write access to secret manager.",
+            "Properties": {
+                "ManagedPolicyName": {
+                    "Fn::Sub": [
+                        "${EnvironmentName}-secret-manager-read-only-access",
+                        {
+                            "EnvironmentName": {
+                                "Ref": "EnvironmentName"
+                            }
+                        }
+                    ]
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "VisualEditor0",
+                            "Effect": "Allow",
+                            "Action": [
+                                "secretsmanager:GetRandomPassword",
+                                "secretsmanager:GetResourcePolicy",
+                                "secretsmanager:GetSecretValue",
+                                "secretsmanager:DescribeSecret",
+                                "secretsmanager:ListSecretVersionIds"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "LambdaRoleForDBQuery": {
+            "Type": "AWS::IAM::Role",
+            "Description": "This IAM role to allow lambda to run sql on RDS, both lambda and RDS are deployed on Private Subnet",
+            "Properties": {
+                "RoleName": {
+                    "Fn::Sub": [
+                        "${EnvironmentName}-lambda-run-rds-sql",
+                        {
+                            "ResourceNamePrefix": {
+                                "Ref": "EnvironmentName"
+                            }
+                        }
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
+                    {
+                        "Ref": "SecretManagerReadOnlyAccess"
+                    }
+                ]
+            },
+            "DependsOn": [
+                "SecretManagerReadOnlyAccess"
+            ]
+        },
+        "LambdaRoleForLoadDataToRDS": {
+            "Type": "AWS::IAM::Role",
+            "Description": "This IAM role to allow lambda to read MPL artcile source data from s3, and insert them into RDS, both lambda and RDS are deployed on Private Subnet",
+            "Properties": {
+                "RoleName": {
+                    "Fn::Sub": [
+                        "${EnvironmentName}-lambda-load-data-to-rds",
+                        {
+                            "ResourceNamePrefix": {
+                                "Ref": "EnvironmentName"
+                            }
+                        }
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
+                    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+                    {
+                        "Ref": "SecretManagerReadOnlyAccess"
+                    }
+                ]
+            },
+            "DependsOn": [
+                "SecretManagerReadOnlyAccess"
+            ]
+        }
+    },
+    "Outputs": {
+        "LambdaRoleForDBQueryARN": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LambdaRoleForDBQuery",
+                    "Arn"
+                ]
+            }
+        },
+        "LambdaRoleForLoadDataToRDSARN": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LambdaRoleForLoadDataToRDS",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}

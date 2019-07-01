@@ -7,7 +7,6 @@
 
 我们希望每完成一个 child stack 时, 我们可以
 
-
 - 传入的 parameters 必须要在 template 中进行声明
 - template 中声明过的 parameters 没有被用到并没有关系
 """
