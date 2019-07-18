@@ -16,3 +16,8 @@ Reference: https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.h
 - All: 每个 Node 的第一个 Slice 上都有该 Table 的一个副本. 常用于很小的表, 并且频繁被 Join 的表. 比如 Tag(tag_id, tag_name). 总共也不过 1000 个 Tag, 而 TagName 很长, 在其他表中你只储存 Id, 而你的查询结果中要使用 TagName.
 
 Example: https://docs.aws.amazon.com/redshift/latest/dg/c_Distribution_examples.html
+
+划重点:
+
+- 如果不指定 Distribution Style, 则默认使用 Auto.
+- 你可以使用 Alter Table 在创建表之后更改 Distribution Style.

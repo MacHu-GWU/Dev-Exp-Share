@@ -1,6 +1,9 @@
 Elastic Map Reduce (EMR)
 ==============================================================================
 
+.. contents::
+    :local:
+
 EMR 是对 Hadoop, HDFS, Hive 的一个封装, 让用户无需管理 Hadoop 所需要的资源, 而专注于实现业务逻辑.
 
 Hadoop 的相关概念:
@@ -21,13 +24,13 @@ Transient vs Long-running cluster. 每次任务完成后关闭所有实例. 每�
     - Leader Node (**Master Node**)
         - Manages the Cluster by coodinating the distribution of data and task
         - Track status of tasks
-        - Every cluster has leader node
+        - Every cluster has leader node (每个 Cluster 都必须有 Leader Node)
     - Work Node (**Slave Node**)
         - Core Node
-            - store data in the HDFS of the cluster
+            - store data in the HDFS of the cluster (存数据)
             - multi-node clusters have at least one work node
         - Task Node (Compute Node), 通常使用 Spot Instance
-            - does not store data
+            - does not store data (不存数据)
 
 
 EMR Cluster Lifecycle
@@ -65,7 +68,6 @@ EMR IAM roles:
 EMR Architect
 ------------------------------------------------------------------------------
 
-
 Storage:
     - Hadoop Distributed File System (HDFS):
     - EMR File System (EMRFS): 其实就是使用 S3 作为 File System, 主要用来保存 input, ouput, intermediate results
@@ -80,4 +82,6 @@ Applications and Programs
     - Hive: data warehouse software, Data Define Language.
     - Pig: Apache Pig is a high-level platform for creating programs that run on Apache Hadoop. The language for this platform is called Pig Latin. Pig can execute its Hadoop jobs in MapReduce, Apache Tez, or Apache Spark.
     - Spark Streaming Library:
+
+
 

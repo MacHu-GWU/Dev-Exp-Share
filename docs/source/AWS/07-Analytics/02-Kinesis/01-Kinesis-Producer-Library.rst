@@ -1,6 +1,12 @@
 KPL (Kinesis Producer Library)
 ===============================================================================
 
+Reference:
+
+- https://docs.aws.amazon.com/streams/latest/dev/developing-producers-with-kpl.html
+
+KPL 本质上是编程语言实现的客户端SDK程序 (目前只有 Java), 能让用户更容易的编写 Producer 程序.
+
 
 Advantages of Using KPL over AWS SDK (Put Record)
 -------------------------------------------------------------------------------

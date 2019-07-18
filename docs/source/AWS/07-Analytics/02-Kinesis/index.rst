@@ -17,7 +17,9 @@ Reference: https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html
     - Consumer
 - Kinesis Firehose (Delivery Stream):
 - Kinesis Analytics: 每隔一段时间, 对近期 Stream 中的数据用 SQL 进行分析, 然后将结果汇总, 传给 Destination, 可以是 Kinesis Stream, Firehose, Lambda.
-
+- Kinesis Video Stream:
+- KPL (Kinesis Producer Library):
+- KCL (Kinesis Consumer Library):
 
 
 FAQ
@@ -80,3 +82,12 @@ KPL 是一个 SDK 开发者工具, 相比 AWS SDK 里的 Kinesis PutRecord 命�
 - Async PutRecord: 异步, 提高性能.
 - Collection: 将多个 Record 打入 Buffer.
 - Aggregation / Batch: 将多个 Record 进行 Aggregation, 然后一起发送. 将收到的批量 Record 批量 Batch 处理.
+
+
+Kinesis Data Analytics for SQL Application
+------------------------------------------------------------------------------
+
+Docs: https://docs.aws.amazon.com/kinesisanalytics/latest/dev/what-is.html
+
+Kinesis Data Analytics 是一个将 Stream 中的数据直接对接给 SQL Application 的服务, 用实时数据处理数据, 然后返回结果.
+

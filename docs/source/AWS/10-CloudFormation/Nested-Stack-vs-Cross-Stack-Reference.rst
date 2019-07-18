@@ -68,7 +68,7 @@ Master Stack, 有很多其他参数, 99-master.json:
 Cross Reference 模式
 ------------------------------------------------------------------------------
 
-在这种模式中, 多个 Stack 之间的 Dependence 和 先后顺序是由开发者自己管理的.
+在这种模式中, 多个 Stack 之间的 Dependence 和 先后顺序是由开发者自己管理的. 这个 Export Name 的引用是全局有效的, 也就是说整个 AWS Account 下的 Stack2 要想读取 Stack1 里的 ExportName, 无需知道 Stack1 的名字, 只要 ExportName 对就 OK. 所以这个 ExportName 最好要使用 StackName 或 EnvironmentName 作为前缀.
 
 Stack1, 先被部署, ``BucketNameInExport`` 是 Exported Output::
 
