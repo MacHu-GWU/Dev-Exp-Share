@@ -1,0 +1,9 @@
+AWS Advance - Cloudformation Pro Resource Dependencies
+==============================================================================
+
+在逻辑上, 一个 Resource A 依赖另一个 Resource B 是指:
+
+- A 的设置中, 需要引用 B 的设置. 此时在 Resource Declaration 上, A 直接的依赖 B.
+- 在使用 A 的时候, 同时也需要使用 B. 此时在 Declaration 上, A 可以不依赖 B, 但是在使用上 A 依赖 B.
+
+比如, EC2 依赖 VPC. Lambda Function 依赖 IAM Role.

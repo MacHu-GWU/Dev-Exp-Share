@@ -15,10 +15,6 @@ Method:
 - Load Test: Gradually increase load, monitor KPI
 - Stress Test: high load, running for long period of time
 
-Simulate Prod Environment:
-
-- Internet
-
 Reference:
 
 - 负载测试、压力测试和性能测试的异同: https://blog.csdn.net/kerryzhu/article/details/3515714

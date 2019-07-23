@@ -25,4 +25,5 @@ IAM Role Name
 
 S3 Bucket
 ---------
-S3 Bucket Name:
+
+- S3 Bucket Name: 由于 S3 是全球通用的服务, 不同账号下同名字的 bucket name 会冲突, 所以我们最好使用 Account ID (12位数字) 或 Account Alias 作为 Bucket Name 的前缀.

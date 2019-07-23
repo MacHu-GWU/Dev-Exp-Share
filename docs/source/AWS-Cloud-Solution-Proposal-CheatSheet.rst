@@ -1,5 +1,0 @@
-- What strategy should NOAA consider to integrate software engineers into a traditionally scientific environment comfortably and efficiently? 对于软件工程师来说, 如何将系统 轻松地 和 有效率地 迁徙到 云的环境中?
-    - Software Architect:
-    - System Admin:
-    - Database Admin:
-    - Developers:

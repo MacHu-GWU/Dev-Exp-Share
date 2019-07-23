@@ -1,0 +1,37 @@
+AWS Advance - Cloudformation Pro Foreword
+==============================================================================
+
+- 作者: Sanhe Hu
+- 声明: 转载请注明出处
+
+最近的工作上频繁的需要部署大量的 AWS Resource, EC2, RDS, Container 什么的. 自然而然的就需要使用 Infrastructure as Code (IAC) 技术. 在 IAC 这个领域, 各个云提供商有各自独特的实现. 例如: Amazon Web Service 有 `Cloudformation <https://aws.amazon.com/cloudformation/>`_, Google Cloud Platform 有  `许多开源工具 <https://cloud.google.com/solutions/infrastructure-as-code/#cards>`_, Microsoft Azure 有 `Azure Resource Manager<https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview>`_. 开源社区第一的 IAC 项目 `Terraform <https://www.terraform.io/>`_ 实现了许多 Cloud Vendor 的 IAC. **那么我们要如何选择 IAC 工具呢?**
+
+
+如何选择 IAC 工具
+------------------------------------------------------------------------------
+
+首先要明确的是, 站在工程师 (Engineer) 的立场上, 和企业技术管理 (Tech Lead) 的立场上, 选择 IAC 技术栈的思路是不同的.
+
+作为工程师, 要关注自己的职业规划, 自然希望所掌握的技术能够解决更复杂的问题, 用最少的时间做最多的事情. 所以适用于全平台的 Terraform, 就成了很多 DevOps 工程师的选择, 因为学会了这一个技术, 就可以应用到各个不同的云平台上.
+
+而作为企业技术管理, 在能满足项目的 功能性, 可维护性, 可扩展性 的基础上, 尽量降低对 工程师 个人能力的需求. 也就是说, 尽量使用能让没有很多 IAC 经验的工程师, 也能快速上手, 写出稳定的 IAC 代码, 减少错误率 的技术. 这个就是仁者见仁, 智者见智了.
+
+我目前所在的公司, 只使用 AWS 的服务. 并且 AWS 的原生工具 Cloudformation 并没有引入像 Terraform 中的那些新概念. 而且鉴于 JSON 的流行性, 工程师的学习成本比较低. 所以我们主要采用 Cloudformation + 扩展工具的方式作为公司的技术栈.
+
+这里需要声明一点的是, 想要用一套工具, 或者一套解决方案解决所有的 IAC 问题几乎是不可能的. 尽管市面上有 Terraform 这样的全平台支持的工具, 但是对于具体的项目具体的问题, 你仍然需要进行深入研究才能得到最终的解决方案. 所以本系列选用了目前市场份额最大的 AWS 自带的 CloudFormation 作为我们的主要内容, 研究那些在 IAC 的项目中, 会遇到的普遍问题, 以及解决方案.
+
+
+Cloudformation Pro 系列讨论了什么问题
+------------------------------------------------------------------------------
+
+1. 管理 Resource 之间的依赖关系 (Dependencies).
+2. 同一套架构, 部署到不同环境中, dev/test/prod (Multi Environment Deployment).
+3. 跨环境的 Resource 之间的依赖关系 (Cross Environment Dependencies).
+4. 将架构设计参数化 (Parameterize the Architect Design).
+5. 减少重复工作, 批量定义多个同类型的 Resource.
+6. IAC 编排 (Orchestration).
+7. 自动化部署 (CI/CD).
+8. 代码复用.
+9. 其他
+
+好了, 下面, 我们开始.
