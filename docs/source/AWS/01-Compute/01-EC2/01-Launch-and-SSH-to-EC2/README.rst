@@ -5,8 +5,8 @@ Connect via SSH
 
     $ ssh -i {path-to-your-pem-file} {username}@{ip-address}
 
-- ``path-to-your-pem-file``:
-- ``username``: the operation system username account. By default it is ``ec2-user``. It is not your IAM username!
+- ``path-to-your-pem-file``: it is where you store your EC2 SSH Key Pair ``.pem`` file, usually, you should put it at ``${HOME}/ec2-pem/<key-pair-name.pem``
+- ``username``: the operation system username account. By default, if it is Amazon Linux, it is ``ec2-user``. If it is ubuntu, it is ``ubuntu``. It is not your IAM username!
 - ``ip-address``: For EC2 on public subnet, public IPV4 address, can be found at your EC2 instances dashboard. For EC2 on private subnet, it is private IPV4 address.
 
 Reference:
@@ -41,6 +41,5 @@ Reference:
 
 chmod 400 ~/ec2-pem/ec2-lambda-deploy.pem
 ssh -i ~/ec2-pem/ec2-lambda-deploy.pem ec2-user@35.168.23.253
-ssh -i ~/ec2-pem/eqtest-sanhe.pem ec2-user@35.168.23.253
 
 psql -h skymap-mpl-dev.cpe3safxwk8b.us-east-1.rds.amazonaws.com -d mpl -U skymap -e STZCXE!3u1c7
