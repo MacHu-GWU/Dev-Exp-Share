@@ -3,16 +3,12 @@ Service Catalog Docs
 
 简单来说, Service Catalog 就是允许不懂 CloudFormation 的人, 从一个较为友好的界面运行 CloudFormation Template.
 
+- Product (产品): 一个 CloudFormation Template, 包含 Parameter Output.
+- Protfolio (投资组合): 由许多 Product 组成.
 
+权限管理:
 
-Hi Arun,
-
-My three major personal goal in 2019 on BambooHr are:
-
-1. Training / self-improvement: AWS Solutions Architect, AWS ML Speciality or Big Data Speciality
-2. Solution Proposal Skills: Be capable of proposing Software / AWS Cloud / Machine learning solution for Business Problem
-3. Technique Lead Skills: Be capable of leading a technical team to propose software architecture, manage / training developers, continuously deliver a durable and high-quality software product.
-
-I think #1 is finished, I passed the SA and Big Data Certs. And in FIDC and the upcoming Lockheed's service catalog
-
-I am expecting to take
+- Home Page: https://aws.amazon.com/servicecatalog/resources/?nc=sn&loc=5
+- Admin Guide: https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html
+- Developer Guide: https://docs.aws.amazon.com/servicecatalog/latest/dg/what-is-service-catalog.html
+- User Guide: https://docs.aws.amazon.com/servicecatalog/latest/userguide/end-user-console.html
