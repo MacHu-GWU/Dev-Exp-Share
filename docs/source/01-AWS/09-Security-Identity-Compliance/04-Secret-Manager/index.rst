@@ -29,3 +29,27 @@ Secret Manager 通常跟 :ref:`KMS <aws-kms>` 结合使用. KMS 储存的是加�
     username = data["username"]
     password = data["password"]
     ...
+
+
+Required IAM Policy to Access Secret
+------------------------------------------------------------------------------
+
+当你使用 IAM User 或是 IAM Role 访问特定的 Secret 的时候, 你最少需要多少 Policy 呢?
+
+虽然 AWS 提供了 官方的 arn:aws:iam::aws:policy/SecretsManagerReadWrite Policy, 但是这个权限太大了. 我推荐自定义创建一个 IAM Policy, 并且明确指定 Secret Arn. 这样能保证这个 Policy 能且只能访问我们指定的 Secret. 虽然 Secret Manager 使用了 KMS 进行加密, 但是从用户角度来说, 不需要 KMS 的权限.
+
+.. code-block:: python
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "VisualEditor0",
+                "Effect": "Allow",
+                "Action": "secretsmanager:GetSecretValue",
+                "Resource": [
+                    "arn:aws:secretsmanager:us-east-1:111122223333:secret:my-example-secret-0f4dFe"
+                ]
+            }
+        ]
+    }
