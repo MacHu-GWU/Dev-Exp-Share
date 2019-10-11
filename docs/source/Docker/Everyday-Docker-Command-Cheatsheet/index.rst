@@ -51,18 +51,18 @@ List containers
       -
     * - List all container, include stopped
       - .. code-block:: bash
-      
+
           docker ps -a
-      
+
       -
     * - Clean all stopped container, release disk
       - .. code-block:: bash
-      
+
           docker container prune
-      
+
       -
     * - Search Running container by name
       - .. code-block:: bash
-      
+
           docker container ls -a -f name=xxx
       -
