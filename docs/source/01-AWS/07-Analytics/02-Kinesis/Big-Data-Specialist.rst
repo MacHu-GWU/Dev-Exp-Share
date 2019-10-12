@@ -41,7 +41,7 @@ Behavior before and after Reshard
 - 在 Split Shard 中, 则那个被 Split 的 Shard 就是 Parent Shard
 - 在 Merge Shard 中, 则两个被 Merge 的 Shard 都是 Parent Shard
 
-开始执行 Resharding 时候, Parent 处于 Open State, 执行完了之后 Parent 处于 Close State, 当 Parent 过了 Retention Period 之后, 里面的数据已经无法 Accessible 了, 此时出于 Expire State.
+开始执行 Resharding 时候, Parent 处于 Open State, 执行完了之后 Parent 处于 Close State, 当 Parent 过了 Retention Period 之后, 里面的数据已经无法 Accessible 了, 此时处于 Expire State.
 
 执行 Resharding 之后, PutReocrd 到 Parent Shard 的数据会被 Route 到 Child Shard, 而 GetRecord 则会从 Parent 和 Child Shard 上读取数据.
 

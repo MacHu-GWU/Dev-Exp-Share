@@ -76,7 +76,6 @@ Kinesis Firehose Delivery Stream Transform Lambda Function Programming Model
 
 4. 如果一次性处理多个 Record, 最后 Firehose Dump 到 S3 文件时, 多个 Record 之间是以字节码直接拼接的形式 Dump 的. 这里有必要解释一下.
 
-
 下面是一段帮助用户在各种 base64 字节码, 字符串 之间转换的代码
 
 .. code-block:: python
