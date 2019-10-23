@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "firstname": "Obama",
+        "lastname": "Barrack"
+    },
+    {
+        "id": 2,
+        "firstname": "Trump",
+        "lastname": "Donald"
+    }
+]
