@@ -58,7 +58,6 @@ Limit
 
 
 Only-Once Delivery
-------------------
+------------------------------------------------------------------------------
 
-Standard Queue 不能保证 only-once delivery, 但是 FIFO Queue 可以保证.
-
+Standard Queue 不能保证 only-once delivery, 但是 FIFO Queue 可以保证. 所以对于数据库应用, 必须使用 FIFO Queue.
