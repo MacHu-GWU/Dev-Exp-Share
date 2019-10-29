@@ -12,9 +12,9 @@ Concepts:
 
 Load Balancer Types:
 
-- Application Load Balancer: HTTP/HTTPS, 比如 /picture 则送到 图像服务器, /request 则送到 App 服务器
-- Network Load Balancer: TCP/IP, 比如 :80 则送到 图像服务器, :8080 则送到 视频服务器
-- Classic Balancer: TCP/SSL or HTTP/HTTPS, Classic Load Balancers currently require a fixed relationship between the load balancer port and the container instance port.
+- **Application Load Balancer**: HTTP/HTTPS, 比如 /picture 则送到 图像服务器, /request 则送到 App 服务器
+- **Network Load Balancer**: TCP/IP, 比如 :80 则送到 图像服务器, :8080 则送到 视频服务器
+- **Classic Balancer**: TCP/SSL or HTTP/HTTPS, Classic Load Balancer currently require a fixed relationship between the load balancer port and the container instance port.
 
 Reference:
 

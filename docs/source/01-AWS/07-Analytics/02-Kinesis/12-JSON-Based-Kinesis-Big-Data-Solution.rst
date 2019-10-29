@@ -110,6 +110,7 @@ Complex Json Example:
         StreamName="test-stream",
     )
 
+
 3. Firehose Delivery Stream Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Transform Source Records:
