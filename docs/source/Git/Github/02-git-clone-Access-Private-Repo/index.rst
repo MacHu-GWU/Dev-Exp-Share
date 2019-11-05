@@ -42,5 +42,5 @@ git clone Access Private Repo (使用 git 访问私有仓库)
 
 .. code-block:: bash
 
-    export MY_GIT_TOKEN="56d5ec6b578a89f41ec25c523250f832a50a55fb"
+    export MY_GIT_TOKEN="49d788fc4785488a0a9df2d591c0e18d"
     git clone https://${MY_GIT_TOKEN}@github.com/MacHu-GWU/test-private-repo
