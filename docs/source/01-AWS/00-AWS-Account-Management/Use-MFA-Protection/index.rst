@@ -10,7 +10,7 @@ Why MFA
 ------------------------------------------------------------------------------
 
 
-Force User to use MFA even for AWS CLI
+Force User to use MFA for AWS CLI
 ------------------------------------------------------------------------------
 
 Reference:
@@ -31,6 +31,20 @@ How to Setup
     {
         "Version": "2012-10-17",
         "Statement": [
+            {
+                "Sid": "AllowUsersToChangePassword",
+                "Effect": "Allow",
+                "Action": [
+                    "iam:ChangePassword",
+                    "iam:GetAccountPasswordPolicy",
+                    "iam:ListUserPolicies",
+                    "iam:GetLoginProfile",
+                    "iam:UpdateLoginProfile"
+                ],
+                "Resource": [
+                    "arn:aws:iam::111122223333:user/${aws:username}"
+                ]
+            }
             {
                 "Sid": "AllowUsersToCreateDeleteTheirOwnVirtualMFADevices",
                 "Effect": "Allow",
@@ -72,20 +86,6 @@ How to Setup
                 ],
                 "Resource": [
                     "arn:aws:iam::111122223333:user/*"
-                ]
-            },
-            {
-                "Sid": "AllowUsersToChangePassword",
-                "Effect": "Allow",
-                "Action": [
-                    "iam:ChangePassword",
-                    "iam:GetAccountPasswordPolicy",
-                    "iam:ListUserPolicies",
-                    "iam:GetLoginProfile",
-                    "iam:UpdateLoginProfile"
-                ],
-                "Resource": [
-                    "arn:aws:iam::111122223333:user/${aws:username}"
                 ]
             }
         ]
