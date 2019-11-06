@@ -64,6 +64,3 @@ Monitoring Kinesis Video Streams
 
 - Monitoring Kinesis Video Streams Metrics with **CloudWatch**
 - Logging Kinesis Video Streams API Calls with AWS **CloudTrail**
-
-
-
