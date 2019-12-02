@@ -1,2 +1,5 @@
 troposphere_mate==0.0.10
 boto3
+elasticsearch-dsl>=7.0.0,<8.0.0
+requests
+requests-aws4auth
