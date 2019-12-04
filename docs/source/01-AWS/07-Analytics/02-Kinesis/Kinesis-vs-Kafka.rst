@@ -4,7 +4,12 @@ Kinesis vs Kafka
 AWS Kinesis 对标的系统是 Apache Kafka, 两者的共同点有:
 
 1. 都是 Publish / Subscription 模型, Kafka 使用 Broker 做消息订阅广播, Kinesis 使用 Delivery Stream 实现消息订阅广播.
-2. 都是分布式系统,
+2. 都是分布式系统.
+
+两者的不同点:
+
+1. 两者都是分布式系统, 既然是分布式系统就要有一个一致性的中心化配置管理以及负载均衡, 这个中心化配置管理本身也是分布式容错的. Kafka 使用的是 Zookeeper, 而 Kinesis 使用的是 Dyanamodb. Zookeeper 是 Strong consistence 的, 而 Dynamodb 是 eventual consistence 的.
+2. Kafka 性能更好, 不过自己配置起来出错概率更高. Kinesis 性能稍差一点, 但是运维无压力.
 
 
 Comparison
