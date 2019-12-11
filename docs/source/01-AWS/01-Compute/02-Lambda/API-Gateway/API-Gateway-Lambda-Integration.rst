@@ -10,6 +10,7 @@ API Gateway Lambda Integration Guide
 
 **本文主要讨论各种常用的 API Gateway 和 Lambda 相结合使用的方式**
 
+
 几种常用的 Integration 风格
 ------------------------------------------------------------------------------
 

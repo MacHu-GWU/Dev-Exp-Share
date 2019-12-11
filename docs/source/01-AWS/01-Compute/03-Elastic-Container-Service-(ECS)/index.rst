@@ -17,3 +17,5 @@ Launch Type
 Reference:
 
 - Amazon ECS Launch Types: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html
+
+
