@@ -3,3 +3,11 @@ boto3
 elasticsearch-dsl>=7.0.0,<8.0.0
 requests
 requests-aws4auth
+sqlalchemy
+sqlalchemy_mate
+psycopg2-binary
+sfm
+
+# tor network
+pysocks
+stem

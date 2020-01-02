@@ -1,0 +1,3 @@
+- Oracle数据库迁移到AWS云的方案: https://aws.amazon.com/cn/blogs/china/oracle-database-migration/
+- 使用AWS的数据库迁移DMS服务: https://aws.amazon.com/cn/blogs/china/migrating-dms/
+- 如何利用 AWS DMS 轻松迈出数据库上云第一步，看这一篇就够了: https://zhuanlan.zhihu.com/p/47104594
