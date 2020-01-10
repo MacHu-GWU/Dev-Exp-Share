@@ -11,3 +11,6 @@ sfm
 # tor network
 pysocks
 stem
+
+#
+pluggy
