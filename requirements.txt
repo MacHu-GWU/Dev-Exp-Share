@@ -14,3 +14,7 @@ stem
 
 #
 pluggy
+
+# Linux Development Tool
+fabric2
+patchwork
