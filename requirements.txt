@@ -15,6 +15,9 @@ stem
 #
 pluggy
 
+PyPubSub
+python-box
+
 # Linux Development Tool
 fabric2
 patchwork
