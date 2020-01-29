@@ -28,5 +28,6 @@ supported_py_versions="3.6.2" # e.g: "2.7.13 3.6.2"
 
 #--- Doc Build
 rtd_project_name="dev_exp_share"
+s3_bucket_doc_host="a-example-bucket"
 
 

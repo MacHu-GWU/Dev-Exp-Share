@@ -145,9 +145,6 @@ KPL 能做什么:
 - 自动 Retry
 
 
-
-
-
 3种写入的方法比较, Put Record, KPL, Kinesis Agent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -195,10 +192,6 @@ Resharding 重新分片
 开始执行 Resharding 时候, Parent 处于 Open State, 执行完了之后 Parent 处于 Close State, 当 Parent 过了 Retention Period 之后, 里面的数据已经无法 Accessible 了, 此时出于 Expire State.
 
 执行 Resharding 之后, PutReocrd 到 Parent Shard 的数据会被 Route 到 Child Shard, 而 GetRecord 则会从 Parent 和 Child Shard 上读取数据.
-
-
-
-
 
 
 2. Storage - S3

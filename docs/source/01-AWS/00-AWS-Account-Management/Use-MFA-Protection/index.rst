@@ -277,3 +277,4 @@ How to Setup
 How to Use MFA to access AWS CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+简单来说是通过 aws api 输入你的 profile 和 mfa token 获得一个临时的 token, 然后将这个 token 放在你的 .aws/credential 文件中 并为其 创建一个 profile. 这个操作可以自动化.

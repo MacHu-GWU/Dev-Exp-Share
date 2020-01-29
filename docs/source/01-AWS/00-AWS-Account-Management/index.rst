@@ -36,7 +36,7 @@ AWS Account Management
 ------------------------------------------------------------------------------
 
 - Q: 为什么要禁止 IAM User 创建其他 IAM User?
-- A: 因为作为公司, 公司需要管理用户创建 IAM User 的行为, 并使用 IAM User 来追踪用户的使用行为. 如果允许用户自行创建其他的 IAM User, 那么公司就很难追踪这些新创建的 IAM User.
+- A: 因为作为公司, 公司需要管理用户创建 IAM User 的行为, 并使用 IAM User 来追踪用户的使用行为. 如果允许用户自行创建其他的 IAM User, 那么公司就很难追踪这些新创建的 IAM User. 这叫做 preventing cascade creation.
 
 - Q: 如果我需要使用其他的 IAM User 进行测试该怎么做? 我可能需要同时使用 Console 和 Cli. 比如我需要使用一个 Machine User 进行项目的 Deploy, 我需要知道这个 Machine User 所需要的最小权限是什么, 所以我需要一个 IAM User 进行测试.
 - A: 你可以使用 Assume Role 的方式, 创建一个 IAM Role, 用来模拟 IAM User 的权限, 然后在 Console 和 Cli 中 Assume 这个 Role 进行测试.

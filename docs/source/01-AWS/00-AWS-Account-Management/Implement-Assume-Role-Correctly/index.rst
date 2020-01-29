@@ -1,3 +1,5 @@
+.. _aws-implement-assume-role-correctly:
+
 Implement Assume Role Correctly
 ==============================================================================
 

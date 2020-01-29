@@ -1,6 +1,8 @@
 Design Build Deploy Microservices
 ==============================================================================
 
+本文是对 2017 年 Nignx 博客收上发布的 7 篇系列文章的知识做一个汇总和整理.
+
 .. contents::
     :depth:
     :local:
@@ -108,4 +110,3 @@ Micro Serivce Disadvantage:
 - **限制未完成请求的数量 (Limiting the number of outstanding requests)**: 针对一个请求某服务的客户端, 需要设置其未处理请求数量的上限, 一旦超过限制就不再处理任何请求, 这样就做到快速失败.
 - **断路器模式 (Circuit breaker pattern)**: 跟踪成功和失败请求的数量, 如果比率超过了设置的阀值, 打开断路器使得后续请求快速失败. 如果大量请求失败, 就建议服务为不可以状态并决绝处理新请求, 过一段时间之后, 客户端可以再次重试, 一旦成功, 关闭断路器.
 - **提供fallback机制 (Provide fallbacks)**: 请求失败时提供fallback, 比如返回缓存值或者为失败的推荐服务返回默认空集合作为默认值.
-
