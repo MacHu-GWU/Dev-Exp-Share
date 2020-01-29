@@ -111,3 +111,8 @@ info: ## ** Show information about python, pip in this environment
 	bash ./bin/py/info.sh
 
 
+req-info: ## Show requirements information
+	bash ./bin/py/req-info.sh
+
+
+

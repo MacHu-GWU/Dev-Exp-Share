@@ -206,6 +206,21 @@ jinja_contexts = {
     },
 }
 
+# Api Reference Doc
+import docfly
+
+package_name = dev_exp_share.__name__
+docfly.ApiReferenceDoc(
+    conf_file=__file__,
+    package_name=package_name,
+    ignored_package=[
+        "%s.pkg" % package_name,
+        "%s.docs" % package_name,
+        "%s.tests" % package_name,
+    ]
+).fly()
+
+
 def setup(app):
     app.add_stylesheet('css/custom-style.css')
     app.add_javascript('js/sorttable.js')

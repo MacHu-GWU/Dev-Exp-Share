@@ -1,32 +1,25 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 
-dir_here="$( cd "$(dirname "$0")" ; pwd -P )"
+dir_here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 dir_bin="$(dirname "${dir_here}")"
 dir_project_root=$(dirname "${dir_bin}")
 
 source ${dir_bin}/py/python-env.sh
 
-print_colored_line $color_cyan "[DOING] print useful information:"
-if [ -e ${dir_venv} ]; then
-    print_colored_line $color_green "virtualenv is ready to use at: ${dir_venv}"
-else
-    print_colored_line $color_red "virtualenv are NOT found at: ${dir_venv}"
-fi
-
-if [ -z "$(${bin_pip} show ${package_name} | grep "Name:")" ]; then
-    print_colored_line $color_red "${package_name} is NOT installed at: ${dir_venv_site_packages}"
-else
-    print_colored_line $color_green "${package_name} is installed at: ${dir_venv_site_packages}"
-fi
-
-print_colored_ref_line ${color_cyan} "venv" ${dir_venv}
-print_colored_ref_line ${color_cyan} "python executable" ${bin_python}
-print_colored_ref_line ${color_cyan} "pip executable" ${bin_pip}
-print_colored_ref_line ${color_cyan} "site-packages" ${dir_venv_site_packages}
-print_colored_ref_line ${color_cyan} "site-packages64" ${dir_venv_site_packages64}
-print_colored_ref_line ${color_cyan} "local html doc" ${path_sphinx_index_html}
-print_colored_ref_line ${color_cyan} "readme file" ${path_readme}
-print_colored_ref_line ${color_cyan} "versioned doc on s3" ${s3_uri_doc_versioned}
-print_colored_ref_line ${color_cyan} "latest doc on s3" ${s3_uri_doc_latest}
-print_colored_ref_line ${color_cyan} "latest doc on readthedocs.org" ${rtd_url}
+print_colored_line ${color_cyan} "[DOING] print useful information:"
+print_colored_ref_line ${color_light_blue} "venv" $(colored_path ${dir_venv})
+print_colored_ref_line ${color_light_blue} "${package_name} installed at" $(colored_path "${dir_venv_site_packages}/${package_name}")
+print_colored_ref_line ${color_light_blue} "python executable" $(colored_path ${bin_python})
+print_colored_ref_line ${color_light_blue} "pip executable" $(colored_path ${bin_pip})
+print_colored_ref_line ${color_light_blue} "activate venv" "source $(colored_path ${bin_activate})"
+print_colored_ref_line ${color_light_blue} "deactivate venv" "deactivate"
+print_colored_ref_line ${color_light_blue} "site-packages" $(colored_path ${dir_venv_site_packages})
+print_colored_ref_line ${color_light_blue} "site-packages64" $(colored_path ${dir_venv_site_packages64})
+print_colored_ref_line ${color_yellow} "local html doc" $(colored_path ${path_sphinx_index_html})
+print_colored_ref_line ${color_yellow} "latest doc on readthedocs.org" ${rtd_url}
+print_colored_ref_line ${color_yellow} "readthedocs project" ${rtd_project_url}
+print_colored_ref_line ${color_yellow} "latest doc on s3.amazonaws.com" ${s3_doc_url}
+print_colored_ref_line ${color_yellow} "versioned doc on s3" ${s3_uri_doc_versioned}
+print_colored_ref_line ${color_yellow} "latest doc on s3" ${s3_uri_doc_latest}
+print_colored_ref_line ${color_yellow} "readme file" $(colored_path ${path_readme})

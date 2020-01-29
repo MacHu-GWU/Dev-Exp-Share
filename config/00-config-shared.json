@@ -1,0 +1,5 @@
+{
+    "PROJECT_NAME": "dev_exp_share",
+    "AWS_PROFILE_FOR_DOC_DEPLOY": "an-aws-project-name",
+    "S3_BUCKET_FOR_DOC_HOST": "a-s3-bucket-name"
+}
