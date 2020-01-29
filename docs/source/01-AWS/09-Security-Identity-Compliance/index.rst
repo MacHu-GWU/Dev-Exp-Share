@@ -15,3 +15,6 @@ Compliance, 审计, 让第三方监控所有的系统, 所有的操作, 是由�
 - KMS (Key Management Service): 秘钥管理服务, 将你的秘钥托管.
 - Secret Manager: 敏感信息管理服务, 将你的敏感信息用 KMS 加密, 安全的传递给有权限的人使用.
 - Cognito: 用户登录托管服务, 让你的 APP 轻松用上安全, 效率的登录, 以及权限管理功能.
+
+.. autotoctree::
+    :maxdepth: 1
