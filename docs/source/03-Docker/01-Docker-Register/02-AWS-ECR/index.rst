@@ -42,8 +42,26 @@ AWS ECR
 - https://docs.aws.amazon.com/AmazonECR/latest/userguide/registries.html
 
 
-aws ecr get-login --region us-east-1 --no-include-email --profile eq_sanhe
+AWS ECR 大坑之 如何使用 docker 登录 ecr
+------------------------------------------------------------------------------
 
-docker tag sanhe/cicd:awscli-python3.6.8-packer-slim 110330507156.dkr.ecr.us-east-1.amazonaws.com/aws-ls-docker:awscli-python3.6.8-packer-slim
+执行下面的命令获得一个 token 用于登录某个 aws account, 某个 aws region 下的 ecr::
 
-docker push 110330507156.dkr.ecr.us-east-1.amazonaws.com/aws-ls-docker:awscli-python3.6.8-packer-slim
+    aws ecr get-login --region <aws-region> --no-include-email --profile <aws-profile>
+
+该命令会返回一个形如下面这样的字符串::
+
+    docker login -u AWS -p <token-value> https://<aws-account-id>.dkr.ecr.<aws-region>.amazonaws.com.
+
+其中 <token-value> 部分就是验证用的 token. 这个字符串就是登录命令, 可以直接拷贝到命令行中执行. 所以你甚至可以直接使用下面的命令执行它, 免去了复制粘贴的步骤::
+
+    $(aws ecr get-login --region <aws-region> --no-include-email --profile <aws-profile>)
+
+根据 docker login 的文档 -p 命令是不安全的, 会将 token 暴漏在 cli 的命令历史记录中, 官方推荐使用 ``--password-stdin`` 选项传入 token. 所以最终的命令是这样的::
+
+    AWS_REGION="us-east-1"
+    AWS_PROFILE="my-aws-profile"
+    ecr_uri="https://111122223333.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    aws ecr get-login --no-include-email --region ${AWS_REGION} --profile ${AWS_PROFILE} | awk '{printf $6}' | docker login -u AWS ${ecr_uri} --password-stdin
+
+在这之后, ``docker pull`` 或是 ``docker push`` 就会有操作权限了.
