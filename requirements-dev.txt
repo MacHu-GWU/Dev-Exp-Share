@@ -8,6 +8,8 @@ sqlalchemy_mate==0.0.10
 psycopg2-binary==2.8.2
 mysql-connector-python==8.0.16
 
+tabulate
+
 # MongoDB
 pymongo==3.8.0
 mongoengine==0.17.0
@@ -67,3 +69,6 @@ pandas_mate==0.0.3
 # excel read / write
 xlrd==1.2.0
 openpyxl==2.6.2
+
+troposphere_mate==0.0.12
+

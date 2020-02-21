@@ -33,3 +33,76 @@ CircleCI 术语概念列表
 
 - Orb
 - Layer: 是一种
+
+
+
+
+
+
+CircleCI Config YAML 小技巧
+------------------------------------------------------------------------------
+
+
+
+
+Reuse YAML Node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+YAML 支持定义一个 anchors 或者 alias, 然后在其他地方引用之, 以达到重复利用代码的目的.
+
+定义的标记是 ``&``, 引用有两个标记, ``*`` 是指完全拷贝. 而 ``<<: *`` 是指继承并修改一些子节点.
+
+简单来说就是::
+
+    definitions:
+      steps:
+        - step: &build-test
+            name: Build and test
+            script:
+              - mvn package
+            artifacts:
+              - target/**
+
+    pipelines:
+      branches:
+        develop:
+          - step: *build-test
+        master:
+          - step:
+              <<: *build-test
+              name: Testing on Master
+
+
+等价于::
+
+    definitions:
+      steps:
+        - step: &build-test
+            name: Build and test
+            script:
+              - mvn package
+            artifacts:
+              - target/**
+
+    pipelines:
+      branches:
+        develop:
+          - step:
+            name: Build and test
+            script:
+              - mvn package
+            artifacts:
+              - target/**
+        master:
+          - step:
+            name: Testing on Master
+            script:
+              - mvn package
+            artifacts:
+              - target/**
+
+
+参考资料:
+
+- https://confluence.atlassian.com/bitbucket/yaml-anchors-960154027.html
+- https://en.wikipedia.org/wiki/YAML#Advanced_components

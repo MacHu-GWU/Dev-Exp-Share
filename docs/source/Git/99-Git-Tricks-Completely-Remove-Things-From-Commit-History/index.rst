@@ -1,5 +1,7 @@
+.. _completely-remove-things-from-commit-history:
+
 Completely Remove Things From Commit History
-============================================
+==============================================================================
 
 Why? You accidentally checked in:
 
@@ -15,7 +17,7 @@ Solution:
 
 
 Remove File
------------
+------------------------------------------------------------------------------
 
 .. code-block:: bash
 
@@ -36,3 +38,9 @@ Then ``PATH-to-File-to-Delete`` = ``folder1/credential.txt``
 Reference:
 
 - Using filter-branch: https://help.github.com/en/articles/removing-sensitive-data-from-a-repository#using-filter-branch
+
+
+Remove Updates
+------------------------------------------------------------------------------
+
+...
