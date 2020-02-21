@@ -1,6 +1,6 @@
 .. _dist-sys-highly-available-strong-consistent-metadata-store:
 
-Highly Available Strong Consistent Metadata Store
+Highly Available Strong Consistent Metadata Store (高可用强一致的元数据库)
 ==============================================================================
 
 对于分布式系统而言, 多个节点对整个系统的 外部状态 [1]_ 要有一个一致的了解才能协作. 例如在分布式 Map Reduce 集群中, 每个做 Map 的节点要知道处理后的数据发送到哪个 Reduce 的节点上, 那这些节点的 Metadata 就需要有一个一致的中心化的模块进行管理. 而我们知道任何 **单机系统都不可避免的会出现单点故障**, 所以这个 **中心化的模块本身就需要是一个高可用, 强一致, 分布式的服务**.
