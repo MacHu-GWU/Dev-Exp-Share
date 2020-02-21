@@ -1,3 +1,5 @@
+.. _dist-sys-highly-available-strong-consistent-metadata-store:
+
 Highly Available Strong Consistent Metadata Store
 ==============================================================================
 
@@ -64,11 +66,6 @@ ETCD vs Zookeeper
 
 - ETCD: Master / Slave
 - Zookeeper: Leader / Follower / Observer
-
-
-
-
-
 
 
 .. [1] 外部状态是指一个系统以系统的外部使用者的视角来看, 处于的状态.

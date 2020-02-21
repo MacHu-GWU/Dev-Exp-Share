@@ -1,9 +1,9 @@
-.. _node-clustrer-patterns:
+.. _dist-sys-node-cluster-patterns:
 
-Node Cluster Patterns
+Node Cluster Patterns (节点集群模式)
 ==============================================================================
 
-.. contents::
+.. contents:: Table of Content
     :depth: 1
     :local:
 
@@ -26,9 +26,11 @@ Master-Slave 或 Leader-Follower Pattern
 
 Active / Active Pattern
 ------------------------------------------------------------------------------
+
 指所有节点的地位是等价的, 都同时工作, 由负载均衡请求发送给不同的节点处理. 例如 web app 多采用这一模式部署服务器.
 
 
 Active / Standby Pattern
 ------------------------------------------------------------------------------
+
 指只有 Active 的节点在运行提供服务, 而 Standby 只是备用, 当 Active 节点挂掉后 Standby 立刻接管.

@@ -1,7 +1,6 @@
-
 .. _distribution-system:
 
-Distribution System
+Distribution System (分布式系统)
 ==============================================================================
 
 分布式系统在现代软件系统架构中非常重要. 随着软件服务的用户, 流量越来越大, 用户对服务的可用性, 稳定性要求越来越高. 分布式是保证系统的 高可用性 (highly availability), 易扩容性 (scalability) 的核心技术.

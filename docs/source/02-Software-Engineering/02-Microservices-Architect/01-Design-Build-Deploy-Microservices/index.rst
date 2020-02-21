@@ -1,4 +1,6 @@
-Design Build Deploy Microservices
+.. _design-build-deploy-microservices:
+
+Design Build Deploy Microservices (设计, 构建, 部署微服务)
 ==============================================================================
 
 本文是对 2017 年 Nignx 博客收上发布的 7 篇系列文章的知识做一个汇总和整理.

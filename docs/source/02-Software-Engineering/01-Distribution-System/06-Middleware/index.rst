@@ -1,3 +1,5 @@
+.. _dist-sys-middleware:
+
 Distributive System Middleware
 ==============================================================================
 
