@@ -1,6 +1,6 @@
-.. _devops-practice-in-testing:
+.. _devops:
 
-DevOps Practice in Testing
+DevOps (运维)
 ==============================================================================
 
 .. autotoctree::

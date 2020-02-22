@@ -1,4 +1,6 @@
-Deploy Strategy 部署策略
+.. _devops-software-deploy-strategy:
+
+Software Deploy Strategy (部署策略)
 ==============================================================================
 
 .. contents::

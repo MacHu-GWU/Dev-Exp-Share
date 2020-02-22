@@ -1,5 +1,11 @@
+.. _circleci:
+
 CircleCI
 ==============================================================================
+
+CircleCI 是一个比较年轻的 CICD as service 的平台. 公司创建于 2011 年, 在 2016 年上线了第一个 1.0 版本. 易用程度非常好, 功能非常多, 性能高, 高度可扩展, 并且从软件设计的角度来说设计的非常好.
+
+在此之间, 业界常用的开源
 
 
 CircleCI 持续集成能用来做什么?
@@ -8,7 +14,6 @@ CircleCI 持续集成能用来做什么?
 **开源库**:
 
 你的项目是一个开源库. 你想要使用 CI 来测试其的基本功能 和 API 在不同的操作系统, 以及不同的 Runtime 版本 (例如 Python35, 36, 37, 38) 进行单元测试, 又或者兼容依赖库的不同版本.
-
 
 **Web 应用**:
 
@@ -31,78 +36,6 @@ CircleCI 持续集成能用来做什么?
 CircleCI 术语概念列表
 ------------------------------------------------------------------------------
 
-- Orb
+- Jobs: 一个独立的工作, 由一连串 shell script 构成, 每个 jobs 在独立的 container 中运行.
+- Orb:
 - Layer: 是一种
-
-
-
-
-
-
-CircleCI Config YAML 小技巧
-------------------------------------------------------------------------------
-
-
-
-
-Reuse YAML Node
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-YAML 支持定义一个 anchors 或者 alias, 然后在其他地方引用之, 以达到重复利用代码的目的.
-
-定义的标记是 ``&``, 引用有两个标记, ``*`` 是指完全拷贝. 而 ``<<: *`` 是指继承并修改一些子节点.
-
-简单来说就是::
-
-    definitions:
-      steps:
-        - step: &build-test
-            name: Build and test
-            script:
-              - mvn package
-            artifacts:
-              - target/**
-
-    pipelines:
-      branches:
-        develop:
-          - step: *build-test
-        master:
-          - step:
-              <<: *build-test
-              name: Testing on Master
-
-
-等价于::
-
-    definitions:
-      steps:
-        - step: &build-test
-            name: Build and test
-            script:
-              - mvn package
-            artifacts:
-              - target/**
-
-    pipelines:
-      branches:
-        develop:
-          - step:
-            name: Build and test
-            script:
-              - mvn package
-            artifacts:
-              - target/**
-        master:
-          - step:
-            name: Testing on Master
-            script:
-              - mvn package
-            artifacts:
-              - target/**
-
-
-参考资料:
-
-- https://confluence.atlassian.com/bitbucket/yaml-anchors-960154027.html
-- https://en.wikipedia.org/wiki/YAML#Advanced_components

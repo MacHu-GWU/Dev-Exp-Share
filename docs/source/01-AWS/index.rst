@@ -1,8 +1,7 @@
+.. _aws:
+
 Amazon Web Service
 ==============================================================================
-
-.. autotoctree::
-    :maxdepth: 1
 
 Amazon 是世界上市场份额最大的云服务供应商. 而云基础设施中最基础的三大类服务包括: 计算, 存储, 和 网络.
 
@@ -11,3 +10,6 @@ Amazon 是世界上市场份额最大的云服务供应商. 而云基础设施�
 Ref:
 
 - AWS vs Azure vs Google Cloud Market Share 2019: What the Latest Data Shows: https://www.parkmycloud.com/blog/aws-vs-azure-vs-google-cloud-market-share/
+
+.. autotoctree::
+    :maxdepth: 1

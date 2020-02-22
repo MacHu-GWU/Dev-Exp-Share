@@ -1,7 +1,8 @@
-.. _devops-practice-in-testing:
+.. _linux:
 
-DevOps Practice in Testing
+Linux
 ==============================================================================
+
 
 .. autotoctree::
     :maxdepth: 1

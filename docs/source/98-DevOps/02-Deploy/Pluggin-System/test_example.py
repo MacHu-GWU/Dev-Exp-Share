@@ -5,11 +5,6 @@ import pluggy
 hookspec = pluggy.HookspecMarker("crawlib")
 hookimpl = pluggy.HookimplMarker("crawlib")
 
-
-
-
-
-
 class OrmModelSpec(object):
     @hookspec
     def build_request(self):

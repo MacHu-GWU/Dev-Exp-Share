@@ -1,6 +1,6 @@
-.. _devops-practice-in-testing:
+.. _circleci:
 
-DevOps Practice in Testing
+CircleCI
 ==============================================================================
 
 .. autotoctree::
