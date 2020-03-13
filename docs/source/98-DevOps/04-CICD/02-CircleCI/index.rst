@@ -1,6 +1,6 @@
 .. _circleci:
 
-CircleCI
+CircleCI Experience
 ==============================================================================
 
 .. autotoctree::

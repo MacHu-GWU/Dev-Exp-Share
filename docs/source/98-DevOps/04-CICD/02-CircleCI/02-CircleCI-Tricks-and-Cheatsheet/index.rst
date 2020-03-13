@@ -32,6 +32,13 @@ CircleCI 提供了两种方式用于读取敏感信息.
 1. 打开 Workflows 菜单, 点击具体的 project, 点击 Settings (或齿轮)
 2. 编辑 Environment Variables 菜单. 然后在 CI 的 Bash scripts 中用 ``${VAR_NAME}`` 引用之.
 
+还有一种方法可以实现安全引用各种敏感信息和复杂的数据结构.
+
+具体操作很简单, 本质上是在 Context 中设定一个 AWS ACCESS KEY 和 AWS SECRET KEY, 其背后的 IAM User 被允许访问 kms, secret manager, system manager parameter store. 然后使用 secret manager 和 parameter store 保存敏感数据, 然后再 runtime 中使用 aws cli 来访问敏感数据.😆🤣p`1txcjv,./
+]\=06fe
+]\)P:Åxs    c.v07-=(0p;./-].
+' 吗>
+
 
 SSH to Job Instance to Debug
 ------------------------------------------------------------------------------
