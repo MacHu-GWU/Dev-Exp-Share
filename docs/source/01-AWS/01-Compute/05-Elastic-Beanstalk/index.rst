@@ -1,2 +1,4 @@
-AWS Elastic BeanStalk (EB) Docs
+AWS Elastic Beanstalk (EB) Docs
 ==============================================================================
+
+AWS Elatic Beanstalk Documents
