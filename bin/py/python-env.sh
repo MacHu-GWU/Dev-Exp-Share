@@ -36,6 +36,7 @@ resolve_important_path()
 
     path_sphinx_doc_build_html=${path_sphinx_doc_build}/html
     path_sphinx_index_html=${path_sphinx_doc_build}/html/index.html
+    path_sphinx_readme_html=${path_sphinx_doc_build}/html/README.html
 
     path_sphinx_config=${path_sphinx_doc_source}/conf.py
 

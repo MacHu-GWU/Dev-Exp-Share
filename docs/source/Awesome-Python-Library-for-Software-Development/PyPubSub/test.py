@@ -1,14 +1,16 @@
+# -*- coding: utf-8 -*-
+
 from pubsub import pub
+
 
 # ------------ create a listener ------------------
 
 def listener1(message):
     print("User1 received Message: {}".format(message))
 
+
 def listener2(message):
     print("User2 received Message: {}".format(message))
-
-
 
 
 # ------------ register listener ------------------

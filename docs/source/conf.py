@@ -25,6 +25,9 @@ import os
 from datetime import datetime
 import dev_exp_share
 
+from docfly.doctree import ArticleFolder
+ArticleFolder._filename = "README.rst"
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -58,7 +61,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'README'
 
 # General information about the project.
 project = 'dev_exp_share'

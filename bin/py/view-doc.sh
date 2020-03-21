@@ -7,4 +7,4 @@ dir_project_root=$(dirname "${dir_bin}")
 
 source ${dir_bin}/py/python-env.sh
 
-${open_command} ${path_sphinx_index_html}
+${open_command} ${path_sphinx_readme_html}

@@ -1,8 +1,4 @@
-.. _linux:
+.. _pypi-box:
 
-Linux
+box - dot notation pattern for dictionary
 ==============================================================================
-
-
-.. autotoctree::
-    :maxdepth: 1

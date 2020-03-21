@@ -30,10 +30,10 @@ with Connection(
         ]
     )
 ) as conn:
-    # put file to remote
+    # 1. put file to remote
     conn.put(Path(HERE, "test.json"), "/tmp/test.json")
 
-    # send command, see if the test.json file already on remote
+    # 2. send command, see if the test.json file already on remote
     result = conn.run('cat /tmp/test.json', hide=True) # type: Result
     # print(result.stdout)
     # print(result.stderr)
@@ -43,14 +43,14 @@ with Connection(
     # print(result.env)
     # print(result.exited)
 
-    # get file from remote
+    # 3. get file from remote
     conn.run('echo "{\\"name\\": \\"Bob\\"}" > /tmp/data.json') # create a temp file on remote
     conn.get("/tmp/data.json", Path(HERE, "data.json")) # get it from here
 
-    # sync folder from local to remote, like google drive
+    # 4. sync folder from local to remote, like google drive
     rsync(conn, source=Path(HERE, "test-folder"), target="/tmp")
     conn.run('cat /tmp/test-folder/index.html')
 
-    # sync folder from remote to local, like google drive
+    # 5. sync folder from remote to local, like google drive
     rsync(conn, source=HERE, target="/tmp/test-folder", remote_to_local=True) # will be available in 1.0.2
     conn.local('cat {}'.format(Path(HERE, "test-folder", "index.html").abspath))
