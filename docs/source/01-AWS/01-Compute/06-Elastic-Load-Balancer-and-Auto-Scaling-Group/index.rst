@@ -1,4 +1,4 @@
-Elastic Load Balancer and Auto Scaling
+AWS Elastic Load Balancer and Auto Scaling Group (ELB, ASG) Docs
 ==============================================================================
 
 简单来说 ELB 就是一个 ``host:port/path`` 到多个具体的 EC2 的 ``host:port`` 的映射.

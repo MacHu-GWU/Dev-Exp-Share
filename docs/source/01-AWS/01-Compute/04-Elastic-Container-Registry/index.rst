@@ -1,6 +1,6 @@
 .. _aws-ecr:
 
-Elastic Container Registry
+AWS Elastic Container Registry (ECR) Docs
 ==============================================================================
 
 相当于私有的 DockerHub 服务, 用于注册, 管理你的 Docker Image.
