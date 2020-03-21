@@ -1,5 +1,2 @@
-Operation System (OS) Docs
+Deploy with Docker (使用 Docker 部署你的应用)
 ==============================================================================
-
-.. autotoctree::
-    :maxdepth: 1

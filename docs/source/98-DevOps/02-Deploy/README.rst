@@ -1,4 +1,6 @@
-Operation System (OS) Docs
+.. _devops-practice-in-testing:
+
+DevOps Practice in Deployment
 ==============================================================================
 
 .. autotoctree::

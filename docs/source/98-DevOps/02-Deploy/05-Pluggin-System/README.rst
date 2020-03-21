@@ -1,5 +1,2 @@
-Operation System (OS) Docs
+Pluggin System
 ==============================================================================
-
-.. autotoctree::
-    :maxdepth: 1

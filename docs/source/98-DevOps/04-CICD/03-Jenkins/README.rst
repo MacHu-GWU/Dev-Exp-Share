@@ -1,5 +1,2 @@
-Operation System (OS) Docs
+Jenkins Docs
 ==============================================================================
-
-.. autotoctree::
-    :maxdepth: 1

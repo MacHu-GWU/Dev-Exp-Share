@@ -1,4 +1,6 @@
-Operation System (OS) Docs
+.. _circleci:
+
+CircleCI Docs
 ==============================================================================
 
 .. autotoctree::

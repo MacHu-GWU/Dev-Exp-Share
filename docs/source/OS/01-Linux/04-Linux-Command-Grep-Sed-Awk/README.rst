@@ -85,7 +85,7 @@ Python 作为通用编程语言, 在功能上比上面三个肯定是强大多�
     This's a test
     10 There are apple, banana, cherry
 
-这事我们的 Python 脚本::
+这是我们的 Python 脚本::
 
     # -*- coding: utf-8 -*-
     # content of example.py
