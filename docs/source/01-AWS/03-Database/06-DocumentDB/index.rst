@@ -1,5 +1,7 @@
-DocumentDB
-==========
+.. aws-documentdb:
+
+AWS DocumentDB
+==============================================================================
 
 MongoDB API compatible Database.
 

@@ -1,4 +1,5 @@
-AWS Elastic Cache Docs
+AWS Database Service Docs
 ==============================================================================
 
-AWS powered MemoryCache / Redis as service.
+.. autotoctree::
+    :maxdepth: 1

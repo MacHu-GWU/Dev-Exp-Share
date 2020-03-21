@@ -1,6 +1,6 @@
-.. _s3-ebs:
+.. _aws-ebs:
 
-Elastic Block Storage
+AWS Elastic Block Storage (EBS) Docs
 ==============================================================================
 
 

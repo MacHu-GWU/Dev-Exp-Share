@@ -1,4 +1,7 @@
-Redshift
+
+.. _aws-redshift:
+
+AWS Redshift Docs
 ==============================================================================
 
 Redshift, powerful OLAP database.
