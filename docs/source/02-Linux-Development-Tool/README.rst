@@ -1,6 +1,6 @@
 .. _linux-development-tool:
 
-Linux Development Tool
+Linux Development Tool Docs
 ==============================================================================
 
 .. autotoctree::
