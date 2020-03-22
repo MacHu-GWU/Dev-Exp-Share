@@ -1,4 +1,4 @@
-Re-architect Monolithic to Microservice
+Re-architect / Migrate Monolithic to Microservice
 ==============================================================================
 
 将一个大型应用迁徙到 Microservice 的模式是非常复杂的.

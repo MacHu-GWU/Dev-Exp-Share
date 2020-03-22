@@ -7,9 +7,10 @@ Per Account S3 Bucket
 
 命名规则:
 
-- Bucket Name: ``<aws-account-id>-everything``
+- Bucket Name: ``${aws-account-id}-for-everything`` or ``${aws-account-alias}-for-everything``
 - CloudFormation: ``/cloudformation/...``
 - Lambda: ``/lambda/...``
 - Athena: ``/athena/...``
 - CloudTrail: ``/cloudtrail/...``
+- Terraform: ``/terraform/workspace/env:/${workspace}/...``
 - ...

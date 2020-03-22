@@ -19,7 +19,6 @@ EMR 里的工具:
 - Hue (Hadoop User Experience): 一个开源的, 用于管理 EMR 和 Hadoop 集群的图形界面应用.
 
 
-
 - Presto: 开源的分布式 SQL 查询引擎. Redshift 和 Athena 背后的引擎.
 
 AWS 里看到文字无法立刻联想到功能的工具:

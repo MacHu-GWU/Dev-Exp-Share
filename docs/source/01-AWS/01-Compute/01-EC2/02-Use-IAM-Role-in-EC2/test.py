@@ -11,10 +11,9 @@ from troposphere_mate.canned.iam import (
     AWSServiceName, AWSManagedPolicyArn, create_assume_role_policy_document
 )
 
-
 aws_profile = "eq_sanhe"
-image_id = "ami-00dc79254d0461090" # amazon linux
-security_group_id = "sg-2c2b857d" # allow ssh
+image_id = "ami-00dc79254d0461090"  # amazon linux
+security_group_id = "sg-2c2b857d"  # allow ssh
 key_name = "eq-sanhe-dev"
 stack_name = "eq-sanhe-test"
 
@@ -56,13 +55,15 @@ ec2_inst = ec2.Instance(
 
 boto_ses = boto3.Session(profile_name=aws_profile)
 s3_client = boto_ses.client("s3")
+cf_client = boto_ses.client("cloudformation")
+
 template_url = upload_template(
     s3_client=s3_client,
     template_content=template.to_json(),
     bucket_name="eq-sanhe-for-everything"
 )
 deploy_stack(
-    boto_ses=boto_ses,
+    cf_client=cf_client,
     stack_name=stack_name,
     template_url=template_url,
     include_iam=True,
