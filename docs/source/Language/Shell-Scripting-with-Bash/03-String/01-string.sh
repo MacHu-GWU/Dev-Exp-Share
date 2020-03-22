@@ -2,5 +2,5 @@
 # -*- coding: utf-8 -*-
 
 name="Jack"
-message="Hello ${Jack}!"
+message="Hello ${name}!"
 echo ${message}

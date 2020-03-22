@@ -1,4 +1,7 @@
 #!/bin/bash
+# -*- coding: utf-8 -*-
+
+# run this script with no argument
 
 # $@ = all of the positional parameters, but each parameter is a quoted string
 # $@ = 将所有的输入参数看成一个列表
