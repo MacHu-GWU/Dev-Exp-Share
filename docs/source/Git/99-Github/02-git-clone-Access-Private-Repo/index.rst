@@ -27,7 +27,7 @@ git clone Access Private Repo (使用 git 访问私有仓库)
 使用 SSH
 ------------------------------------------------------------------------------
 
-1. 生成一对私钥和公钥, 默认私钥放在 ``$HOME/.ssh/id_rsa``, 公钥 ``$HOME/.ssh/id_rsa.pub``. (参考 Generating a new SSH key and adding it to the ssh-agent: https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+1. 生成一对私钥和公钥, 默认私钥放在 ``$HOME/.ssh/id_rsa``, 公钥 ``$HOME/.ssh/id_rsa.pub``. (参考 Generating a new SSH key and adding it to the ssh-agent: https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
 .. code-block:: bash
 

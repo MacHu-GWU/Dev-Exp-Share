@@ -39,6 +39,13 @@ Elastic Beanstalk 是怎么解决这些问题的
 EB 提供了一个 console, 用于可视化所有的设置. EB 还有个命令行工具. 叫做 aws eb cli (``pip install awsebcli``), 用于在 Git 仓库中初始化配置文件, 并根据配置文件将代码打包, 部署到服务器上. 而这个部署过程是用 CloudFormation 进行实现的. EB 会根据配置文件生成一个 CloudFormation Template, 然后根据你选择的 部署模式 将所有的 EC2, Security Group, IAM Role, ELB, ASG, Log Group 一次性部署.
 
 
+Elastic Beanstalk 的基本概念
+------------------------------------------------------------------------------
+
+- Application: 代表一个应用, 或是一个项目. 这个项目只是一个名字.
+- Environment: 一个项目的实例, 由 EC2, Load Balancer 等相关组件构成. 可以是多个互相隔离的环境, 例如 dev, test, prod.
+
+
 TODO 如何进行测试
 ------------------------------------------------------------------------------
 

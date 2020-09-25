@@ -7,7 +7,7 @@ Git Commands Cheatsheet (Git 命令速查)
     :depth: 1
     :local:
 
-
+git clone -b master https://${CMS_GIT_TOKEN}@github.cms.gov/IDM/aws-ls.git
 ``git clone``
 ------------------------------------------------------------------------------
 
@@ -21,6 +21,12 @@ Git Commands Cheatsheet (Git 命令速查)
     git reset --hard e5581a5b32f20922509dec25c87b3247648010e5
     git checkout -B release1
     git reset --hard e5581a5b32f20922509dec25c87b3247648010e5
+
+- clone specific commit hash::
+
+    git clone -n https://github.com/MacHu-GWU/learn_git-project # -n means don't checkout
+    cd learn_git-projects
+    git checkout 8ec69331b6e788b115d1f7170eb4cb07beab9530
 
 
 ``git branch``
