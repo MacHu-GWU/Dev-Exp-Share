@@ -1,0 +1,32 @@
+all: # default Group name, will include all hosts appears in this file
+  hosts:
+    mail.example.com:
+amazonEcommerce: # amazonEcommerce 是一个 group name, 由用户指定
+  children: # children 是一个 ansible 内置的 declaritive, 表示下面的 key 都被视为一个 group
+    # What - An application, stack or microservice (for example, database servers, web servers, and so on).
+    webservers:
+      hosts:
+        foo.example.com:
+        bar.example.com:
+    dbservers:
+      hosts:
+        one.example.com:
+        two.example.com:
+        three.example.com:
+    # Where - A datacenter or region, to talk to local DNS, storage, and so on (for example, east, west).
+    east:
+      hosts:
+        foo.example.com:
+        one.example.com:
+        two.example.com:
+    west:
+      hosts:
+        bar.example.com:
+        three.example.com:
+    # When - The development stage, to avoid testing on production resources (for example, prod, test).
+    prod:
+      children:
+        east:
+    test:
+      children:
+        west:

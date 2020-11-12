@@ -1,0 +1,6 @@
+- name: run RedHat logic
+  import_tasks: redhat.yml
+  when: ansible_facts['os_family']|lower == 'redhat'
+- name: run Darwin logic
+  import_tasks: Darwin.yml
+  when: ansible_facts['os_family']|lower == 'darwin'

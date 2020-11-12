@@ -1,0 +1,7 @@
+- name: action1
+  hosts: webservers
+  tasks:
+  - name: create a test.txt file
+    shell: |
+      echo "hello" > ~/test.txt
+

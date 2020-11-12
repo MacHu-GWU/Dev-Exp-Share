@@ -72,3 +72,8 @@ openpyxl==2.6.2
 
 troposphere_mate==0.0.12
 
+# ansible
+ansible==2.10.1
+fabric==2.5.0
+patchwork==1.0.1
+

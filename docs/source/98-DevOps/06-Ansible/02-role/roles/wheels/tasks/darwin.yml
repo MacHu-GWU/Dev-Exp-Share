@@ -1,0 +1,3 @@
+- name:
+  shell: |
+    echo "this is {{ message }}" > ~/ansible-role-test.txt

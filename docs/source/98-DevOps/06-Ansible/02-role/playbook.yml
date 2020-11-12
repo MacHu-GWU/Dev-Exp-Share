@@ -1,0 +1,5 @@
+- name: action1
+  hosts: 127.0.0.1
+  connection: local
+  roles:
+    - role: ~/Documents/GitHub/Dev-Exp-Share/docs/source/98-DevOps/06-Ansible/02-role/roles/wheels
