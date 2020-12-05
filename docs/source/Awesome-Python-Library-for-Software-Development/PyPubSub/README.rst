@@ -1,4 +1,4 @@
-.. _pypi-pubsub:
+.. _pypi-PyPubSub:
 
 PyPubSub - Publisher Subscriber Pattern (Pub Sub)
 ==============================================================================

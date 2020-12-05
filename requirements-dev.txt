@@ -1,3 +1,4 @@
+# My main dependencies development
 twine>=1.13.0   # make distribution archive
 wheel>=0.33.1   # make pre-compiled distribution package
 
@@ -20,7 +21,7 @@ mongoengine_mate==0.0.3
 redis==3.2.1
 
 # class writing, data validation
-attrs==19.1.0
+attrs==20.3.0
 attrs_mate==0.0.4
 marshmallow==2.19.2
 attrsmallow==0.0.1
@@ -56,14 +57,15 @@ sfm==0.0.17
 # common data transfer format
 superjson==0.0.13
 PyYAML==5.1
+jsonpickle==1.4.2
 
 # fuzzy string match
 fuzzywuzzy==0.17.0
 python-Levenshtein==0.12.0
 
 # data manipulate
-numpy==1.14.2
-pandas==0.19.2
+numpy==1.19.4
+pandas==1.1.4
 pandas_mate==0.0.3
 
 # excel read / write
@@ -77,3 +79,11 @@ ansible==2.10.1
 fabric==2.5.0
 patchwork==1.0.1
 
+# Design Pattern
+PyPubSub==4.0.3
+
+# Dictionary Improvement
+python-box==5.2.0
+bidict==0.21.2
+
+atomicwrites==1.4.0

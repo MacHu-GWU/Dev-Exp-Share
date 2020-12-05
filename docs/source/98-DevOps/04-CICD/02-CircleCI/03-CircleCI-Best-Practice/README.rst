@@ -36,4 +36,4 @@ CircleCI 术语概念列表
 
 - Jobs: 一个独立的工作, 由一连串 shell script 构成, 每个 jobs 在独立的 container 中运行.
 - Orb: 将 Jobs Command 打包到一起的一个功能模块. 比如 安全性检查, 漏洞扫描, VPN 连接. 作为 CICD Workflow 中的可复用模块.
-- Layer:
+- Layer: ...

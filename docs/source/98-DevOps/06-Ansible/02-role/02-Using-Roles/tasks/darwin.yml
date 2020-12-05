@@ -1,0 +1,16 @@
+tasks:
+- name: task1
+  shell: |
+    echo "this is task2" > {{ workspace_dir }}/ansible-role-task2.txt
+  tags:
+  - task1
+- name: task2
+  shell: |
+    echo "this is task2" > {{ workspace_dir }}/ansible-role-task2.txt
+  tags:
+  - task2
+- name: task3
+  shell: |
+    echo "this is task3" > {{ workspace_dir }}/ansible-role-task3.txt
+  tags:
+  - task3

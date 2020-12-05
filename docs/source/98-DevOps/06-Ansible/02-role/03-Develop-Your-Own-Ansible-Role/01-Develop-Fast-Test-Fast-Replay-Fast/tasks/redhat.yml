@@ -1,0 +1,3 @@
+- name: create ansible-role-test file
+  shell: |
+    echo "this is Alice" > ~/ansible-role-test.txt
