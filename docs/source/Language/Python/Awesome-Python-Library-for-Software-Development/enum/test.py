@@ -15,6 +15,8 @@ class Color(enum.Enum):
 
 def test_api():
     assert Color.Red.value == 1
+    assert Color["Red"].value == 1
+    assert Color(1).value == 1
     assert isinstance(Color.Red , Color)
 
     assert [color.name for color in Color] == ["Red", "Blue", "Yellow"]
