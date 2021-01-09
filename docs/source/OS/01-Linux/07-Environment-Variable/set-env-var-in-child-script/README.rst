@@ -46,9 +46,9 @@ Bash Script::
 
 先说结论:
 
-    这是不可能的, 因为 ``python child.py`` 命令本身是一个 sub process, 子进程 是无法修改父进程中的环境变量的.
+    **这是不可能的**, 因为 ``python child.py`` 命令本身是一个 sub process, 子进程 是无法修改父进程中的环境变量的.
 
-    但你可以让 Python 将一些变量的值以某种方式, 或是通过 stdout, 文件, 等方式返回给 Bash Script. 这需要额外的工作.
+    **但你可以让 Python 将一些变量的值以某种方式, 或是通过 stdout, 文件, 等方式返回给 Bash Script. 这需要额外的工作**.
 
 一个例子:
 
