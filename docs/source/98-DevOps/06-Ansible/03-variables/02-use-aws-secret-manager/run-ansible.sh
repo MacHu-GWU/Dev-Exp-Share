@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Before playing with this script, open your terminal, manually ssh to the ec2, and verify the outcome::
+# Warning, AWS Secret plugin doesn't works on Mac
+# The Mac OS doesn't allow folk a process from ansible process for aws secret call
 #
+# Before playing with this script, open your terminal, manually ssh to the ec2, and verify the outcome::
 #
 # EC2_USER="ec2-user"
 # EC2_IP="34.224.64.152"
@@ -20,11 +22,9 @@ host_file="inventory.yml"
 #${dir_venv_bin}/ansible all -i ${host_file} -m ping
 
 # execute playbook
-${dir_venv_bin}/ansible-playbook -i ${dir_here}/${host_file} ${dir_here}/playbook.yml --extra-vars "@${dir_here}/vars.yml"
-
+${dir_venv_bin}/ansible-playbook -i ${dir_here}/${host_file} ${dir_here}/playbook.yml
+#ansible-playbook -i inventory.yml playbook.yml
 # clean up last ansible run effect
 #rm ~/test.txt
 # validate effect
 #cat ~/test.txt
-
-ansible-playbook -i inventory.yml playbook.yml
