@@ -1,13 +1,9 @@
 #!/bin/bash
 
-<<COMMENT
-
-Before playing with this script, open your terminal, manually ssh to the ec2, and verify the outcome::
+# Before playing with this script, open your terminal, manually ssh to the ec2, and verify the outcome::
 
 EC2_IP="111.111.111.111"
 ssh -i ~/ec2-pem/eq-sanhe-dev.pem "ec2-user@${EC2_IP}"
-
-COMMENT
 
 dir_here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 dir_project_root="$( dirname $( dirname $( dirname $( dirname $( dirname $( dirname ${dir_here}))))))"

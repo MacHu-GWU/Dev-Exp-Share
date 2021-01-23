@@ -1,0 +1,8 @@
+# 创建一个 ${HOME}/test.txt 文件, 内容是 Hello Alice
+- name: action1
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: create a test.txt file
+    shell: |
+      echo "Hello Alice" > ~/test.txt

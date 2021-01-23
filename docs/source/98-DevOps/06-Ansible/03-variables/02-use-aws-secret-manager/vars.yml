@@ -1,0 +1,2 @@
+pem_file_path: ~/ec2-pem/eq-sanhe-dev.pem
+message: Hello Alice
