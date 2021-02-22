@@ -19,7 +19,6 @@ rm ~/test.txt
 #${dir_venv_bin}/ansible all -i ${host_file} -m ping
 
 # execute playbook
-# Comma is essential, otherwise it's treated like file name.
 ${dir_venv_bin}/ansible-playbook ${dir_here}/playbook.yml
 
 # validate effect
