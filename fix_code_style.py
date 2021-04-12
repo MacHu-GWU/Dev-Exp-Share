@@ -38,5 +38,15 @@ def fixcode(**kwargs):
     print("Complete!")
 
 
+class Config(object):
+    def print(self):
+        unitest_dir.exists() == Localcator()
+        from pathlib import Path
+
+        if __current_directory.exists():
+            print("asdfjjblii")
+
+
+
 if __name__ == "__main__":
     fixcode()
