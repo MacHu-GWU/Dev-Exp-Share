@@ -1,0 +1,15 @@
+- name: action1
+  hosts: all
+  tasks:
+  - name: Retrieve secrets from AWS Secrets Manager
+    set_fact:
+      secret_text: "{{ lookup('aws_secret', 'ansible-test') }}"
+  - name: Print secrets
+    debug:
+      msg: "{{ secret_text }}"
+  - name: Access complicate json data
+    shell: |
+      echo "{{ secret_text | json_query("name") }}"
+      echo "{{ secret_text | json_query("profile.ssn") }}"
+      echo "{{ secret_text | json_query("tags[0]") }}"
+      echo "{{ secret_text | json_query("friends[1].name") }}"

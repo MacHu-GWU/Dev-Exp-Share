@@ -7,12 +7,23 @@ AWS Solution Architect Associate, The Ultimate Cheatsheet
 
 
 
-IAM (Identity and Access Management)
+Fundamental / IAM (Identity and Access Management)
 ------------------------------------------------------------------------------
 
+概念:
+
+- IAM Policy: Access Management 的 Declartion (定义)
+    - Principal: 谁? 通常是以 ARN (Amazon Resource Name), 可以指代 EC2, IAM User, IAM Role 等
+    - Action: 能进行什么操作? 比如 S3::PutObject
+    - Evaluation: 多个 Policy 的 Evaluation 的逻辑是: Explicit Deny > Explicit Allow > Default Deny
+- IAM User: 一个 IAM 账号, 可以用账号密码登录, 通常是活生生的人.
+- IAM Group: 用于管理 User, 一个用户加入了某个 IAM Group
+- IAM Role: 可以包含多个 IAM Policy 和一个 Inline Policy, 简单来说 IAM Role 之于 机器 或是 AWS 服务, 就等于 IAM User 之于人类用户. 你用 IAM User 定义用户能干什么, 而 IAM Role 则定义了一个 EC2 能干什么.
+- Permission Boundary: 为了防止一个低权限, 但能管理 IAM 的用户, 手动给自己添加高权限的 IAM Policy 使得自己你超出了自己本身的权限. 这种错误叫做 Cascade Update.
+- Path: 为了更方便的管理 IAM User 和 IAM Role 的功能, 简单来说你可以给 User 和 Role 定义一个 Path, 然后用通配符在 IAM Policy 中定义哪些 IAM User / Role 的 Path 能够执行某些 Action. 这样可以批量给 IAM User 授权, 而不需要把一个个具体的 IAM User 的 ARN 添加进去, 只要 IAM User 都定义了 Path.  Path 主要用于在企业中按照部门, 项目, 小组管理用户. Path 只能用 CLI 或是 API 修改, 不能在 Console 修改.
 
 
-S3 (Simple Storage Service)
+Fundamental / S3 (Simple Storage Service)
 ------------------------------------------------------------------------------
 
 .. contents::
@@ -23,10 +34,10 @@ S3 (Simple Storage Service)
 Data Consistency
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Eventually Consistency: you may read previous version of object after overwrite put and delete.
-- S3 Put Object operation is atomic.
-- Provide read-after-write consistency for Put New Object operation.
-- There's no object lock, the last put object operation taken effect if two concurrent put object operations.
+- Provide read-after-write consistency for Put New Object operation. (对于一个新上传的对象, S3提供写后读写一致性, put 后马上 get 保证是刚写入的内容)
+- Eventually Consistency: you may read previous version of object after overwrite put and delete. (对于已存在对象的复写, S3提供最终读写一致性, 也就是说 put 后马上 get 不能保证是刚写入的内容, 因为 S3 是分布式系统, 改变发布到所有节点需要时间, 这个时间通常是毫秒级)
+- S3 Put Object operation is atomic. (例如同时更改 Body, Metadata, ACL, 这些要么全部完成, 要么全部不完成)
+- There's no object lock, the last put object operation taken effect if two concurrent put object operations. (S3 没有 Object 锁, 一个 put 没结束前你仍然可以对同一个 Object Put. 但对一个 Object 的两个 Put, 谁后发起, 最后内容是谁的)
 
 
 Storage Class
@@ -52,11 +63,11 @@ Bucket Feature
 
 - Bucket Properties:
     - **Versioning (超级重要)**:
-        - Managing Objects in a Versioning-Enabled Bucket
+        - Managing Objects in a Versioning-Enabled Bucket (开启了 Versioning 的 Bucket):
             - Add: 自动给予 Object 新的 VersionId.
             - Get: 默认获得最新的, 要获得特定 Version, 需要指定 VersionId
             - Delete: 如果不指定 VersionId, 则在最新的 Object 上加一个 Marker, 标记为已删除, 这个已删除的 Object 则会作为最新的 Object. 此时默认的 Get 操作则会返回 404 错误. 只有指定 VersionId, 才能真正删除某个 Version.
-        - Managing Objects in a Versioning-Suspended Bucket:
+        - Managing Objects in a Versioning-Suspended Bucket (开启了 Versioning, 然后关闭了):
             - Add: 新加的 Object 会使用 Null 作为 VersionId, 并不会覆盖以前有 VersionId 的 Object, 而新加的同 Key 的 Object 则会覆盖掉 Null VersionId 的 Object.
             - Get: 无论你是否开启 Versioning, 永远是获取最新的那个 Object. Null 被视为最新的 Object.
             - Delete: 只能删除 Null VersionId 的 Object, 无法删除之前的 Versioned Object.
@@ -80,7 +91,7 @@ Bucket Feature
     - Object Lock: 防止某些 Object 被删除.
     - **Transfer Acceleration**: 常用于当你的 Bucket 在美国, 而你的用户在欧洲, 你可以使用 Transfer Acceleration (其实是 CloudFront 在起作用)
     - Events:
-    - Request Pay:
+    - Request Pay:Ø
 - Permissions:
     - Block public access
     - Access Control List: 用于允许 其他 AWS 账户, 对 bucket 进行访问, 以及控制 读 写 的权限. ACL 作用于 Bucket 级.
@@ -251,6 +262,10 @@ VPC (Virtual Private Cloud)
 - VPC Peering: 连接两个 VPC. 但无法连接 3 个, 只能将它们两两连接.
 - VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 AWS 服务, 而是在 VPC 内, 通过 Amazon 数据中心内部的 Network 访问. 有三种 Endpoint:
     - Interface Endpoint:
+    - VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 S3, 而是在 VPC 内, 通过 Amazon Network 访问 S3. 一共有三种 VPC Endpoint (https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html):
+- Interface endpoints, 给 API Gateway, Athena, RDS 等.
+- Gateway Load Balancer endpoints, 给 ELB yong 的.
+- Gateway endpoints, 给 S3 和 DynamoDB 用的.
 - VPC FlowLog: 记录了所有的网络端口通信细节 (不包括数据本身), **主要用于 Debug**.
 
 
