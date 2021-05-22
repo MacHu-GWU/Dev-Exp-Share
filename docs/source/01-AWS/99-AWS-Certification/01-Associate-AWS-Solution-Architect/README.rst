@@ -260,10 +260,12 @@ VPC (Virtual Private Cloud)
 - Network Control List: Stateless, inbound 和 outbound 都要验证, 一个没有验证成功都不行. 有 Rule Number 的概念, 从小到大依次验证, 小的成功了, 大的就不用管了. 作用于 Subnet 级别.
 - Security Group: Stateful, 比如发起者是位于公网的用户, 那么只用考虑 inbound, 一旦连接建立, 就不用管 outbound 了. 作用于 EC2, Lambda, RDS, 等 AWS Resource 级别.
 - VPC Peering: 连接两个 VPC. 但无法连接 3 个, 只能将它们两两连接.
-- VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 S3, 而是在 VPC 内, 通过 Amazon Network 访问 S3. 一共有三种 VPC Endpoint (https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html):
-    - Interface endpoints, 给 API Gateway, Athena, RDS 等.
-    - Gateway Load Balancer endpoints, 给 ELB yong 的.
-    - Gateway endpoints, 给 S3 和 DynamoDB 用的.
+- VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 AWS 服务, 而是在 VPC 内, 通过 Amazon 数据中心内部的 Network 访问. 有三种 Endpoint:
+    - Interface Endpoint:
+    - VPC Endpoint: 允许位于 VPC 内部的机器. 当你的公司对安全要求很严格, 需要 VPC 内的机器不通过 Public Internet 访问 S3, 而是在 VPC 内, 通过 Amazon Network 访问 S3. 一共有三种 VPC Endpoint (https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html):
+- Interface endpoints, 给 API Gateway, Athena, RDS 等.
+- Gateway Load Balancer endpoints, 给 ELB yong 的.
+- Gateway endpoints, 给 S3 和 DynamoDB 用的.
 - VPC FlowLog: 记录了所有的网络端口通信细节 (不包括数据本身), **主要用于 Debug**.
 
 
