@@ -39,7 +39,36 @@ Reference:
 - Transferring Files to Linux Instances from Linux Using SCP
 
 
-Step3. Copy file or dir between EC2 and local machine via SSH Copy
+Step3. Connect via SSH the Better Way
+------------------------------------------------------------------------------
+
+由于在我们启动一个 EC2 的时候, 是并不知道他的 public ip 地址的. 而每次 EC2 关闭再启动后, 这个 IP 地址都会改变. 我们希望提供一小段代码, 使得每次想要 SSH 到 EC2 上的时候, 只要快速的复制粘贴即可.
+
+.. code-block:: bash
+
+    # specify your ec2 name
+    EC2_NAME="your-ec2-name"
+
+    # specify your cli profile
+    AWS_PROFILE="your-aws-cli-profile"
+
+    # retrieve public ip
+    EC2_IP="$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_NAME}" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text --profile ${AWS_PROFILE})"
+
+    # retrieve private ip
+    EC2_IP="$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_NAME}" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text --profile ${AWS_PROFILE})"
+
+    # specify the default user, for redhat, centos, amazon linux, it is ec2-user. for ubuntu it is ubuntu
+    EC2_USER="ec2-user"
+
+    # specify the location of your pem file
+    EC2_PEM="path-to-your-pem-file"
+
+    # run ssh connect
+    echo EC2_PEM="${EC2_PEM}", EC2_USER="${EC2_USER}", EC2_IP="${EC2_IP}" && ssh -i ${EC2_PEM} ${EC2_USER}@${EC2_IP}
+
+
+Step4. Copy file or dir between EC2 and local machine via SSH Copy
 ------------------------------------------------------------------------------
 
 Reference:

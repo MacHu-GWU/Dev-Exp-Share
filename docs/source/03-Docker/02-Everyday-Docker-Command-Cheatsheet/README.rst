@@ -61,6 +61,11 @@ List containers
           docker image prune
 
       - 清除所有没有被任何容器使用的镜像
+    * - Delete all untagged images
+      - .. code-block::
+
+          docker rmi $(docker images -q --filter "dangling=true")
+      - 清楚那些 tag 被覆盖掉后为 None 的镜像
     * - Clean all stopped container, release disk
       - .. code-block:: bash
 
@@ -72,3 +77,11 @@ List containers
 
           docker container ls -a -f name=xxx
       -
+
+
+# Delete all containers
+docker rm $(docker ps -aq)
+# Delete all images
+docker rmi $(docker images -q)
+# Delete all untagged images
+docker rmi $(docker images -q --filter "dangling=true")

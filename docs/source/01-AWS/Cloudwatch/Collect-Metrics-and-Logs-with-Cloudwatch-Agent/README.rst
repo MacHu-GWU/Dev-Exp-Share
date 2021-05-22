@@ -103,5 +103,6 @@ For the first time playing with it, I recommend using configuration wizard.
     # stop it
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a stop
 
+4. View cloudwatch log::
 
-cat /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+    cat /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
