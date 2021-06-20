@@ -3,6 +3,12 @@
 DynamoDB Data Modeling
 ==============================================================================
 
+本文档记录了我学习用 DynamoDB 建立数据模型的学习心得. 主要分两个部分:
+
+1. Principal 包括各种经典数据模型, one-to-many, many-to-many, 以及各种 查询模式 的数据模型.
+2. system 包括各种互联网产品的后台设计. 比如设计抖音的数据后台.
+
+
 参考资料:
 
 - DynamoDB 关系建模: https://blog.csdn.net/m0_37263637/article/details/89668891

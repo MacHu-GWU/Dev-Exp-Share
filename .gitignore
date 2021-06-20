@@ -3,6 +3,10 @@ dev_exp_share_venv/
 dev_exp_share.egg-info/
 dev_exp_share-*/
 .terraform/
+cdk.out/
+Pipfile
+Pipfile.lock
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

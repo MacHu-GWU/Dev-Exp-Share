@@ -209,11 +209,10 @@ Full decentralization
 - Everyone manages data pipelines and data warehouses
 
 
-
-
 Integration
 
 
-Integrate Operation Database with Data Warehouse
+Q. Sync data from RDBMS Database to Data Warehouse
 
-你有个 RDBMS 数据库
+你有个 RDBMS 数据库, 上面跑着你的业务数据, 如何
+
