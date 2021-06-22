@@ -1,7 +1,8 @@
-.. _aws-dynamodb-docs:
-
-AWS DynamoDB Docs
+Understand Dynamodb
 ==============================================================================
+
+.. autotoctree::
+    :maxdepth: 1
 
 
 Connect to DynamoDB

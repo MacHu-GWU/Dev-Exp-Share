@@ -1,0 +1,2 @@
+# python dependencies for lambda function
+pynamodb==5.0.3
