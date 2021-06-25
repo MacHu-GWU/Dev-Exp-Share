@@ -275,6 +275,36 @@ Navigation
       - Ctrl + M
       -
 
+    * - **Search Everything** (全文搜索所有, 文件, 符号, 等...)
+      - Ctrl + Shift + M
+      - Double click Shift
+      -
+
+    * - **Go to File** (根据文件名和目录名查找文件并跳转)
+      -
+      - Cmd + Shift + O
+      -
+
+    * - **Go to Synbol** (查找 类, 方法, 变量 名并跳转)
+      -
+      - Cmd + Alt + O
+      -
+
+    * - **Go to Class** (查找 类 并跳转)
+      -
+      - Cmd O
+      -
+
+    * - Show File Structure and Jump (打开临时的文件结构或目录窗口, 在 header 之间跳转)
+      -
+      - Cmd + F12
+      -
+
+    * - Show File in external File Explorer (将文件在外部文件浏览器中打开)
+      -
+      - Cmd + Alt + F12
+      -
+
 
 Menu
 ------------------------------------------------------------------------------
@@ -444,14 +474,24 @@ Python
       - Cmd + Alt + B
       -
 
-    * - View Definition (快速查看定义)
+    * - View Definition (快速查看定义, 需要选中 类, 方法, 变量名)
       - Ctrl + Shift + I
       - Alt + Space
       -
 
-    * - View Document (快速查看文档)
+    * - View Document (快速查看文档, 需要选中 类, 方法, 变量名)
       - Ctrl + Q
       - F1
+      -
+
+    * - View Parameters (快速查看参数信息, 游标要在括号内)
+      -
+      - Cmd + P
+      -
+
+    * - Show Type of Selected Variable (查看选中目标的类型信息)
+      -
+      - Ctrl + Shift + P
       -
 
     * - Pep8 Reformat (Pep8风格化代码)
