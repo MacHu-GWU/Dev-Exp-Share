@@ -239,7 +239,7 @@ Line
 
     * - Multiline Editing (多行同时编辑)
       - Alt + Click/Drag or Press Ctrl Twice + Up/Down to select lines
-      - Cmd + Click/Drag or Press Alt Twice + Up/Down to select lines
+      - Cmd + Click/Drag or Press Alt Twice + Up/Down to select lines (连续按下 Alt 2 次并按住, 然后按上下选择. 或者 Shift + Alt + 鼠标拖曳)
       - Alt + Click/Drag or Press Ctrl Twice + Up/Down to select lines
 
     * - Sort Lines (多行排序)
