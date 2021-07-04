@@ -1,1 +1,0 @@
-PyCharm是一款专门为Python开发打造的IDLE, 功能强大，相当于Visual Studio之余C++。唯一的弱点可能是太 `重量级` 了, 机器配置不好的话不太适合。机器配置不好的话推荐使用Eclipse + Sublime Text。

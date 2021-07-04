@@ -1,6 +1,6 @@
 
 .. image:: https://readthedocs.org/projects/sanhe-dev-exp-share/badge/?version=latest
-    :target: https://sanhe-dev-exp-share.readthedocs.io/index.html
+    :target: https://sanhe-dev-exp-share.readthedocs.io/README.html
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social

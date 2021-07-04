@@ -1,11 +1,20 @@
-.. contents::
-
 PyCharm Shortcut Key
 ==============================================================================
-在默认设置的基础上加一些个人的自定义。
 
-- Windosw下使用Default。
-- MacOS下使用MacOS.
+PyCharm 快捷键大全.
+
+PyCharm 为了适应来自于不同背景的开发者, 自定义了几套快捷键模式. 以下并不会列出所有的模式, 只列出了我自己最常用的两套.
+
+- Windows 下使用 Default 模式.
+- MacOS 下使用 MacOS 模式 (不是 MacOS System Shortcut 模式)
+
+如果你要修改其中的一些快捷键, 我建议点击 Keymap 模板选择界面的齿轮, 并选择 Duplicate, 然后在此基础上修改. 免得覆盖了系统默认的快捷键模板.
+
+以下内容来源于 我自己的 Google Sheet: https://docs.google.com/spreadsheets/d/1-7blQUyf5BkYvxBIYDqZljm60IL2C-xitiffvk9otCY/edit?usp=sharing
+
+.. contents::
+    :depth: 1
+    :local:
 
 
 General
