@@ -54,32 +54,3 @@ Create VPC Wizard 会自动给你创建一个默认的 Security Group, 但我们
 6. VPC Security Group
 7. DB Subnet Group
 
-想要从本地开发电脑上连接数据库?
-
-
-生产环境:
-
-Local PC <---> Jumpbox (Public Subnet) <---> RDS Instance (Private Subnet)
-
-1. 使用 Dbeaver 客户端连接数据库:
-
-- 点击小插头图标, 创建新的连接:
-- 选择数据库类型
-- 填入 host, port, database, username, password
-- 点击 Next, 进入 Network Setting
-- 勾选 Use SSH Tunnel
-- 在 Host/IP 填入你的的 Jumpbox Public IP, Port 填 22 (是 SSH 的默认端口)
-- 在 Username 填入 Linux 默认用户, AmazonLinux 和 Redhat 是 ``ec2-user``, Ubuntu 是 ``ubuntu``
-- Authentication Method 选择 Public Key, 在 Private Key 处选择 Jumpbox 所用的 ``*.pem`` Key 文件.
-- 点击 Next, 进入 General
-- 给 Connection 一个有意意的名字.
-- 完成.
-
-2. 使用编程语言的 SQL Client 连接数据库, 我们这里以 Python + Sqlalchemy 为例:
-
-- 在 Mac 命令行填入下面的命令, 其功能是用创建一个 SSH Tunnel: ``ssh -i /path-to-your-pem-file.pem -f -N -L {local_port_for_db_connect}:{rds_endpoint}:{rds_port} {linux_username}@{jumpbox_public-ip} -v``. 简单来说你凡是发给 localhost:{local_port_for_db_connect} 的数据, 会通过 jumpbox, 转发到 {rds_endpoint}:{rds_port}, 也就是数据库.
-- 可以用该 Linux 命令列出处于连接状态的 ssh 连接列表: ``sudo lsof -i -n | egrep '\<ssh\>'``, 其中第二列是 pid. 你可以用命令 ``kill ${pid}`` 来杀死 ssh tunnel 进程.
-
-
-
-
