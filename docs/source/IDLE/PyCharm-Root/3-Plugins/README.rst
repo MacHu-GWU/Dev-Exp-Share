@@ -1,6 +1,6 @@
-.. contents::
+.. _pycharm-plugins:
 
-Pluggin
+Plugins
 ==============================================================================
 Install Pluggin:
 
@@ -29,8 +29,16 @@ Makefile Syntax Highlight.
 
 - https://plugins.jetbrains.com/plugin/9333-makefile-support
 
+
 CodeGlance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Add Sublime Style code minimap view.
 
 - https://plugins.jetbrains.com/plugin/7275-codeglance
+
+
+Rainbow Brackets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Colored bracket
+
+- https://plugins.jetbrains.com/plugin/10080-rainbow-brackets
