@@ -29,14 +29,6 @@ Makefile Syntax Highlight.
 
 - https://plugins.jetbrains.com/plugin/9333-makefile-support
 
-
-BashSupport
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Syntax Highlight, Run Bash in PyCharm.
-
-- https://plugins.jetbrains.com/plugin/4230-bashsupport
-
-
 CodeGlance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Add Sublime Style code minimap view.
