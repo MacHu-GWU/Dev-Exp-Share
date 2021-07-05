@@ -30,6 +30,18 @@ PyCharm 专业版的加持下, 工作流变成了, 在本地编辑好 Bash Scrip
     - Arguments: $FileName
     - Working Directory: /tmp/pycharm-projects/$ProjectName$/$FileRelativeDir$
 4. 在 Connect Settings -> SSH Configuration 中选择你的服务器所用的 Configuration. 这一设置是告诉 PyCharm 如何 SSH 到远程服务器上的. 你每次换了远程服务器后, 需要更新这一设置.
-5. 最后, 你在 Keymap 菜单里, 搜索你刚才创建的 Remote SSH External Tools 的名字 ``Run Bash Remotely`` 然后给一个快捷键, 我的设置是 ``Alt + ` (反撇)`` (相应滴直接用 Bash 的快捷键是 ``Shift + ` ``.
+5. 最后, 你在 Keymap 菜单里, 搜索你刚才创建的 Remote SSH External Tools 的名字 ``Run Bash Remotely`` 然后给一个快捷键, 我的设置是 Alt + ` (反撇) (相应滴直接用 Bash 的快捷键是 Shift + ` (反撇).
+
+
+远程服务器文件浏览器以及文件同步
+------------------------------------------------------------------------------
+
+总的来说, 当你指定了 Path Mapping 之后, PyCharm 会将任何写入到磁盘的改动 Upload 同步到服务器上. 你在本地修改完然后立刻执行, 就是最新的结果.
+
+但是仍然有些情况, 比如你手动在服务器上对文件夹下的文件进行了改动, 或是删除了文件夹, 那么同步会偶尔失效. 所以我们需要掌握手动同步并重置 PyCharm 同步器的技巧.
+
+在菜单 ``Tools -> Deployment`` 下的选项通常都是跟同步相关, 有上传, 有下载, 还有一个远程服务器文件浏览器 ``Browse Remote Host``.
+
+
 
 
