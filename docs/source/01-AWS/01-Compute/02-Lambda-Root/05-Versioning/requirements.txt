@@ -1,0 +1,2 @@
+pynamodb==5.1.0
+cottonformation==0.0.3
