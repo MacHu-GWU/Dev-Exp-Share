@@ -1,0 +1,4 @@
+awswrangler
+scipy
+stumpy
+pynamodb

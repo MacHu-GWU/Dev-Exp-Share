@@ -37,6 +37,8 @@ AWS 提供了个脚本能改变当前主硬盘 EBS 的大小, 将下面的 shell
 - https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize
 
 
+
+
 Cloud9 使用 AWS Service 的权限
 ------------------------------------------------------------------------------
 
