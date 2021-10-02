@@ -29,6 +29,12 @@ Data Access Model in Lake Formation
 - **Named data catalog resources security**: Grant / Revoke a Principal access to a Resource. This is very similar to the legacy Resource Policy, and also the default model in old AWS Lake Formation.
 - **Lake Formation Tag security model**: Define key value pair as Tag, associate one or multiple tag to ``Resource`` and ``Principal``. ``Principal`` automatically gain access to ``Resource`` that matching the Tag.
 
+.. image:: ./access-control.svg
+
+
+
+
+
 Pro and Con:
 
 - **Named data catalog resources security**
