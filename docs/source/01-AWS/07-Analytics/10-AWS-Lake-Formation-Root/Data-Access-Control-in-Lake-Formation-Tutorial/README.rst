@@ -81,7 +81,13 @@ If you have a Catalog Table, then you can create a Athena View using a SQL query
 LF Tag based Data Access Control Hands On Practice
 ------------------------------------------------------------------------------
 
-**Use Case**:
+.. contents::
+    :depth: 1
+    :local:
+
+
+Use Case
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We have:
 
@@ -105,7 +111,9 @@ We have:
     - ``regular``: cannot see ``users.ssn``.
     - ``limited``: can only access ``orders``, ``users.user_id``, ``users.user_email`` and cannot see data that ``users.confidential = 1``.
 
-**IAM Role**
+
+IAM Role
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Lake Formation Admin IAM User (or assumed role)
 - AWS Glue Crawler service role
@@ -117,11 +125,15 @@ We have:
 - User Group ``limited`` assumed role
     - Policy: same as above
 
-**Prepare S3 Data**
+
+Prepare S3 Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Upload ``eshop`` to AWS S3.
 
-**Understand Lake Formation Console**
+
+Understand Lake Formation Console
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Dashboard
 - **Data catalog**
@@ -141,7 +153,9 @@ Upload ``eshop`` to AWS S3.
     - **Data locations**: who can update glue catalog pointing to which registered data location
     - External data filtering: EMR
 
-**Configure Data Access in Lake Formation**
+
+Configure Data Access in Lake Formation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Populate Tables
 
@@ -151,16 +165,21 @@ Populate Tables
 4. Grant Data location permission: Allow ``AWS Glue Crawler Service Role`` to create/update table pointing to the ``eshop`` data location
 5. Create and Run Glue Crawler, create three tables ``users``, ``items``, ``orders``.
 
+
 Config LF Tag
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. go to **LF-Tags** menue, create six LF Tags for three defined user group: ``Admin = Y, Admin = N, Regular = Y, Regular = N, Limited = Y, Limited = N``
 
+
 Configure Principal
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. go to **Data Lake Permission**: give three User Group assumed role LF-Tags accordingly.
 
-Configure Resource
 
+Configure Resource
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Note:
 
     - ``admin``: can access everything.
@@ -172,6 +191,7 @@ Note:
 3. set ``users.ssn: Regular = N``, ``users.ssn: Limited = N``, ``users.type: Limited = N``.
 
 Test Query in Athena
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Test query
 2. create view to enable row level access
