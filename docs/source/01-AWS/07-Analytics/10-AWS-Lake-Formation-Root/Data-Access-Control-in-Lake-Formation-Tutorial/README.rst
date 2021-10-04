@@ -158,42 +158,54 @@ Configure Data Access in Lake Formation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Populate Tables
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-1. Choose Admin
-2. Register Data Location for ``eshop`` folder
-3. Create a Database
-4. Grant Data location permission: Allow ``AWS Glue Crawler Service Role`` to create/update table pointing to the ``eshop`` data location
-5. Create and Run Glue Crawler, create three tables ``users``, ``items``, ``orders``.
+1. Choose Admin.
+2. Change Global Lake Formation Settings, uncheck ``Use only IAM access control for new databases``, ``Use only IAM access control for new tables in new databases``, with it unchecked, LakeFormation will not automatically create IAM Role access and to use LF-Tags by default.
+3. Register Data Location for ``eshop`` folder
+4. Create a Database
+5. Grant Data location permission: Allow ``AWS Glue Crawler Service Role`` to create/update table pointing to the ``eshop`` data location
+6. Create and Run Glue Crawler, create three tables ``users``, ``items``, ``orders``.
 
 
 Config LF Tag
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-1. go to **LF-Tags** menue, create six LF Tags for three defined user group: ``Admin = Y, Admin = N, Regular = Y, Regular = N, Limited = Y, Limited = N``
+1. go to **LF-Tags** menu, create six LF Tags for three defined user group: ``Admin = Y, Admin = N, Regular = Y, Regular = N, Limited = Y, Limited = N``
 
 
 Configure Principal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 1. go to **Data Lake Permission**: give three User Group assumed role LF-Tags accordingly.
 
 
 Configure Resource
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 Note:
 
     - ``admin``: can access everything.
     - ``regular``: cannot see ``users.ssn``.
     - ``limited``: can only access ``orders``, ``users.user_id``, ``users.user_email`` and cannot see data that ``users.confidential = 1``.
 
-1. go to **Databases** give it ``Admin = Y`` and ``Regular = Y``, all table and column will inherit this tag
-2. go to **Table** give ``orders``, ``users`` table ``Limited = Y``.
-3. set ``users.ssn: Regular = N``, ``users.ssn: Limited = N``, ``users.type: Limited = N``.
+LF-Tag assignment
+
+- ``database``: Admin = Y, Regular = Y, Limited = Y
+    - ``users``: Limited = N
+        - ``users.user_id``: Limited = Y
+        - ``users.email``: Limited = Y
+        - ``users.ssn``: Regular = N, Limited = N
+        - ``users.confidential``: Limited = Y
+    - ``orders``: Limited = N
+    - ``items``:
+    - ``users_limited_view``: Limited = Y
+
 
 Test Query in Athena
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-1. Test query
-2. create view to enable row level access
+1. Test query using different assumed role
+2. create view (``users_limited_view`` to enable row level access)
 3. give Athena View Table LF-Tag
 4. test on View Table

@@ -33,5 +33,5 @@ if __name__ == "__main__":
         s3_client=s3_client,
         src_dir_path=os.path.join(here, "eshop"),
         bucket="aws-data-lab-sanhe-for-everything",
-        dst_dir_key="poc/2021-10-02-lakeformation-access-control-poc-dataset",
+        dst_dir_key="poc/2021-10-04-lakeformation-access-control-poc-dataset/eshop",
     )
