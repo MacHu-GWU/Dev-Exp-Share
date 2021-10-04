@@ -7,7 +7,7 @@ from pynamodb.models import Model
 from pynamodb.indexes import GlobalSecondaryIndex, LocalSecondaryIndex, AllProjection
 from pynamodb.attributes import UnicodeAttribute
 
-os.environ["AWS_DEFAULT_PROFILE"] = "skymap_sandbox"
+# os.environ["AWS_DEFAULT_PROFILE"] = "skymap_sandbox"
 
 
 class UserModel(Model):
@@ -23,6 +23,7 @@ class UserModel(Model):
 
 
 UserModel.create_table(read_capacity_units=5, write_capacity_units=5)
+
 
 
 class BoardNameIndex(GlobalSecondaryIndex):
