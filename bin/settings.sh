@@ -20,10 +20,10 @@ github_repo_name="Dev-Exp-Share"
 # Python
 package_name="dev_exp_share"
 py_ver_major="3"
-py_ver_minor="6"
-py_ver_micro="2"
+py_ver_minor="8"
+py_ver_micro="11"
 use_pyenv="N" # "Y" or "N"
-supported_py_versions="3.6.2" # e.g: "2.7.13 3.6.2"
+supported_py_versions="3.8.11" # e.g: "2.7.13 3.6.2"
 
 
 #--- Doc Build

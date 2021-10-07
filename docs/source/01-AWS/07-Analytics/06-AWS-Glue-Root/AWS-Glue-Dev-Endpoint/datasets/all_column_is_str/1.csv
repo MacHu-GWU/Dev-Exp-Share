@@ -1,0 +1,6 @@
+a_int,a_float,a_bool,a_int_with_null,a_float_with_null
+"1","1.1","True","1","1.1"
+"2","2.2","False","2","2.2"
+"3","3.3","True","3","3.3"
+"4","4.4","False",,"4.4"
+"5","5.5","True","5",

@@ -1,0 +1,8 @@
+{
+    "topic_name": ["subscriber1", "subscriber2"]
+}
+
+for topic, subscirpter:
+    if subscript.notexist():
+        sns.client.subs()
+

@@ -1,0 +1,5 @@
+acc,ssn,create_time,status
+1,"ssn-1",2000-01-01 08:00:00,"active"
+2,"ssn-2",2000-01-02 08:00:00,"active"
+3,"ssn-3",2000-01-03 08:00:00,"active"
+4,"ssn-4",2000-01-04 08:00:00,"closed"

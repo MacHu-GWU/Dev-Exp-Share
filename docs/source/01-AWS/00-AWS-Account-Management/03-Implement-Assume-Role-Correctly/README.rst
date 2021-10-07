@@ -3,6 +3,8 @@
 Implement Assume Role Correctly
 ==============================================================================
 
+**创建一个可以被 Assumed 的 IAM Role, 以及指定谁可以 Assume 这个 Role**
+
 假设你需要用在 ``aws-account-a`` 上的 IAM User Assume ``aws-account-a`` 上的 IAM Role, 有两种方式可以控制这一权限.
 
 1. 为 IAM User ``arn:aws:iam::aws-account-a:user/alice`` 添加 inline policy. 指定他可以 Assume 的 Role.
@@ -50,3 +52,7 @@ Implement Assume Role Correctly
 而如果只做了 #2, 但如果 ``arn:aws:iam::aws-account-a:user/alice`` 被允许 Assume 了在 ``aws-account-b`` 上的其他 Role, 而如果这个 Role 恰巧有修改 IAM Role trusted entity 的权限, 那么 ``Alice`` 可以通过修改 trusted entity 的形式的给自己权限. 所以也是有潜在风险的.
 
 所以要同时实现 #1, #2, 并且仅仅允许管理员 IAM User 通过修改其他 IAM User 的 inline policy 给予 Assume 指定的 IAM Role 的权限, 才可以保证完全安全.
+
+**配置 AWS cli, 以 Assumed Role 的身份调用 AWS API**
+
+- How do I assume an IAM role using the AWS CLI?: https://aws.amazon.com/premiumsupport/knowledge-center/iam-assume-role-cli/

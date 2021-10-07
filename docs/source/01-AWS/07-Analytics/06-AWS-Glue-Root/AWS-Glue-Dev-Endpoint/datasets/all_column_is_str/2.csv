@@ -1,0 +1,6 @@
+a_int,a_float,a_bool,a_int_with_null,a_float_with_null
+"6","6.6","True","6","6.6"
+"7","7.7","False","7","7.7"
+"8","8.8","True","8","8.8"
+"9","9.9","False",,"9.9"
+"10","10.1","True","10",

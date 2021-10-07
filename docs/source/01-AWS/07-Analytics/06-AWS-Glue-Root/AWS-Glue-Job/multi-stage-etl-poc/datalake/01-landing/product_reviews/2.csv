@@ -1,0 +1,5 @@
+product_id,user_id,message
+3,3,"this is good"
+3,,"this is good"
+4,3,"this is bad"
+,4,"this is bad"

@@ -1,4 +1,5 @@
 Management and Governance
 ==============================================================================
 
-AWS 中
+.. autotoctree::
+    :maxdepth: 1

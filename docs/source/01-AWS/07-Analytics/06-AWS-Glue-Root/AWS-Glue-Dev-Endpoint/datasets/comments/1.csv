@@ -1,0 +1,5 @@
+post_id,title,content,thumb_up
+1,"Hello, How are you","special char: "", ' and many ...",3
+2,"Hello, How are you","special char: "", ' and many ...",5
+3,"Hello, How are you","special char: "", ' and many ...",2
+4,"Hello, How are you","special char: "", ' and many ...",
