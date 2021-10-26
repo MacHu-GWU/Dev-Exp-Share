@@ -75,7 +75,17 @@ The resource hierarchy is Database -> Table -> Column from top to bottom. Table 
 Row Level Access in Lake Formation
 ------------------------------------------------------------------------------
 
-If you have a Catalog Table, then you can create a Athena View using a SQL query like ``SELECT * FROM table WHERE confidential = False``. Athena View is actually just another Catalog Table. You just grant the user who need limited row access a permission to visit that view.
+Lake Formation support Data Filter, you can define a "Data Filter" in lake formation, it is basically a ``SELECT * WHERE column = value`` SQL filter. See this tutorial https://aws.amazon.com/blogs/big-data/part-4-effective-data-lakes-using-aws-lake-formation-part-4-implementing-cell-level-and-row-level-security/
+
+The following method won't work, because you still need the access to visit the underlying table. The only work around is to define a Catalog Table Resource Policy ``Deny``, ``glue:ListTable`` and set ``Resources: [arn_to_the_table]`` to hide the source table in Athena view:
+
+    If you have a Catalog Table, then you can create a Athena View using a SQL query like ``SELECT * FROM table WHERE confidential = False``. Athena View is actually just another Catalog Table. You just grant the user who need limited row access a permission to visit that view.
+
+
+Column Level Masking
+------------------------------------------------------------------------------
+
+- Anonymize and manage data in your data lake with Amazon Athena and AWS Lake Formation: https://aws.amazon.com/blogs/big-data/anonymize-and-manage-data-in-your-data-lake-with-amazon-athena-and-aws-lake-formation/
 
 
 LF Tag based Data Access Control Hands On Practice
