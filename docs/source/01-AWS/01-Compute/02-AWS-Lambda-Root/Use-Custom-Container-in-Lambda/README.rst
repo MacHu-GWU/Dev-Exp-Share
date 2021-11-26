@@ -49,3 +49,12 @@ Links:
     docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/hello-world:latest
 
 Then you can create a Lambda function from docker image and run test event.
+
+
+3. Understand the AWS Lambda Base Image
+------------------------------------------------------------------------------
+
+docker run --rm --name dev public.ecr.aws/lambda/python:3.8 ls /var
+docker run --rm -dt --name dev lambci/lambda:build-python3.8 pwd ~
+docker exec -it dev bash
+docker container stop dev

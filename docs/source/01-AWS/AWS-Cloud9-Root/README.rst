@@ -37,8 +37,6 @@ AWS 提供了个脚本能改变当前主硬盘 EBS 的大小, 将下面的 shell
 - https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize
 
 
-
-
 Cloud9 使用 AWS Service 的权限
 ------------------------------------------------------------------------------
 
@@ -72,3 +70,26 @@ Cloud9 环境下常用 git 命令::
     git add --all
     git commit -m "commit message"
     git push
+
+
+Cloud9 Runner
+------------------------------------------------------------------------------
+
+Runner 就是当你选中一个文件, 点击 Run (或用快捷键) 时, 实际发生的 Command Line 命令.
+
+例如系统自带的 python3.7 对应着 ``python3.7 $filename`` 这个命令, 其中 $filename 是你当前选中文件相对与当前所在目录的相对路径.
+
+如果你要用其他 Python, 比如 virtualenv 里的 Python 来运行, 那么你就要定义一个 virtualenv 专用的 Runner file. Runner file 就是一个 Json 文件. 你在 cmd 里把第一个命令定义为 virtualenv 中的 Python 所在路径即可.
+
+.. code-block:: javascript
+
+    // Create a custom Cloud9 runner - similar to the Sublime build system
+    // For more information see http://docs.aws.amazon.com/console/cloud9/create-run-config
+    {
+        "cmd" : ["/home/ec2-user/environment/venv/bin/python", "$file", "$args"],
+        "info" : "Started $project_path$file_name",
+        "env" : {},
+        "selector" : "source.py"
+    }
+
+然后你点击 python 文件, 然后点击 Run. 在右边有个 ``Runner``. 如果它没有自动发现你刚才配置的 Runner, 你可以手动选择, 然后点击左边的 Run 按钮即可.

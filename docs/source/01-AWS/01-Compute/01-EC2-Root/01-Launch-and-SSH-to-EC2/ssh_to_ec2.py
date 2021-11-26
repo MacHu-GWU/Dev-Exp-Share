@@ -19,10 +19,10 @@ Ref:
 import boto3
 
 #------------------------- File in value here -------------------------
-aws_profile = "eq_sanhe"
+aws_profile = "aws_data_lab_sanhe"
 region = "us-east-1"
-ec2_name = "ctf-lib-jump-box-dev-jump-box"
-ec2_pem = "~/ec2-pem/eq-sanhe-dev.pem"
+ec2_name = "sanhe-infra-dev-jump-box"
+ec2_pem = "~/ec2-pem/aws-data-lab-sanhe-dev.pem"
 #----------------------------------------------------------------------
 
 boto_ses = boto3.session.Session(profile_name=aws_profile, region_name=region)

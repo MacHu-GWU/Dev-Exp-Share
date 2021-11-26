@@ -57,8 +57,12 @@ Source 为 S3 Backed Data Catalog 的时候, 需要先 Crawl 增量:
 当你的 Data Catalog 在 Crawler 抓取之后, 是会显示有多少个数据对象的. 如果在这之后你有新的数据进来, 而 Catalog 没有更新. Glue Job 是不会对增量的数据进行 ETL 的, 因为你没有重新处理.
 
 
-
 去重:
 
 - Job Detail 里的 Job Bookmark 选项要记得打开. 打开后每次 Job Run 就会标记处理完的数据对象 (S3 的), 之后就不会重复对同一对象进行 ETL 了. 而且你还可以选择重置 Bookmark, 把所有已经处理的数据标记为未完成.
+
+
+
+How to Control Output File Size
+------------------------------------------------------------------------------
 

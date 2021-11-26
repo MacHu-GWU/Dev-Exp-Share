@@ -17,35 +17,22 @@ job.init(args["JOB_NAME"], args)
 
 dataset_name = "bank_accounts"
 
-DataSource = glueContext.create_dynamic_frame.from_catalog(
-    database="multi_stage_etl_poc",
-    table_name=f"landing_{dataset_name}",
+DataSource = glueContext.create_dynamic_frame.from_options(
+    connection_type="s3",
+    connection_options = {"paths": [ "s3://aws-data-lab-sanhe-vpc-endpoint-test/users.csv", ]},
+    format="csv",
+    format_options=dict(
+        withHeader=True,
+    ),
     transformation_ctx="DataSource"
 )
 
-def get_mapping_by_dataset(dataset_name):
-    mappings = [
-        ("acc", "int", "acc", "int"),
-        ("ssn", "str", "ssn", "str"),
-        ("create_time", "str", "create_time", "str"),
-        ("status", "str", "status", "str"),
-    ]
-    return mappings
-
-mappings = get_mapping_by_dataset(dataset_name)
-
-Transform = ApplyMapping.apply(
-    frame=DataSource,
-    mappings=mappings,
-    transformation_ctx="Transform"
-)
-
 DataSink = glueContext.write_dynamic_frame.from_options(
-    frame=Transform,
+    frame=DataSource,
     connection_type="s3",
-    format="parquet",
+    format="json",
     connection_options={
-        "path": f"s3://aws-data-lab-sanhe-for-everything/poc/2021-10-05-multi-stage-etl-job-poc-dataset/02-staging/{dataset_name}/",
+        "path": "s3://aws-data-lab-sanhe-vpc-endpoint-test/users.json",
     },
     transformation_ctx="DataSink"
 )
