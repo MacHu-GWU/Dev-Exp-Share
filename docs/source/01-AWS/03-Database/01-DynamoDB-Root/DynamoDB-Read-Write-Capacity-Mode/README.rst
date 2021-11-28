@@ -31,3 +31,10 @@ On Demand Mode vs Provisioned Mode
     - You have unpredictable application traffic. 你的 App Traffic 不规律, 无法预测.
     - You prefer the ease of paying for only what you use. 你想偷懒, 不想被多收钱.
 2. Provisioned 模式, R/W 固定, 或是通过 Auto Scale 自动
+
+
+Dynamodb Pricing
+------------------------------------------------------------------------------
+
+Dynamodb
+

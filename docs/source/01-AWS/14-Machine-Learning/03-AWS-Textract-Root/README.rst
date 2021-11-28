@@ -7,7 +7,7 @@ What is AWS Textract
 
 
 
-Textract 发送给 SNS 的 Message 其实是一个 Json dump 成 String 的形式. 具体 Schema 如下:
+Textract 发送给 SNS 的 Message 其实是一个 Json dump 成 String 的形式. 具体 Schema 如下 (参考 https://docs.aws.amazon.com/textract/latest/dg/api-async.html#api-async-get-status):
 
 .. code-block:: javascript
 

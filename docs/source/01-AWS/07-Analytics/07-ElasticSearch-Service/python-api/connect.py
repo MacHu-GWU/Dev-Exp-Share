@@ -5,8 +5,7 @@ connect to the ES cluster on AWS
 """
 
 import boto3
-from elasticsearch import RequestsHttpConnection
-from elasticsearch_dsl import connections
+from elasticsearch import Elasticsearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 from superjson import json
 
@@ -26,12 +25,10 @@ awsauth = AWS4Auth(
     credentials.access_key, credentials.secret_key, region, service,
     session_token=credentials.token,
 )
-connections.create_connection(
-    hosts=[
-        {"host": host, "port": 443}
-    ],
+es = Elasticsearch(
+    hosts=[{"host": host, "port": 443}],
     http_auth=awsauth,
     use_ssl=True,
     verify_certs=True,
-    connection_class=RequestsHttpConnection,
+    connection_class=RequestsHttpConnection
 )

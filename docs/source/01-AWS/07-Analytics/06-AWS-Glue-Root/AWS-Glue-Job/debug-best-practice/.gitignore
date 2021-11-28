@@ -1,3 +1,4 @@
 *.json
+*.parquet
 site-packages/
 site-packages.zip
