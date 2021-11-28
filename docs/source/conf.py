@@ -26,7 +26,8 @@ from datetime import datetime
 import dev_exp_share
 
 from docfly.doctree import ArticleFolder
-ArticleFolder._filename = "README.rst"
+
+ArticleFolder.DEFAULT_INDEX_FILE = "README.rst"
 
 # -- General configuration ------------------------------------------------
 
@@ -90,7 +91,7 @@ language = None
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'monokai'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
@@ -100,7 +101,11 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'furo'
+html_theme_options = {
+    "sidebar_hide_name": False,
+}
+pygments_dark_style = "monokai"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -114,21 +119,27 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 html_logo = "./_static/dev_exp_share-logo.png"
 html_favicon = "./_static/dev_exp_share-favicon.ico"
+html_css_files = [
+    'css/custom-style.css',
+]
+html_js_files = [
+    'js/sorttable.js',
+]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
 #
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
-    ]
-}
+# html_sidebars = {
+#     '**': [
+#         'about.html',
+#         'navigation.html',
+#         'relations.html',  # needs 'show_related': True theme option to display
+#         'searchbox.html',
+#         'donate.html',
+#     ]
+# }
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -189,13 +200,10 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 autodoc_member_order = 'bysource'
 
 # Enable custom css
-try:
-    custom_style_file_path = os.path.join(os.path.dirname(__file__), "_static", ".custom-style.rst")
-    with open(custom_style_file_path, "rb") as f:
-        custom_style_file_content = f.read().decode("utf-8")
-    rst_prolog = "\n" + custom_style_file_content + "\n"
-except:
-    pass
+custom_style_file_path = os.path.join(os.path.dirname(__file__), "_static", ".custom-style.rst")
+with open(custom_style_file_path, "rb") as f:
+    custom_style_file_content = f.read().decode("utf-8")
+rst_prolog = "\n" + custom_style_file_content + "\n"
 
 # Add data for Jinja2
 try:
@@ -208,22 +216,3 @@ jinja_contexts = {
         "doc_data": doc_data,
     },
 }
-
-# Api Reference Doc
-import docfly
-
-package_name = dev_exp_share.__name__
-docfly.ApiReferenceDoc(
-    conf_file=__file__,
-    package_name=package_name,
-    ignored_package=[
-        "%s.pkg" % package_name,
-        "%s.docs" % package_name,
-        "%s.tests" % package_name,
-    ]
-).fly()
-
-
-def setup(app):
-    app.add_stylesheet('css/custom-style.css')
-    app.add_javascript('js/sorttable.js')
