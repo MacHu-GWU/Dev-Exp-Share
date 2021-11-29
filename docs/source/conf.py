@@ -26,8 +26,7 @@ from datetime import datetime
 import dev_exp_share
 
 from docfly.doctree import ArticleFolder
-
-ArticleFolder.DEFAULT_INDEX_FILE = "README.rst"
+from docfly.directives.autotoctree import AutoTocTree
 
 # -- General configuration ------------------------------------------------
 

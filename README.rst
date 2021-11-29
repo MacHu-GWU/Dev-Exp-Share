@@ -16,6 +16,9 @@ Doc source is here: https://github.com/MacHu-GWU/Dev-Exp-Share/tree/master/docs/
 
 命名原则, 比如你想快速定位到 AWS 的文档, 那么你的 AWS 页面主标题需要设置为 ``AWS Docs``, 也就是 ``专有名词`` + ``Docs`` 的命名模式.
 
-How to use:
+How to Search:
 
-1. Search by keywords in github search bar: ``some keyword in:path in-file``
+1. Find a document by keyword in Github:
+    - Search by keywords in github search bar: ``in:path in:file some keyword``. It leverage the built-in Github full text search
+2. Find a document by keyword in Document website:
+    - This document website is hosted on https://sanhe-dev-exp-share.readthedocs.io/README.html, you can use the insite full text search also.

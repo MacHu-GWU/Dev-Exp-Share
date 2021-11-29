@@ -5,6 +5,7 @@ Table of Content
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst
 
 .. include:: ../../AUTHORS.rst
 
