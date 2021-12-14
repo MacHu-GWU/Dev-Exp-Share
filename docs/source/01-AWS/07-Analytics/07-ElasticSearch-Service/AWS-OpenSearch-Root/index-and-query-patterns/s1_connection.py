@@ -25,7 +25,7 @@ def create_connection():
         verify_certs=True,
         connection_class=RequestsHttpConnection
     )
-    # print(es.info())  # validate connection
+    print(es.info())  # validate connection
     return es
 
 
@@ -132,7 +132,7 @@ def query_language(es):
 if __name__ == "__main__":
     es = create_connection()
     # single_document_crud(es)
-    query_language(es)
+    # query_language(es)
 
 # es = Elasticsearch(
 #     hosts=[{"host": endpoint, "port": 443}],

@@ -28,6 +28,9 @@ Dynamodb Table 的所有物理节点都只能在同一个 Region 中. 但是会�
 
 Hash Key and Range Key
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hash Key 又叫 Partition Key, Range Key 又叫 Sort Key.
+
 每个 Table 有两种可能:
 
 1. 有一个 Hash Key, 没有 Range Key (情况 1)
