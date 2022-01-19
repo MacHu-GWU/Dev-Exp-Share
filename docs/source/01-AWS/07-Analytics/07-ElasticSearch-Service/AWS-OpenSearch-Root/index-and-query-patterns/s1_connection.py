@@ -141,22 +141,3 @@ if __name__ == "__main__":
 #     verify_certs=True,
 #     connection_class=RequestsHttpConnection
 # )
-
-# username = "sanhe"
-# password = "vEeGv9Xt7%p9"
-# es_uri = f"https://{username}:{password}@{endpoint}:443/"
-# es = Elasticsearch(
-#     hosts=es_uri,
-#     # http_auth=("sanhe", ),
-#     use_ssl=True,
-#     # url_prefix="",
-#     # timeout=10,
-#     # headers=None,
-#     # http_compress=None,
-#     # cloud_id=None,
-#     # api_key=None,
-#     # opaque_id=None,
-#     # meta_header=True,
-#     # **kwargs
-# )
-# print(es.info())
