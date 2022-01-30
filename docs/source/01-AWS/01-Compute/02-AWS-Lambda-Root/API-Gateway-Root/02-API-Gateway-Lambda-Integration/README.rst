@@ -1,9 +1,10 @@
 API Gateway Lambda Integration Guide
 ==============================================================================
-
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
 
 在 Serverless 应用中, 我们常常会使用 API Gateway 来间接调用 Lambda 函数. 这样做的好处是工程师只专注于数据接口, 而调用 Lambda 的语言和 Lambda 实现所用的语言完全相互独立. 是一种很典型的解耦合的设计. 当然直接在 App 里面使用 AWS SDK 调用 invoke function 也是可以的. 不过就无法利用 API Gateway 自带的安全, 统计等功能了.
 
@@ -13,8 +14,9 @@ API Gateway Lambda Integration Guide
 
 几种常用的 Integration 风格
 ------------------------------------------------------------------------------
-
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
     :local:
 
 
@@ -65,12 +67,11 @@ Binary 风格
 
 
 
-
-
 API Gateway 中的设置
 ------------------------------------------------------------------------------
-
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
     :local:
 
 
@@ -171,7 +172,7 @@ Integration Request:
 - URL Query String Parameters: 无需设置
 - HTTP Headers: 无需设置
 - Mapping Templates: 将 HTTP GET 的 URL 和参数转化为 Lambda 的 event
-    - Content-Type: ``application/json``
+    - Content-Type: e``application/json``
     - Mapping Template: ``{"page": "$input.params('page')"}``, 如果 page 参数不存在, 则会返回一个空字符串. ``{"page": ""}``, 所以 Lambda 中需要对其进行异常处理.
 
 Method Response:

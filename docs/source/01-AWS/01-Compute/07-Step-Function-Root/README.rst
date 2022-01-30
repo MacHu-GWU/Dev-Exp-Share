@@ -1,7 +1,11 @@
-.. _step_function:
+.. _aws_step_function:
 
 Step Function
 ==============================================================================
+
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
 
 Step Function是一种将许多无状态的 Application 组织到一起的中间件. 通过 Amazon State Language (ASL) 自定义你的 workflow, 决定先执行哪个, 后执行哪个, 成功了怎么样继续, 不成功怎么样继续.
 

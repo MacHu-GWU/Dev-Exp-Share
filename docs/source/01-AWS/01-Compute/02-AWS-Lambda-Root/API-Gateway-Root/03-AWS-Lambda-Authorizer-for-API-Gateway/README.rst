@@ -2,6 +2,8 @@ API Gateway Lambda Authorizer
 ==============================================================================
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
     :local:
 
 Reference:
@@ -10,11 +12,57 @@ Reference:
 - Use API Gateway Lambda Authorizers: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
 
 
-Lambda Authorizer
+What is AWS Lambda Authorizer
 ------------------------------------------------------------------------------
+API Gateway 支持三种鉴权方式:
+
+1. AWS Cognito
+2. SAML (Third Party Single Sign On)
+3. Custom Authorizer
+
+AWS Lambda Authorizer 就是 Custom Authorizer 的实现.
+
+简单来说根据 `这篇文档 <https://docs.aws.amazon.com/apigateway/latest/developerguide/call-api-with-api-gateway-lambda-authorization.html>`_  Client 在发送 Request 的时候需要附带一个 HTTP Headers ``{"Authorization": "${TOKEN}"}``. 然后根据 `这篇文档 <https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-lambda-authorizer-input.html>`_ AWS Lambda Authorizer 收到的 event 是这样子的:
+
+.. code-block:: javascript
+
+    {
+      "type": "TOKEN",
+      "authorizationToken": "{caller-supplied-token}", # 就是 header 里的 TOKEN
+      "methodArn": "arn:aws:execute-api:{regionId}:{accountId}:{apiId}/{stage}/{httpVerb}/[{resource}/[{child-resources}]]"
+    }
+
+根据 `这篇文档 <https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-lambda-authorizer-output.html>`_ 这个 AWS Lambda 需要返回一个长这样的 Policy Document, 其中 Action, Effect, Resource 定义了这次 Authentication 的结果, 能否访问? 能访问什么权限? 能使用什么 HTTP Method?:
+
+.. code-block:: javascript
+
+    {
+      "principalId": "yyyyyyyy", // The principal user identification associated with the token sent by the client.
+      "policyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": "execute-api:Invoke",
+            "Effect": "Allow|Deny",
+            "Resource": "arn:aws:execute-api:{regionId}:{accountId}:{apiId}/{stage}/{httpVerb}/[{resource}/[{child-resources}]]"
+          }
+        ]
+      },
+      "context": {
+        "stringKey": "value",
+        "numberKey": "1",
+        "booleanKey": "true"
+      },
+      "usageIdentifierKey": "{api-key}"
+    }
+
+请注意这里的 ``context``, 你可以把 Authorization 的结果信息放入 context, 然后这个 context 会被一同 pass 给实际调用的 backend service. 这个机制可以用作鉴权缓存. 相当于提供 Service 的 backend 本身也做了一些鉴权的判断逻辑.
+
+值得一提的是, 根据 `这篇文档 <https://aws.amazon.com/blogs/security/use-aws-lambda-authorizers-with-a-third-party-identity-provider-to-secure-amazon-api-gateway-rest-apis/>`_, Authorizer 是支持缓存的, 也就是一定时间内你对 API 发起的请求不需要再经过 Authorizer 的 Lambda Function 了, 这样可以提高响应速度.
 
 
-Token
+
+一个具体的例子
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 简单来说, 该方法是在你每次发送 API Http Request 的时候, 在 Header 中附带一个 Token 信息, 然后有一个专用的 Lambda Function 会接受到这个 Token, 以及被请求的资源的信息. 然后你使用自定义的逻辑处理这个 Token, 返回一个 JSON Policy Document, 里面定义了能对哪些资源进行访问, 哪些资源不允许访问. 然后 AWS 会根据这个 Policy Document 来检查你要访问的资源是否允许你访问.
@@ -86,3 +134,14 @@ REQUEST
 
 REQUEST 本质上跟 TOKEN 一致, 都是通过 Header 传入信息, 由 Lambda Function 进行处理, 返回 PolicyDocument, 不过输入信息更丰富. 而且你需要手动指定 Cache Key, 也就是在 Header 中选择一个或多个 Key 作为 Cache 的 Key.
 
+
+使用 Lambda Authorizer 时的 API 鉴权的流程
+------------------------------------------------------------------------------
+我们以 GitHub 网站为例:
+
+1. 用户输入账号密码登录, 这个登录服务器本身也是一个对公网开放的 API, 这个 API 是无需权限的, 但是有限流限速等机制以防暴力破戒. 一旦登录成功, 服务器端就会生成一个有效期 24 小时的 token, 并将 token 存在 Dynamodb 中 (Redis 也可以, 类似, 我们就按 Dynamodb 算吧) 并设置 TTL. 然后浏览器会收到这个 token.
+2. 用户进入 GitHub 点击各个网页元素或者菜单, 有些按钮是不是 public 的, 比如列出你的所有 Private Repo. 那么这些网页元素本身背后就是一个需要 Authentication 的 API. 你第一次点击的时候浏览器就会自动带上这个 token.
+3. 后端的 Lambda Authorizer 的实现逻辑可能仅仅是检查这个 Key 在 Dynamodb 中是否存在, 如果存在则 Allow.
+4. 于是 Github 网站成功返回一些需要登录才能获得的资源.
+5. 当你再次刷新这个页面时, 如果是 Get, 可能不仅仅 Authorization 被缓存, 而实际返回的数据 API Gateway 都直接缓存了, 所以 Lambda Authorizer 以及 Backend Service 都没有被 Invoke.
+6. 如果是 Post, 比如你要 commit, 那么 API Gateway 则会在短时间内, 比如 60 秒内不经过 Authorizer, 而是直接在 Authorization 缓存里找到你已经登录的记录, 直接 commit. 如果超过 60 秒, 就再 call 一次 Lambda Authorizer 即可.

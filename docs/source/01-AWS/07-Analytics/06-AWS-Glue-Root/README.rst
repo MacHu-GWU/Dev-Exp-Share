@@ -1,9 +1,11 @@
-AWS Glue
+AWS Glue Root
 ==============================================================================
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
 
 AWS Glue 是一个什么样的服务?
 ------------------------------------------------------------------------------
