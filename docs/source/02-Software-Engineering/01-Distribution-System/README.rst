@@ -9,3 +9,4 @@ Distribution System (分布式系统) Docs
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst

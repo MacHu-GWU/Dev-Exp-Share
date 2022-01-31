@@ -1,4 +1,6 @@
 Python: Beautiful is better than ugly
 ==============================================================================
 
-pip install -r <path-to-requirements.txt>
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
