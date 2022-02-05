@@ -1,0 +1,6 @@
+{
+    "instance_type": "t2.micro",
+    "documents": [
+        {"id": 1, "name": }
+    ]
+}

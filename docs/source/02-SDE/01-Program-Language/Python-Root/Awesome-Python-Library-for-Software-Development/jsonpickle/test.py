@@ -18,6 +18,7 @@ class User:
     def __init__(self, name):
         self.name = name
 
+
 @attr.s
 class Account:
     username = attr.ib()
@@ -32,8 +33,8 @@ dct = dict(
     a_bytes="hello world!".encode("utf-8"),
     a_datetime=datetime.now(),
     a_user_object=User(name="Alice"),
-    a_account_object = Account(username="alice@example.com", password="mypassword"),
-    a_numpy_array=np.array([[1,2,3],[4,5,6],[7,8,9]]),
+    a_account_object=Account(username="alice@example.com", password="mypassword"),
+    a_numpy_array=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
     a_pandas_dataframe=pd.DataFrame([("a", 1), ("b", 2)], columns=["alpha", "number"]),
 )
 
@@ -45,4 +46,3 @@ print(ser_dct)
 
 deser_dct = jsonpickle.loads(ser_dct)
 print(deser_dct)
-

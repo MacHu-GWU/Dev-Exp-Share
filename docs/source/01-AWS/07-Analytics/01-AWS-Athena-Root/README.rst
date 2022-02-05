@@ -1,8 +1,12 @@
-AWS Athena Docs
+.. _aws-athena:
+
+AWS Athena
 ==============================================================================
 
-.. contents::
-    :local:
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
+
 
 
 Athena 是

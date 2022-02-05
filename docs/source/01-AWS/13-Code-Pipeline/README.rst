@@ -2,8 +2,10 @@ Code Pipeline
 ==============================================================================
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
 
 Code Pipeline 是 AWS 提供的 持续集成, 持续部署 (CI/CD) 解决方案, 里面包含了 4 个子模块, Code Commit 负责管理代码仓库, Code Build 负责在容器中运行 test 和 build, Code Deploy 负责将 build 好的代码 deploy, 而 Code Pipeline 则负责将 Code Commit, Code Build, Code Deploy 编排到一起.
 
