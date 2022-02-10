@@ -8,6 +8,8 @@ Redshift, powerful OLAP database.
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst
+
 
 Docs: https://docs.aws.amazon.com/redshift/latest/dg/welcome.html
 

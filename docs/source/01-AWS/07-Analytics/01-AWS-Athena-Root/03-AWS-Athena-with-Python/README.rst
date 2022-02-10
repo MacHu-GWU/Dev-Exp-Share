@@ -9,8 +9,14 @@ Keywords: Athena, Python, pyathena
 
 Python 社区对 Athena 的 DB API 2.0 实现的库是 https://pypi.org/project/pyathena/. 本质上 Athena 是将数据存在 S3 bucket 中, 而 ``pyathena`` 是通过实现一个 wrapper, 以实现 DB API 2.0 标准. 如果想要用 python 操作 Athena, 建议参照 ``pyathena`` 的文档, 配合 ``sqlalchemy`` 和 ``pandas`` 一起使用, 体验最好.
 
+``requirements.txt`` Dependency
+
 .. literalinclude:: ./requirements.txt
 
+``prepare_data.py`` data faker
+
 .. literalinclude:: ./prepare_data.py
+
+``query_data.py`` pyathena usage example
 
 .. literalinclude:: ./query_data.py

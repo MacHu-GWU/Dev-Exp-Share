@@ -7,3 +7,4 @@ Availability (可用性)
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst

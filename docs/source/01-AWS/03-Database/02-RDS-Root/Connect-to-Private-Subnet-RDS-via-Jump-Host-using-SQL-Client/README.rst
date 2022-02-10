@@ -1,3 +1,5 @@
+.. _connect-to-private-subnet-rds-via-jump-host-using-sql-client:
+
 Connect to Private Subnet RDS via Jump Host using SQL Client
 ==============================================================================
 
