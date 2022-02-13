@@ -26,6 +26,12 @@ Create a ``config.json`` file like this::
         "aws_profile": "my_aws_profile",
         "aws_region": "my_aws_region"
     }
+
+Reference:
+
+- https://github.com/aws/amazon-redshift-python-driver#basic-example
+- https://github.com/aws/amazon-redshift-python-driver#example-using-iam-credentials
+- https://github.com/sqlalchemy-redshift/sqlalchemy-redshift
 """
 
 import json
@@ -49,6 +55,21 @@ aws_region = config.get("aws_region")
 
 def method1():
     conn = redshift_connector.connect(
+        host=host,
+        port=5439,
+        database=database,
+        user=db_user,
+        password=db_password,
+        timeout=6,
+    )
+
+    cur = conn.cursor()
+    for row in cur.execute("SELECT 1;"):
+        print(row)
+
+
+def method2():
+    conn = redshift_connector.connect(
         iam=True,
         database=database,
         db_user=db_user,
@@ -59,21 +80,6 @@ def method1():
         password="",
         timeout=6,
     )
-    cur = conn.cursor()
-    for row in cur.execute("SELECT 1;"):
-        print(row)
-
-
-def method2():
-    conn = redshift_connector.connect(
-        host=host,
-        port=5439,
-        database=database,
-        user=db_user,
-        password=db_password,
-        timeout=6,
-    )
-
     cur = conn.cursor()
     for row in cur.execute("SELECT 1;"):
         print(row)

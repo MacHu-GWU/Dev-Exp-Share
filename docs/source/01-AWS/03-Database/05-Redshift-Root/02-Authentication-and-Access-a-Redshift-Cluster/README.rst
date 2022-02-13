@@ -35,6 +35,7 @@ Redshift 和 RDS 的网络层管理很类似, 本质上是一个 EC2 集群, 不
 
 **应用层管理**
 
+
 Redshift Service Role
 ------------------------------------------------------------------------------
 Redshift 本身也是 EC2, 也是有需要访问 AWS 账号内的其他服务, 例如从 S3 读取数据. 那么你也是需要给 Redshift 本身 attach 一个 IAM Role, 这就和 EC2 instance profile 类似. 由于这个 Role 的 Principal (使用者) 是一个 AWS Service, 所以这种给 AWS Service 使用的 IAM Role 叫做 Service Role.
