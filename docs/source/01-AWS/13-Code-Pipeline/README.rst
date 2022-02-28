@@ -31,3 +31,4 @@ Build Spec File 就相当于 TravisCI 中的 ``.travis.yml``, CircleCI 中的 ``
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst
