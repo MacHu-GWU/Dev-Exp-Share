@@ -36,7 +36,6 @@ Augmented AI 是一个什么样的服务, 解决了什么问题
 
 How Augmented AI Works?
 ------------------------------------------------------------------------------
-
 **Human review workflow**
 
     Augmented AI 最顶层的抽象叫做 Human review workflow. 它包含如下信息:

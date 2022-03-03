@@ -18,9 +18,7 @@ SQS 后台是分布式的, 一个队列的许多消息是分布在多台机器�
 
 Differences Between Long and Short Polling
 ------------------------------------------------------------------------------
-
 Short polling occurs when the WaitTimeSeconds parameter of a ReceiveMessage request is set to 0 in one of two ways:
 
-The ReceiveMessage call sets WaitTimeSeconds to 0.
-
-The ReceiveMessage call doesn’t set WaitTimeSeconds, but the queue attribute ReceiveMessageWaitTimeSeconds is set to 0.
+- The ReceiveMessage call sets WaitTimeSeconds to 0.
+- The ReceiveMessage call doesn’t set WaitTimeSeconds, but the queue attribute ReceiveMessageWaitTimeSeconds is set to 0.

@@ -1,13 +1,18 @@
 Simple Notification Service (SNS) Docs
 ==============================================================================
 
-SNS 和 SQS 类似, 也是一个消息队列系统. 但是 SNS 主要是解决实时推送的问题, 不像 SQS 通常用于延迟处理类型的问题.
 
-SNS 的模型是 Topic, Subscription. Subscription 必须要是一个可以进行 Consume 的单元, 可以是 AWS Lambda, SQS, Http Endpoint, Text Message, Email.
 
-简单来说当一条 Message 被发布到 Topic, 所有的 Subscriber 会被同时触发.
-
-SNS 允许创建 100,000 个 Topic, 以及 10 Million 个 Subscription Per Topic.
+What is SNS
+------------------------------------------------------------------------------
+- SNS 和 SQS 类似, 也是一个消息队列系统. **但是 SNS 主要是解决实时推送的问题, 不像 SQS 通常用于延迟处理类型的问题**.
+- SNS 的模型是 Topic, Subscription. Subscription 必须要是一个可以进行 Consume 的单元, 可以是 AWS Lambda, SQS, Http Endpoint, Text Message, Email.
+- 简单来说, 当一条 Message 被发布到 SNS Topic, 所有的 Subscriber 会被同时触发.
+- SNS 允许创建 100,000 个 Topic, 以及 10 Million 个 Subscription Per Topic.
+- SNS 适合做什么:
+    - App 上的实时推送
+- SNS 不适合做什么:
+    - Pub / Sub 的消息数据处理系统
 
 
 1. Topic 不多 Subscriber 非常多, 要求实时.
@@ -30,3 +35,14 @@ SNS 允许创建 100,000 个 Topic, 以及 10 Million 个 Subscription Per Topic
 ------------------------------------------------------------------------------
 
 这是最难的一种情况了. 比如 微信 消息推送, 每一个点对点的聊天都是一个 Topic.
+
+
+Phone Number Subscriber
+------------------------------------------------------------------------------
+
+
+Email Subscriber
+------------------------------------------------------------------------------
+本节我们介绍如何设置 Email
+
+默认情况下 AWS

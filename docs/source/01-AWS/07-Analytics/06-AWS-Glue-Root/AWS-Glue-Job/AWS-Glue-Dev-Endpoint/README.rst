@@ -48,14 +48,22 @@ https://docs.aws.amazon.com/cli/latest/reference/glue/update-dev-endpoint.html
 
 Glue Dev Endpoint with Python
 ------------------------------------------------------------------------------
-
-
 Ref:
 
 - Glue Dev Endpoint 中 Glue 的版本信息: https://docs.aws.amazon.com/glue/latest/dg/dev-endpoint.html
 - Glue Dev Endpoint 中自带的 Python 库的信息: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-libraries.html#glue20-modules-provided
 - 关于 Glue Dev Endpoint 无法添加依赖 C 的包的声明: https://docs.aws.amazon.com/glue/latest/dg/add-dev-endpoint.html
 - Glue Release Note: https://docs.aws.amazon.com/glue/latest/dg/release-notes.html
+
+
+SSH to Glue Dev Endpoint
+------------------------------------------------------------------------------
+Glue Dev Endpoint 本质上是一个 EMR + Spark 集群, 也是有 Master node 的. 你可以用 ssh 连接到这个集群上, 直接在服务器上进行一些 debug 和调试. 方法如下:
+
+
+Ref:
+
+- https://docs.aws.amazon.com/glue/latest/dg/dev-endpoint-elastic-ip.html
 
 
 Links
