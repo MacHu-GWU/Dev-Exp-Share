@@ -2,6 +2,7 @@
 
 AWS Augmented AI Root
 ==============================================================================
+Keywords: AWS Augmented AI, a2i, human in loop, HIL
 
 Ref:
 
