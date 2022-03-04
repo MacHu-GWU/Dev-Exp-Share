@@ -1,0 +1,64 @@
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<style>
+    table, tr, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+</style>
+
+<crowd-form>
+    <div>
+        <h1>Instructions</h1>
+        <p>Please review the predictions in the Predictions table based on the input data table below, and make corrections where appropriate. </p>
+        <p> Here are the labels: </p>
+        <p> 0: Benign </p>
+        <p> 1: Malignant </p>
+    </div>
+
+    <h1> Predictions Table </h1>
+
+    <table>
+        <tr>
+            <th>ROW NUMBER</th>
+            <th>MODEL PREDICTION</th>
+            <th>AGREE/DISAGREE WITH ML RATING?</th>
+            <th>YOUR PREDICTION</th>
+            <th>CHANGE REASON </th>
+        </tr>
+
+        {% for pair in task.input.Pairs %}
+
+            <tr>
+                <td>{{ pair.row }}</td>
+
+                <td>
+                    <crowd-text-area name="predicted{{ forloop.index }}" value="{{ pair.prediction }}"></crowd-text-area>
+                </td>
+                <td>
+                    <p>
+                        <input type="radio" id="agree{{ forloop.index }}" name="rating{{ forloop.index }}" value="agree" required>
+                        <label for="agree{{ forloop.index }}">Agree</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="disagree{{ forloop.index }}" name="rating{{ forloop.index }}" value="disagree" required>
+                        <label for="disagree{{ forloop.index }}">Disagree</label>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <input type="text" name="True Prediction{{ forloop.index }}" placeholder="Enter your Prediction" />
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <input type="text" name="Change Reason{{ forloop.index }}" placeholder="Explain why you changed the prediction" />
+                    </p>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+</crowd-form>
