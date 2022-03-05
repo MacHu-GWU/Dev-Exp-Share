@@ -2,7 +2,6 @@
     "Pairs": [
         {"row": "Key_0: Value_0", "prediction": 0.1544346809387207},
         {"row": "Key_1: Value_1", "prediction": 0.4938497543334961},
-        {"row": "Key_2: Value_2", "prediction": 0.23486430943012238},
-        {"row": "Key_3: Value_3", "prediction": 0.23486430943012238}
+        {"row": "Key_2: Value_2", "prediction": 0.23486430943012238}
     ]
 }

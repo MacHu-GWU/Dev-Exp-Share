@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Infrastructure as Code script.
+Augmented AI as Code script. Allow you to quickly spin up required resources
+to play with A2I, and then easily clean up all resource with one click.
 
 Prerequisite:
 
@@ -32,6 +33,7 @@ class Config:
     aws_region = "us-east-1"
     project_name = "a2i_poc"
     hil_output_loc = "s3://aws-data-lab-sanhe-for-everything/2022-02-23-a2i"  # DO NOT end with "/"
+    worker_team_arn = "arn:aws:sagemaker:us-east-1:669508176277:workteam/private-crowd/sanhe-labeling-workforce"
 
     @property
     def project_name_slug(self):
@@ -193,11 +195,11 @@ def create_flow_definition():
     response = sm_client.create_flow_definition(
         FlowDefinitionName=config.flow_definition_name,
         HumanLoopConfig={
-            "WorkteamArn": "arn:aws:sagemaker:us-east-1:669508176277:workteam/private-crowd/sanhe-labeling-workforce",
+            "WorkteamArn": config.worker_team_arn,
             "HumanTaskUiArn": config.task_ui_arn,
             "TaskTitle": config.task_ui_name,
             "TaskDescription": f"{config.task_ui_name} description",
-            "TaskCount": 1,
+            "TaskCount": 2,
             "TaskTimeLimitInSeconds": 3600,
         },
         OutputConfig={

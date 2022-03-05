@@ -9,14 +9,14 @@ License: MIT (see LICENSE for details)
 
 Pre-requisite:
 
-1. Python >= 3.7
+- ``Python >= 3.7``, ``python_liquid``, ``python_box``
+
 .. code-block:: bash
 
     pip install python_liquid
     pip install python_box
-
-
 """
+
 import json
 from pathlib import Path
 from box import Box
@@ -26,9 +26,18 @@ dir_here = Path(__file__).parent
 path_template = Path(dir_here, "task.liquid")
 path_data = Path(dir_here, "task.json")
 path_html = Path(dir_here, "task.html")
+
+# read liquid template
 template = Template(path_template.read_text())
 
-data = json.loads(path_data.read_text())
-task = Box({"input": data})
+# read task data
+input_data = json.loads(path_data.read_text())
+
+# convert task data to box, so it support dot notation
+task = Box({"input": input_data})
+
+# render template
 content = template.render(task=task)
+
+# write template to html file
 path_html.write_text(content)
