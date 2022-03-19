@@ -167,7 +167,7 @@ def delete_a2i_execution_role():
 
 def create_human_task_ui():
     # ref: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker.html#SageMaker.Client.create_human_task_ui
-    liquid_template = Path(dir_here, "task.liquid").read_text(encoding="utf-8")
+    liquid_template = Path(dir_here, "task-backup.liquid").read_text(encoding="utf-8")
     response = sm_client.create_human_task_ui(
         HumanTaskUiName=config.task_ui_name,
         UiTemplate={
@@ -229,6 +229,7 @@ def start_human_loop():
             {"row": "Key_0: Value_0", "prediction": 0.1544346809387207},
             {"row": "Key_1: Value_1", "prediction": 0.4938497543334961},
             {"row": "Key_2: Value_2", "prediction": 0.23486430943012238},
+            {"row": "Avantor Team 1", "prediction": 0.23486430943012238},
         ]
     }
     response = a2i_client.start_human_loop(

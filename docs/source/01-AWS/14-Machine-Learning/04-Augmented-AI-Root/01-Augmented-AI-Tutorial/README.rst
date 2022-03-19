@@ -47,6 +47,7 @@ A traditional Human-in-loop Workflow Example, credit card application use case:
     {
         "application_id": "a-127",
         "approve": True,
+        "confidence": 90,
     }
 
 3. **Merge Input / Output data, generate a Human review request. Send the merged data to backend**.

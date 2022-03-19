@@ -42,7 +42,7 @@ update_dev_endpoint() {
     aws glue update-dev-endpoint --endpoint-name "${dev_endpoint_name}" --custom-libraries ExtraPythonLibsS3Path="s3://${bucket}/${key}" --update-etl-libraries
 }
 
-# install_dependencies
-# create_zip_file
-# upload_to_s3
-# update_dev_endpoint
+#install_dependencies
+#create_zip_file
+#upload_to_s3
+#update_dev_endpoint

@@ -44,6 +44,10 @@ Cloud9 本质上是一个 EC2. AWS 提供了两种方式管理对 AWS Service �
 
 第一种叫 AWS Managed Temporary Credentials. 让你的 Cloud9 EC2 拥有跟环境创建者, 通常是 IAM User 相同的权限. 实际上是在 ~/.aws/credential 和 ~/.aws/config 处生成文件, 并隔一段时间就 rotate 一下具体的 Credential. 这个功能可以在 Cloud9 的 IDE 里的 Preference 里打开和关闭. 这是 AWS 最推荐的方式.
 
+.. warning::
+
+    如果你的 Cloud9 放在了 Private Subnet 上, 则无法使用 AWS Managed Temporary Credentials. 必须关闭这个选项并用 IAM Role 来控制权限.
+
 第二种就是给 Cloud9 EC2 添加 IAM Role. 记得要将第一种 AWS Managed Temporary Credentials 的设置在 IDE 里关闭才能生效.
 
 参考资料:
@@ -53,7 +57,6 @@ Cloud9 本质上是一个 EC2. AWS 提供了两种方式管理对 AWS Service �
 
 Cloud9 + GitHub
 ------------------------------------------------------------------------------
-
 Cloud9 是一个云 IDE, 并不是一个 RDP, 所有不能用图形化客户端软件, 在 Cloud9 上只能用 git 命令行.
 
 AWS 官方推荐使用 Personal Access Token 用于 GitHub Authorization. 对于私有仓库, Clone 时你要输入 Username 和 Token. 对于任何仓库你 Push 时也要输入.
@@ -70,6 +73,8 @@ Cloud9 环境下常用 git 命令::
     git add --all
     git commit -m "commit message"
     git push
+
+对于 Code commit
 
 
 Cloud9 Runner

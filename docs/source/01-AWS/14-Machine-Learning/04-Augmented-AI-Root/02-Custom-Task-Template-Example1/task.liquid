@@ -1,0 +1,96 @@
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<style>
+    table, tr, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+</style>
+
+<crowd-form>
+    <div>
+        <h1>Instructions</h1>
+        <p>Your instruction go here </p>
+    </div>
+
+    <div>
+        <h2>Current Product</h2>
+        <ul>
+            <li><strong>Product ID</strong>: {{ task.input.product.id }}</li>
+            <li><strong>Product Description</strong>: {{ task.input.product.description }} </li>
+            <li><strong>Price / Unit</strong>: {{ task.input.product.price_unit }} </li>
+            <li><strong>GP / Unit</strong>: {{ task.input.product.gp_unit }} </li>
+        </ul>
+        DON't TOUCH THIS! <input type="text" name="s3uri" value="{{ task.input.s3uri }}" />
+    </div>
+
+    <h1> Recommendations </h1>
+
+    <table>
+        <tr>
+            <th>SELECT</TH>
+            <th>PRODUCT ID</th>
+            <th>PRODUCT DESCRIPTION</th>
+            <th>PRICE/UNIT</th>
+            <th>GP/UNIT</th>
+            <th>REMARKS</TH>
+        </tr>
+
+        {% for recmd in task.input.recommendations %}
+
+            <tr>
+                <td>
+                    <p>
+                        <input type="radio" id="recommend{{ forloop.index }}" name="recommend{{ forloop.index }}" value="recommend" required>
+                        <label for="recommend{{ forloop.index }}">Recommend</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="notRecommend{{ forloop.index }}" name="recommend{{ forloop.index }}" value="notRecommend" required>
+                        <label for="notRecommend{{ forloop.index }}">Not Recommend</label>
+                    </p>
+                </td>
+
+                <td>{{ recmd.id }}</td>
+
+                <td>{{ recmd.description }}</td>
+
+                <td>{{ recmd.price_unit }}</td>
+
+                <td>{{ recmd.gp_unit }}</td>
+
+
+                <td>
+                    <p>
+                        <input type="text" name="remark{{ forloop.index }}" placeholder="Enter your notes" />
+                    </p>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% comment %}
+    Follow up actions:
+
+    1. Approve: render it in retail store UI
+    2. Deny: don't render it in retail store UI
+    3. Need More Research: don't render it in retail store UI, notify developer
+    {% endcomment %}
+    <h1> Human In Loop Decision </h1>
+
+    <p>
+        <input type="radio" id="decisionApprove" name="decision" value="decisionApprove" required>
+        <label for="decisionApprove">Approve</label>
+    </p>
+    <p>
+        <input type="radio" id="decisionDeny" name="decision" value="decisionDeny" required>
+        <label for="decisionDeny">Deny</label>
+    </p>
+    <p>
+        <input type="radio" id="decisionTBD" name="decision" value="decisionTBD" required>
+        <label for="decisionTBD">Need more research</label>
+    </p>
+
+</crowd-form>

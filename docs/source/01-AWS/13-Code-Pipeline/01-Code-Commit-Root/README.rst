@@ -121,6 +121,30 @@ Ref:
 
 简单来说就是三步:
 
-1. Actions for the Administrator in AccountA (repo 在这个 Acc 上).
-2. Actions for the Administrator in AccountB (user 在这个 Acc 上.
-3. Actions for the repository user in AccountB.
+1. Actions for the Administrator in AccountA (repo 在这个 Acc 上). 在 AccA 上创建 IAM Policy / Role, 我们称之为 RoleA, 这 RoleA 是能读写 repo 的.
+2. Actions for the Administrator in AccountB (user 在这个 Acc 上). 在 AccB 上创建 IAM Policy / Role, 我们称之为 RoleB. 我们的 IAM User 可以 assume RoleB, 而 RoleB 也要能 assume RoleA, RoleA 也要允许 RoleB assume 它自己.
+3. Actions for the repository user in AccountB. 接下来就跟跨 AWS Account assume role 一样, 用户 B 先 login, assume RoleB, 然后 assume RoleA, 最后对 Git 进行操作.
+
+注意, 你无法使用 Codebuild built-in integration 跨 Account Pull CodeCommit repo. 你只能手动在 buildspec file 里写 shell script 来 clone repo.
+
+
+Code Commit Trigger AWS Lambda
+------------------------------------------------------------------------------
+很多流行的 Git 系统例如 GitHub, GitLab 都有 Webhook 的功能. 也就是通过监控 Git 的 event, 包括各种 pull, push, merge request 等, 然后把事件信息的 JSON 数据发送给 Webhook 连接的后台, 实现自动化运行一些后续功能. 而 AWS CodeCommit 则可以用这些 event 触发 AWS Lambda, 以实现几乎任何你想实现的功能. 例如一些著名的 CI/CD 的 SAAS 服务的本质就是用 webhook 监控时间, 从而触发 build / deploy. 而你完全可以用 Lambda 监控, 并触发 Code build 的 build 从而做到更神奇的事.
+
+- https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify-lambda.html
+- https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify-lambda-cc.html
+
+
+Code Commit Approval Rule
+------------------------------------------------------------------------------
+Approval Rule 是一个简单的功能, 可以实现对于不同的 branch, 指定一些 IAM User / Role, 只有他们 Approve 了之后才能 Merge.
+
+- https://docs.aws.amazon.com/codecommit/latest/userguide/approval-rule-templates.html
+
+
+Code Commit Code Owner
+------------------------------------------------------------------------------
+在 GitHub 中有个功能叫做 Code Owner. 也就是说对于某个文件夹下的文件, 必须得到 Code Owner Approve Pull Request 之后才能够 Merge. 在 Code Commit 中是通过 IAM 管理权限的. 所以你可以通过 IAM Policy 管理: 谁, 可以对哪些文件, 做什么. 比 GitHub 的 CodeOwner 功能更强大, 但是设置起来更复杂.
+
+- https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-permissions-reference.html#aa-files

@@ -23,7 +23,7 @@ from box import Box
 from liquid import Template
 
 dir_here = Path(__file__).parent
-path_template = Path(dir_here, "task.liquid")
+path_template = Path(dir_here, "task-backup.liquid")
 path_data = Path(dir_here, "task.json")
 path_html = Path(dir_here, "task.html")
 

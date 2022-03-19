@@ -18,7 +18,6 @@ Code Pipeline 是 AWS 提供的 持续集成, 持续部署 (CI/CD) 解决方案,
 
 Code Commit 其实就是 Git 服务器的实现, Code Commit Repository 相当于一个用户界面远没有 GitHub 友好的 GitHub.
 
-
 什么是 Code Build:
 
 Build Spec File 就相当于 TravisCI 中的 ``.travis.yml``, CircleCI 中的 ``.circleci/config.yml``, 定义了多个 Job, 每个 Job 要执行的命令.
