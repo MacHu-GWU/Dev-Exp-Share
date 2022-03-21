@@ -45,14 +45,20 @@ def list_records(
 
 
 def test_list_records():
-    print(list_records())  # {'records': [{'id': 1}, {'id': 2}, {'id': 3}, {'id': 4}, {'id': 5}], 'next_paginator': 6}
-    print(list_records(limit=3))  # {'records': [{'id': 1}, {'id': 2}, {'id': 3}], 'next_paginator': 4}
-    print(list_records(limit=5,
-                       paginator=6))  # {'records': [{'id': 6}, {'id': 7}, {'id': 8}, {'id': 9}, {'id': 10}], 'next_paginator': 11}
-    print(list_records(limit=5,
-                       paginator=16))  # {'records': [{'id': 16}, {'id': 17}, {'id': 18}, {'id': 19}, {'id': 20}], 'next_paginator': None}
-    print(list_records(limit=5,
-                       paginator=18))  # {'records': [{'id': 18}, {'id': 19}, {'id': 20}], 'next_paginator': None}
+    # {'records': [{'id': 1}, {'id': 2}, {'id': 3}, {'id': 4}, {'id': 5}], 'next_paginator': 6}
+    print(list_records())
+
+    # {'records': [{'id': 1}, {'id': 2}, {'id': 3}], 'next_paginator': 4}
+    print(list_records(limit=3))
+
+    # {'records': [{'id': 6}, {'id': 7}, {'id': 8}, {'id': 9}, {'id': 10}], 'next_paginator': 11}
+    print(list_records(limit=5, paginator=6))
+
+    # {'records': [{'id': 16}, {'id': 17}, {'id': 18}, {'id': 19}, {'id': 20}], 'next_paginator': None}
+    print(list_records(limit=5, paginator=16))
+
+    # {'records': [{'id': 18}, {'id': 19}, {'id': 20}], 'next_paginator': None}
+    print(list_records(limit=5, paginator=18))
 
 
 def list_all_records():
