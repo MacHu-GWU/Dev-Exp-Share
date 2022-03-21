@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-
-::
+A simple implementation of depth first search / width first search::
 
     t
     |--- t1
@@ -18,6 +17,7 @@
     # width first search result
     t, t1, t2, t11, t12, t21, t22
 """
+
 from typing import List
 
 
@@ -56,5 +56,5 @@ def width_first_search(node: Node, _is_root=True):
         yield from width_first_search(n, _is_root=False)
 
 
-print(list(depth_first_search(t)))
-print(list(width_first_search(t)))
+print(list(depth_first_search(t)))  # ['t11', 't12', 't1', 't21', 't22', 't2', 't']
+print(list(width_first_search(t)))  # ['t', 't1', 't2', 't11', 't12', 't21', 't22']
