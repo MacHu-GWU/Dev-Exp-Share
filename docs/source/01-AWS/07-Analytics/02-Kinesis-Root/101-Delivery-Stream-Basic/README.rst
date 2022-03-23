@@ -24,7 +24,21 @@ Ref:
 
 How it Work
 ------------------------------------------------------------------------------
-我们知道 Kinesis Data Stream 底层有很多个 Shard. 每个 Shard 负责一定量的数据. 而 Kinesis Delivery Stream 的内部也是有很多 Shard. 你可以将其理解为
+我们知道 Kinesis Data Stream 底层有很多个 Shard. 每个 Shard 负责一定量的数据. 而 Kinesis Delivery Stream 的内部也是有很多 Shard. 你可以将其理解为一个 Delivery Stream 的计算逻辑对应一个 Container 中的代码. 一个 Container 就是一个 Consumer. Delivery Stream 为每个 Shard 都配了一个 Consumer. 然后这个 Consumer 就会完成数据的 delivery, 如果其中有 Transformation 的需求, 那么 Transformation 的逻辑会在 AWS Lambda 处理完成. 所以整个流程看起来是像这样子:
+
+    Kinesis Data Stream
+    ->
+    Data Stream Shard
+    ->
+    delivery stream buffer
+    ->
+    Delivery Stream Shard
+    ->
+    lambda buffer
+    ->
+    Lambda Transformation data
+
+.. image:: ./kinesis_delivery_stream_how_it_work.drawio.png
 
 
 Data Stream 和 Delivery Stream 的区别
