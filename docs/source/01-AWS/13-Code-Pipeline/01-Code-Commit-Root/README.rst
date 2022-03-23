@@ -61,6 +61,8 @@ MacOS 上的大坑
 此段参考资料: https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-connect.html
 
 
+.. _use-code-commit-repo-on-aws-cloud9-or-jupyter-lab:
+
 在 Cloud 9 (Or EC2) + Jupyter Lab 上使用 Code Commit
 ------------------------------------------------------------------------------
 大型企业管理 AWS Account 的方式和个人有很大不同, 通常使用企业内部的 Employee Account (email / password), 通过 Single Sign On 来管理 Sign In. 也就是说一般企业用户不会使用 IAM User 来 Sign In. 所以 Code Commit 中为 IAM User 配置 "HTTPS Git credentials for AWS CodeCommit" 账号密码的方法就不奏效了.

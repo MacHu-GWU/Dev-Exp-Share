@@ -1,3 +1,5 @@
+.. _gitlab-authentication:
+
 GitLab Authentication
 ==============================================================================
 Keyword: Git, GitLab, Auth, Authentication, SSH, Personal Access Token.
