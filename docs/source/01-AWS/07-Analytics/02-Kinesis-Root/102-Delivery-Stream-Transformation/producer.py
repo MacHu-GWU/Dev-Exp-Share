@@ -18,7 +18,7 @@ raw_records = [
 
 kin_records = [
     dict(
-        Data=json.dumps(raw_record).encode("utf-8"),
+        Data=(json.dumps(raw_record) + "\n").encode("utf-8"),
         PartitionKey=raw_record["id"],
     )
     for raw_record in raw_records

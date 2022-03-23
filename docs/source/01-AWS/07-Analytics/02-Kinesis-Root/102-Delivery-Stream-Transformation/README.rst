@@ -2,7 +2,7 @@
 
 Kinesis Firehose Delivery Stream Transformation
 ==============================================================================
-Keywords: AWS Lambda, Transform,
+Keywords: AWS Kinesis, Firehose, Delivery Stream, Lambda, Transform Transformation.
 
 我们来看一个典型的实时数据流 Transformation 案例:
 
@@ -34,6 +34,7 @@ Keywords: AWS Lambda, Transform,
 
 .. literalinclude:: ./producer.py
    :language: python
+
 
 3, 4. Transformation Lambda Function
 ------------------------------------------------------------------------------

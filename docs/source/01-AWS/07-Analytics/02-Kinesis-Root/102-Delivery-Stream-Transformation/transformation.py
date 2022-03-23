@@ -43,8 +43,7 @@ def lambda_handler(event, context):
     for record in event["records"]:
         print(record["recordId"])
         # convert the data back to raw data
-        record_data = record["data"]
-        raw_record = json.loads(base64.b64decode(record_data.decode("utf-8")))
+        raw_record = json.loads(base64.b64decode(record["data"].encode("utf-8")))
 
         # Do custom processing on the payload here
         transformed_record = raw_record
@@ -54,7 +53,7 @@ def lambda_handler(event, context):
         output_record = {
             "recordId": record["recordId"],
             "result": "Ok", # "OK" | "Dropped" | "ProcessingFailed"
-            "data": base64.b64encode(json.dumps(transformed_record).encode('utf-8'))
+            "data": base64.b64encode((json.dumps(transformed_record) + "\n").encode('utf-8'))
         }
         output.append(output_record)
 
