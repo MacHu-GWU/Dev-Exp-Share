@@ -23,3 +23,9 @@ Example: Status Code
         success = 2
 
     print("Now status code is {}".format(StatusCode.success.value))
+
+
+Best Practice
+------------------------------------------------------------------------------
+.. literalinclude:: ./best_practice.py
+   :language: python
