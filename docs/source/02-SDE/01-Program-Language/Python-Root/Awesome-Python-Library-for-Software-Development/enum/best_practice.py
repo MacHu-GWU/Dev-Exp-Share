@@ -40,3 +40,9 @@ with raises(KeyError):
 # value 不存在会报 ValueError
 with raises(ValueError):
     _ = Color(3)
+
+# 遍历所有 enum
+for c in Color:
+    print(c, c.name, c.value)
+
+print(list(Color.__members__.values()))
