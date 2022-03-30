@@ -2,6 +2,8 @@
 
 Add Extra Python Library to Glue Job or Dev Endpoint
 ==============================================================================
+Keywords:
+
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
