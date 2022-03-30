@@ -1,5 +1,6 @@
 # this list is from official doc https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-libraries.html#glue20-modules-provided
-# glue 2.0 released around 2020-03-01
+# glue 2.0 released around 2020-03-01, use Spark 2.4.3, Python 3.7
+# Reference: https://docs.aws.amazon.com/glue/latest/dg/release-notes.html
 boto3==1.12.4
 botocore==1.15.4
 certifi==2019.11.28

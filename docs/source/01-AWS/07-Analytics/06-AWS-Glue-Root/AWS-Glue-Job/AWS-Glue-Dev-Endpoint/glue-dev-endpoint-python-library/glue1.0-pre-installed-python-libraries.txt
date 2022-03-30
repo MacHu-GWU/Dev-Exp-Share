@@ -1,5 +1,6 @@
 # this list is from a real glue 1.0 dev endpoint using ssh, then ``pip freeze``
-# glue 1.0 released around 2019-06-01
+# glue 1.0 released around 2019-06-01, use Spark 2.4.3, Python 3.6
+# Reference: https://docs.aws.amazon.com/glue/latest/dg/release-notes.html
 aws-cfn-bootstrap==1.4
 awscli==1.15.83
 Babel==0.9.4
