@@ -1,0 +1,41 @@
+{
+    "deployed_by": "sanhehu",
+    "deployed_at_local_time": "2022-04-05T12:10:01-04:00",
+    "deployed_at_utc_time": "2022-04-05T16:10:01+00:00",
+    "account_id": "669508176277",
+    "region": "us-west-1",
+    "resources": {
+        "tag_aws_lf_tag_admin_access_y": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_admin_access",
+            "value": "y"
+        },
+        "tag_aws_lf_tag_admin_access_n": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_admin_access",
+            "value": "n"
+        },
+        "tag_aws_lf_tag_regular_access_y": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_regular_access",
+            "value": "y"
+        },
+        "tag_aws_lf_tag_regular_access_n": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_regular_access",
+            "value": "n"
+        },
+        "tag_aws_lf_tag_limited_access_y": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_limited_access",
+            "value": "y"
+        },
+        "tag_aws_lf_tag_limited_access_n": {
+            "res_type": "LfTag",
+            "key": "aws_lf_tag_limited_access",
+            "value": "n"
+        }
+    },
+    "datalake_permissions": {},
+    "lf_tag_attachments": {}
+}

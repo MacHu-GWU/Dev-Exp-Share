@@ -1,3 +1,21 @@
+.. _aws-lake-formation-root:
+
+AWS Lake Formation Root
+==============================================================================
+
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
+
+
+
+Q/A:
+
+-
+
+
+
 
 测试用例:
 

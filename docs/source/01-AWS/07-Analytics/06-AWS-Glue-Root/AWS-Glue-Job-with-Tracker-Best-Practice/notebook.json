@@ -1,0 +1,98 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:s3:::aws-glue-jes-prod-us-gov-west-1-assets"
+            ]
+        },
+        {
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:s3:::aws-glue-jes-prod-us-gov-west-1-assets*"
+            ]
+        },
+        {
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents",
+                "logs:CreateLogGroup"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:logs:us-gov-west-1:135218177114:log-group:/aws/sagemaker/*",
+                "arn:aws-us-gov:logs:us-gov-west-1:135218177114:log-group:/aws/sagemaker/*:log-stream:aws-glue-*"
+            ]
+        },
+        {
+            "Action": [
+                "glue:UpdateDevEndpoint",
+                "glue:GetDevEndpoint",
+                "glue:GetDevEndpoints"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:glue:us-gov-west-1:135218177114:devEndpoint/*"
+            ]
+        },
+        {
+            "Action": [
+                "sagemaker:ListTags"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:sagemaker:us-gov-west-1:135218177114:notebook-instance/*"
+            ]
+        },
+        {
+            "Action": [
+                "s3:*"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws-us-gov:s3:::sandbox-*",
+                "arn:aws-us-gov:s3:::sandbox-*/*"
+            ]
+        },
+        {
+            "Action": [
+                "dynamodb:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowKMSforS3",
+            "Action": [
+                "kms:Decrypt",
+                "kms:Encrypt",
+                "kms:GenerateDataKey",
+                "kms:ReEncryptFrom",
+                "kms:ReEncryptTo",
+                "kms:ListKeys",
+                "kms:ListAliases",
+                "kms:ConnectCustomKeyStore"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws-us-gov:kms:*:135218177114:key/*"
+        },
+        {
+            "Action": [
+                "glue:*"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+

@@ -46,3 +46,6 @@ Build Python Library For Glue
     ssh glue@ec2-13-59-145-121.us-east-2.compute.amazonaws.com
 
 该文件夹提供了一些便利的脚本, 以用于为 Glue Job 或者 Glue Dev Endpoint 配置额外的 Python Library.
+
+
+aws glue update-dev-endpoint --endpoint-name "glue-etl-dev" --custom-libraries ExtraPythonLibsS3Path="s3://sandbox-userhome/aip/sanhe.hu/glue/python-library/site-packages.zip" --update-etl-libraries --profile afs_dev
