@@ -14,7 +14,6 @@ On-prem Username Password Access
 
 2. 准备 Secret Manager
 ------------------------------------------------------------------------------
-
 参考 `这篇官方文档 <https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html>`_, 配置 Secret Manager.
 
 - 确保你用来 Encrypt Secret 的 KMS key 是 custom managed key, 而不是 AWS managed key.
@@ -25,6 +24,7 @@ On-prem Username Password Access
         "password": "alice-secret"
     }
 - 确保你的 Secret Name 是以 ``AmazonMSK_`` 开头的.
+- 等 MSK Cluster 启动完毕后, 用 Console 里 Associate Secret 的功能将 Secret 关联到 MSK Cluster
 
 
 3. 准备 Cloud9
@@ -76,3 +76,33 @@ Ref:
 - Authentication and Authorization for Amazon MSK APIs: https://docs.aws.amazon.com/msk/latest/developerguide/security-iam.html
 - Authentication and Authorization for Apache Kafka APIs: https://docs.aws.amazon.com/msk/latest/developerguide/kafka_apis_iam.html
 - Controlling Access to Apache ZooKeeper: https://docs.aws.amazon.com/msk/latest/developerguide/zookeeper-security.html
+
+
+7. 管理 Username, Password 对应的 User 的权限
+------------------------------------------------------------------------------
+请注意 https://docs.aws.amazon.com/msk/latest/developerguide/msk-acls.html 里的一段话:
+
+    Apache Kafka ACLs have the format "Principal P is [Allowed/Denied] Operation O From Host H on any Resource R matching ResourcePattern RP". If RP doesn't match a specific resource R, then R has no associated ACLs, and therefore no one other than super users is allowed to access R. To change this Apache Kafka behavior, you set the property allow.everyone.if.no.acl.found to true. Amazon MSK sets it to true by default. This means that with Amazon MSK clusters, if you don't explicitly set ACLs on a resource, all principals can access this resource. If you enable ACLs on a resource, only the authorized principals can access it. If you want to restrict access to a topic and authorize a client using TLS mutual authentication, add ACLs using the Apache Kafka authorizer CLI.
+
+这段的意思是, 默认情况下 ``allow.everyone.if.no.acl.found`` 是 ``true`` 他的意思是, 当你验证权限的时候, 假设你有一个 Resource 通常是一个 Topic, 如果你所有已有的 ACL 中的 ResourcePattern 的模式都没有 Match 这个 Resource, 换言之这个 Resource 在 ACL 中找不到任何他的定义, 那么任何 Principal 都能访问这个. 说白了当这个设置为 ``true`` 的时候, 如果没有设置, 默认是 Allow. 这就导致了默认情况下, 你在 Secret Manager 中的 User 可以访问任何 Resource, 因为 ACL 里什么都没有. 这样有一个隐患, 就算你为所有的 Resource (Topic) 定义了 ACL, 没有权限的 Principal 是无法访问这些 Topic 的, 但对于之后新创建的 Topic, 总有一段时间你来不及定义 ACL, 这段时间所有的 Principal 都能访问这个 Topic.
+
+而如果把这个设为 ``false``. 说白了就是默认是 Deny. 你必须在 ACL 中显式允许 Principal 访问某个 Resource. 也就是说你在得为 Secret Manager 中的 User 创建 ACL. 这也是 AWS 推荐的模式.
+
+下面我们一步步操作实现用 ACL 精细化管理 Secret Manager 中的 User:
+
+1. 在 MSK Cluster Configuration 中创建一个新的 Configuration, 里面的值就是 AWS 的默认值. 然后在最后添加一行 ``allow.everyone.if.no.acl.found=false``. 然后在 Cluster 中选择 Edit Configuration, 这需要一段时间才能使得 Configuration 生效.
+2. MSK 架构中真正处理 Data 的 Broker 是跟 Zookeeper 在一个 VPC 里的, 而你的 MSK 的 VPC 里的 Broker 是 bootstrap broker. 由于你的 broker 本身也是个 Principal (是基于 CName 的 Principal), 你的 ACL 中并没有定义这个 broker, 所以这个 broker 是无法从真正管理 Topic 的 broker 那里读取 topic 数据发送给客户端的, 所以你需要在 ACL 中给你的 bootstrap broker READ 权限. 一直都是 ````::
+
+    ./kafka-acls.sh --authorizer-properties zookeeper.connect="${zookeeper_conn_str}" --add --allow-principal "User:CN=*.${bootstrap_server_endpoint}" --operation Read --group=* --topic "${topic_name}"
+
+关键的 ACL 命令::
+
+    # 列出已经存在的 ACL
+    ./kafka-acls.sh --authorizer-properties zookeeper.connect="${zookeeper_conn_str}" --list
+
+    # 给指定 Secret Manager 中的用户 Read / Write 的权限
+    ./kafka-acls.sh --authorizer-properties zookeeper.connect="${zookeeper_conn_str}" --add --allow-principal "User:alice" --operation Read --group=* --topic "DatabaseStream"
+    ./kafka-acls.sh --authorizer-properties zookeeper.connect="${zookeeper_conn_str}" --add --allow-principal "User:alice" --operation Write --topic "DatabaseStream"
+
+    # 允许你的 Broker 读取 Topic
+    ./kafka-acls.sh --authorizer-properties zookeeper.connect="${zookeeper_conn_str}" --add --allow-principal "User:CN=*.on-prem-user-pass-con.ey78pz.c24.kafka.us-east-1.amazonaws.com" --operation Read --group=* --topic "DatabaseStream"

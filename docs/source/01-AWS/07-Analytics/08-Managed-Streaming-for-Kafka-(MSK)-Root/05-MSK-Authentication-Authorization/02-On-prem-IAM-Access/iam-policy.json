@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "kafka-cluster:DescribeTopicDynamicConfiguration",
+                "kafka-cluster:WriteDataIdempotently",
+                "kafka-cluster:DescribeCluster",
+                "kafka-cluster:ReadData",
+                "kafka-cluster:DescribeTopic",
+                "kafka-cluster:DescribeTransactionalId",
+                "kafka-cluster:DescribeGroup",
+                "kafka-cluster:DescribeClusterDynamicConfiguration",
+                "kafka-cluster:Connect",
+                "kafka-cluster:WriteData"
+            ],
+            "Resource": [
+                "arn:aws:kafka:us-east-1:669508176277:topic/iam-access-test1/*/DatabaseStream",
+                "arn:aws:kafka:us-east-1:669508176277:group/iam-access-test1/*/*",
+                "arn:aws:kafka:us-east-1:669508176277:cluster/iam-access-test1/*",
+                "arn:aws:kafka:us-east-1:669508176277:transactional-id/iam-access-test1/*/*"
+            ]
+        }
+    ]
+}

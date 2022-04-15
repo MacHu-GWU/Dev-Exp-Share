@@ -33,7 +33,6 @@ VPC Peering 不支持自动桥接, 你如果想要两个 VPC 能通信, 必须�
 
 你需要满足 VPC A 的 Route 里要有一个 Destination 是 B 的地址, VPC B 的 Route 里要有一个 Destination 是 A 的地址. 这个 target 一般是 VPC 的全部 CIDR, 但是 destination 只是部分的 CIDR, 这取决于你要连接的应用. 例如 A 上是 Web App, 要跟 B 上的 Relational Database 通信, 那么这个 destination 的 CIDR 就是在 B 上的 Database 所用到的 CIDR Block. 具体例子如下:
 
-
 - VPC A Route Table: destination 10.11.1.0/28, target 10.11.0.0/16
 - VPC B Route Table: destination 10.10.1.0/24, target 10.10.0.0/16
 
