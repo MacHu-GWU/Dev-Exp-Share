@@ -45,8 +45,9 @@ On-prem Username Password Access
 - 这两台机器放在 Public Subnet 或是 Private Subnet 无所谓, 最好是 Public Subnet 下.
 - 两个 Cloud9 都要禁用 AWS Managed Credential
 - 两个 Cloud9 都要有 VPC default security group
+- 两个 Cloud9 的 IAM Role 的 Trusted Entity Document 必须要有 ``"cloud9.amazonaws.com", "ec2.amazonaws.com"`` 两个, 光有 EC2 没用. 自己创建的 IAM Role 一般只有 EC2, 你需要手动添加 Cloud9.
 - kafka-admin 机器可以有 Admin 权限
-- kafka-app 机器只需要最基本的几个权限就可以了, 不要给他 MSK 权限
+- kafka-app 机器需要有 ``arn:aws:iam::aws:policy/AWSCloud9SSMInstanceProfile`` 这个 AWS 提供的 IAM Policy 即可, 该 Policy 让你能用 System manager 来连接 Cloud9 EC2. 你还要有 ``arn:aws:iam::aws:policy/SecretsManagerReadWrite`` 才能获得 Credential, 避免了把密码直接写在代码里的风险.
 
 
 3. 启用 Public Access
@@ -56,14 +57,21 @@ On-prem Username Password Access
 
 5. 配置 Python Client
 ------------------------------------------------------------------------------
+我们这里使用 `kafka-python <https://kafka-python.readthedocs.io/en/master/index.html>`_ Python 库作为 Kafka Client.
 
-confluent-kafka
+我们使用 `pysecret <https://github.com/MacHu-GWU/pysecret-project>`_ 库来从 AWS Secret Manager 中获得 username, password.
+
+在 MSK Cluster 中选定的 SASL/SCRAM authentication 在 ``kafka-python`` 中对应的是 ``SASL_SSL`` 方式, 使用的是 ``SCRAM-SHA-512`` 验证方式.
 
 Ref:
 
-- https://docs.confluent.io/clients-confluent-kafka-python/current/overview.html
+- MSK SASL authentication: https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html#msk-password-tutorial
+- Consumer: https://kafka-python.readthedocs.io/en/master/_modules/kafka/consumer/group.html
+- Producer: https://kafka-python.readthedocs.io/en/master/_modules/kafka/producer/kafka.html
 
 
+6. 测试 Python Client
+------------------------------------------------------------------------------
 - FAQ Access Management Section: https://aws.amazon.com/msk/faqs/
 - Authentication and Authorization for Amazon MSK APIs: https://docs.aws.amazon.com/msk/latest/developerguide/security-iam.html
 - Authentication and Authorization for Apache Kafka APIs: https://docs.aws.amazon.com/msk/latest/developerguide/kafka_apis_iam.html
