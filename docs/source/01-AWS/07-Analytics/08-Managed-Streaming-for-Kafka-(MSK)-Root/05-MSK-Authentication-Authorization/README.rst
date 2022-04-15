@@ -73,7 +73,18 @@ MSK 的访问权限管理问题其实是 "权限管理问题" 的子集. 本质�
 
 3.2 SASL / SCRAM 详解
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-SASL 就是
+SASL 就是账号密码验证. 只不过账号密码的管理在社区版 Kafka 中是由 Kerberos 管理的. 创建 User, Password 都是通过 `kadmin <https://web.mit.edu/kerberos/krb5-1.12/doc/admin/admin_commands/kadmin_local.html>`_ 这个 Kerberos 命令行工具来进行的. 而 AWS 则是用 Secret manager 来管理用户名和密码, 只要将 Secret Attach 给 MSK, 那么 MSK 中的 User 就会自动和 Secret manager 保持一致 (我估计 AWS 还是用了 Kerberos, 只不过 AWS 把密码管理给自动化了).
+
+显然 AWS 的方式更方便, 更强大, 支持更精细化的密码管理和自动 Rotate.
+
+而 SASL 只能告诉 MSK 你是谁, 在 MSK 中你的 Principal 就是你的 username. 但是 Principal 具体能做什么 SASL 并不管, 也就是说 SASL 只管 Authentication 而不管 Authorization.
+
+那么对于 SASL 提供的 Principal 的 Authorization 由谁负责呢? 答案是 ACL.
+
+
+3.3 ACL 详解
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
 
