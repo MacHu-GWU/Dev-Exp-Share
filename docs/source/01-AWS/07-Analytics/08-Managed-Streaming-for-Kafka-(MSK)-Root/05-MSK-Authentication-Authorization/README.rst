@@ -21,10 +21,22 @@ MSK 的访问权限管理问题其实是 "权限管理问题" 的子集. 本质�
 
 根据 `这篇文档 <https://docs.aws.amazon.com/msk/latest/developerguide/kafka_apis_iam.html>`_ MSK 支持多种权限管理方式, 主要有:
 
-1. IAM Policy.
-2. Mutual TLS Authentication, 就是 HTTPS 协议里的 TLS, 需要 CA 证书.
-3. SASL / SCRAM (Simple Authentication and Security Layer/ Salted Challenge Response Mechanism), 就是基于账号密码的验证.
-4. Kafka ACLs (Access Control List). 本质上就是 Kafka 自带的 IAM, 也有 Principal / Resource / Action 的概念, 不过这里的 Principal 都是 CN (canonical name), 也就是 DNS 地址. 这是一种基于网络的验证手段.
+1. IAM access control. 既能做 Authentication, 又能做 Authorization
+2. Mutual TLS Authentication. 就是 HTTPS 协议里的 TLS, 服务器和客户端都需要 CA (证书). 只能做 Authentication, 不能做 Authorization.
+3. `SASL / SCRAM <https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html>`_ (Simple Authentication and Security Layer/ Salted Challenge Response Mechanism), 就是基于账号密码的验证. 只能做 Authentication, 不能做 Authorization.
+4. `Kafka ACLs <https://docs.aws.amazon.com/msk/latest/developerguide/msk-acls.html>`_ (Access Control List). 本质上 ACL 和 IAM 的实现是相同的, 只不过管理的精细度不同. 也有 Principal / Resource / Action 的概念. 只能做 Authorization. 根据 Kafka 的 `官方文档 <https://docs.confluent.io/platform/current/kafka/authorization.html>`_ ACL 能提供的管理粒度是:
+    - `Principal <https://docs.confluent.io/platform/current/kafka/authorization.html#principal>`_:
+        - Wildcard principals
+        - SASL/Kerberos principals
+        - TLS/SSL principal user names
+        - IP, CName
+    - `Resource <https://docs.confluent.io/platform/current/kafka/authorization.html#resources>`_:
+        - Cluster
+        - Delegation Token
+        - Group
+        - Topic
+        - Transactional ID (For exact once delivery)
+    - `Action <https://docs.confluent.io/platform/current/kafka/authorization.html#operations>`_
 
 
 2. Challenge
@@ -33,6 +45,36 @@ MSK 的访问权限管理问题其实是 "权限管理问题" 的子集. 本质�
 
 3. Options
 ------------------------------------------------------------------------------
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
+
+
+3.1 IAM Access Control 详解
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**AWS 是怎么在 MSK 上实现 IAM Access Console**?
+
+    AWS 是基于开源的 Kafka 源码对其做了一些改动. 每当一个带有 IAM 权限的 Principal (可以是任何机器, 电脑, 只要是 Attach IAM Role 的 EC2, 或是配置了 AWS Named Profile Credential 的任何机器), 跟 MSK 通信的时候, MSK 会跟 Client 握手, 并创建一个临时的 token 储存在 MSK 上, 并获得这个 token 的权限. 这个 token 就代表你的 Principal, 并且 MSK 和 Client 会自动刷新定期检查权限.
+
+    这 MSK 和 Client 的通信协议是由 AWS 实现的. 需要 Client 安装支持这个通讯协议的包. 不然 MSK 是不知道你是 "谁" 的. 目前只支持 `这个 Java 的实现 <https://github.com/aws/aws-msk-iam-auth>`_. 也就是说其他语言目前还不支持用 IAM 跟 MSK 通信, 即使你是用 EC2 和 MSK 通信, MSK 也无法检测到你的流量是从 EC2 来的并自动检测到 EC2 背后的 IAM Role. 目前 AWS 的 `Product Feature Request 文档 <https://aws-crm.lightning.force.com/lightning/r/Product_Feature_Request__c/a2v4z000002RuwRAAS/view>`_ 正在推进对其他编程语言的支持
+
+**如何在 Java Client 中使用 IAM Access Control**
+
+    1. 配置 Client 客户端
+
+    - 首先确保你安装了 Java, 如果是基于 Amazon Linux 的 EC2 和 Cloud9, 你可以用 ``sudo yum install java-1.8.0``
+    - 然后根据 `这篇文档 <https://docs.aws.amazon.com/msk/latest/developerguide/msk-working-with-encryption.html>`_ 中搜索 ``truststore`` 关键字附近的命令, 参考教程把 ``truststore`` 文件拷贝到 ``/tmp/kafka.client.truststore.jks`` 位置供以后使用. 如果你不懂什么是 ``truststore`` 文件, 请参考这篇博文 :ref:`java-keystore-and-truststore-in-jsse`.
+    - 为你的 Client 客户端用 AWS CLI 配置 AWS named profile
+    - 然后根据 `这篇文档 <https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html>`_ 中搜索 ``Configure clients for IAM access control
+`` 后面的教程, 创建好 ``client.properties`` 文件; 然后下载 `aws-msk-iam-auth <https://github.com/aws/aws-msk-iam-auth/releases>`_ JAR, 并放在正确的位置以供 import
+    - 最后为这个 named profile 创建 IAM User (只给 program access 权限), 然后 attach 一个合适的 Policy.
+
+
+3.2 SASL / SCRAM 详解
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SASL 就是
+
 
 
 4. Solutions

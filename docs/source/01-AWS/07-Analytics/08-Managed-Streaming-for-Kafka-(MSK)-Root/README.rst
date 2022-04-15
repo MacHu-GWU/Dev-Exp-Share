@@ -1,7 +1,9 @@
-Kafka and AWS MSK (Managed Streaming for Kafka)
+MSK Root
 ==============================================================================
+AWS 管理的 Kafka 服务.
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
 
@@ -10,6 +12,7 @@ Kafka and AWS MSK (Managed Streaming for Kafka)
 ------------------------------------------------------------------------------
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
 
