@@ -1,6 +1,13 @@
-MSK Root
+.. _aws-msk-root:
+
+AWS MSK (Managed Streaming for Kafka) Root
 ==============================================================================
 AWS 管理的 Kafka 服务.
+
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
+
 
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
