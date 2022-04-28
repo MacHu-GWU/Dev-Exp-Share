@@ -23,28 +23,9 @@ Kafka Data Hub Design
 3. 基础设施复用.
 
 
-
 2. 中心化的 Data Hub 的关键技术挑战是什么?
 ------------------------------------------------------------------------------
-1. Multi-Tenant with-in Topic.
-
-    有两种解决方案:
-
-    1. 用一个 Consumer 作为 Distributor, 按照 Tenant 将数据分流到不同的 Topic 上. 每个 Tenant 变成一个新的 Topic.
-        - 优点:
-            - 数据完完全全被分离开, 不可能出现一个 Tenant 的 Consumer 不小心消费到了别的 Tenant 的数据
-            - 很容易增加和减少 Tenant. 增加一个新的 Topic 即可, 不影响已有的系统.
-        - 缺点:
-            - 为每个 Tenant 所属的 Topic 配置合适的 Partition 非常难. 由于 Kafka 本身只允许增加 Partition, 但不能减少 Partition.
-        - 应用场景:
-            - 每个 Tenant 的 Topic 的流量都很小, 数量不多的 Partition 足以搞定.
-    2. 为每个 Tenant 创建一个 Consumer Group, 每个 Consumer Group filter 出只属于自己的数据并进行消费.
-        - 优点:
-            - 实现简单
-            - 很容易增加和减少 Tenant. 增加一个新的 Consumer Group 即可, 不影响已有的系统.
-        - 缺点:
-            - 每个 Tenant 的 Consumer Group 都收到了全量数据.
-    3. 只创建一个 Consumer Group. 为
+1. Multi-Tenant within a Topic. 详情请参考 :ref:`aws-kafka-multi-tenant`
 
 2. 权限管理.
 

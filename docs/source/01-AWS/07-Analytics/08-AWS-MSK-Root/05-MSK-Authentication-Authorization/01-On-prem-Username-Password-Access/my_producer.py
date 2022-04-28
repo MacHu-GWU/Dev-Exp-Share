@@ -4,7 +4,6 @@ import boto3
 import pysecret
 from kafka import KafkaProducer
 
-
 # ==============================================================================
 # Define your Configuration here
 # ------------------------------------------------------------------------------
@@ -18,6 +17,7 @@ class Config:
 
 cfg = Config()
 # ==============================================================================
+
 boto_ses = boto3.session.Session(region_name=cfg.aws_region)
 msk_client = boto_ses.client("kafka")
 

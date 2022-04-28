@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-
-"""
-
 import boto3
 import pysecret
 from kafka import KafkaConsumer
@@ -20,6 +16,7 @@ class Config:
 
 cfg = Config()
 #==============================================================================
+
 boto_ses = boto3.session.Session(region_name=cfg.aws_region)
 msk_client = boto_ses.client("kafka")
 

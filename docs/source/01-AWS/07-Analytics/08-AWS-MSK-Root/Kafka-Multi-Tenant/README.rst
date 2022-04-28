@@ -28,7 +28,7 @@ Kafka Multi Tenant (多租户)
     1. 不同的租户使用同一个 Cluster的情况.
 
     - 只要做好 Topic 级别的权限管理即可, 让属于不同租户的 Consumer 只能访问他们自己的 Topic
-    - 为了防止某个 Topic 的流量过大影响其他集群性能, 可以用 Quora 进行限流. 限流的粒度有三种. "user + client_id", "user", "client_id".
+    - 为了防止某个 Topic 的流量过大影响其他集群性能, 可以用 `Quota <https://docs.confluent.io/platform/current/kafka/design.html#quotas>`_ 进行限流. 限流的粒度有三种. "user + client_id", "user", "client_id".
 
     2. 同一个 Topic 中的 Message 来自于不同的租户的情况.
 
