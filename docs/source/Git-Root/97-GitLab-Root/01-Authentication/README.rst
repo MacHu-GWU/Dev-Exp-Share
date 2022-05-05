@@ -15,7 +15,6 @@ Keyword: Git, GitLab, Auth, Authentication, SSH, Personal Access Token.
 - 对于 public repository, 任何人都能 clone / pull, 但是只有 owner 和有权限的人才能 push.
 - 对于 private repository, 只有有权限的人才能 clone / pull / push.
 
-
 GitHub 和 GitLab 都提供了以下两种 Auth 方式:
 
 - SSH
@@ -32,11 +31,26 @@ Token 方式原理
 Token 本质就是一个钥匙, 和密码类似. GitLab 会在服务器保存这个钥匙并每次在你发起请求时与之比对. 不同的是一个账户可以有很多 Token, 生命周期和权限各不相同, 并且账号主人可以随时禁用.
 
 
-具体命令
+使用 SSH 访问 GitLab
 ------------------------------------------------------------------------------
+1. 生成一对私钥和公钥, 默认私钥放在 ``$HOME/.ssh/id_rsa``, 公钥 ``$HOME/.ssh/id_rsa.pub``. (参考 Generating a new SSH key and adding it to the ssh-agent: https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
-- GitLab URL 构成: https://<my-user-id>:<my-pat>@gitlab.com/<my-account>/<my-project-name>
+.. code-block:: bash
 
+    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+2. 将公钥交给 GitLab, 点击这个链接 https://gitlab.com/-/profile/keys 创建 ``New SSH Key`` 即可.
+3. 然后使用 ``git clone git@gitlab.com:{account_name}/{repo_name}.git`` 通信.
+4. 对于企业的 GitLab 仓库.
+
+.. code-block:: bash
+
+    # 拉取企业云的 GitLab 上的私有仓库
+    git clone ssh://git@mycompany.domain.com:5050/my_account_id/my_repo_name.git
+
+
+使用 Token 访问 GitLab
+------------------------------------------------------------------------------
 .. code-block:: bash
 
     # 拉取你在 GitLab 上的私有仓库
@@ -46,10 +60,8 @@ Token 本质就是一个钥匙, 和密码类似. GitLab 会在服务器保存这
     git clone "https://oauth2:${GL_TOKEN}@gitlab.com/${GL_USER}/${GL_REPO}.git"
 
     # 具体例子
+    # 手动输入 token
     git clone https://oauth2:@gitlab.com/MacHu-GWU/gitlab-test.git
+
+    # 把 token 包含在 command 里
     git clone "https://oauth2:${GL_TOKEN}@gitlab.com/MacHu-GWU/gitlab-test.git"
-
-.. code-block:: bash
-
-    # 拉取企业云的 GitLab 上的私有仓库
-    git clone ssh://git@mycompany.importantproject.com:5050/my_account_id/my_repo_name.git

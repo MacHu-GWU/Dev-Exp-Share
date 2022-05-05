@@ -2,12 +2,14 @@ git clone Access Private Repo (使用 git 访问私有仓库)
 ==============================================================================
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
     :local:
+
 
 
 使用 SSH 在不手动输入账号密码的情况下操作 Private Repo
 ------------------------------------------------------------------------------
-
 - Q: 有哪些方法可以在不弹出输入框的情况下使用 git 命令拉取 private repo? 这样就可以编写自动化脚本了.
 - A: 常用的有两种:
     1. 使用 ``git clone 'https://<username>:<password>@github.com/<username>/<repo-name>.git'`` 命令. 将账号密码编码成命令中的一部分. **有很大风险且, 不推荐**.
