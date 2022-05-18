@@ -48,7 +48,6 @@ Keywords: Consistent Hash, Load Balancer, Scale
 
 一致性哈希的 Python 实现
 ------------------------------------------------------------------------------
-Python 社区的 Consistent Hash 的实现是 `uhashring
- <https://github.com/ultrabug/uhashring>`_ 这个包.
+Python 社区的 Consistent Hash 的实现是 `uhashring <https://github.com/ultrabug/uhashring>`_ 这个包.
 
 具体的用法可以参考 `示例代码 <./uhashring-test.ipynb>`_
