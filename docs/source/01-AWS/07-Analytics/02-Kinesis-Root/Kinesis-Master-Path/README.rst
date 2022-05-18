@@ -1,17 +1,16 @@
 .. _kinesis:
 
-Kinesis Master Path
+Kinesis - Path to Master
 ==============================================================================
 Keywords: AWS Kinesis
 
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
 
-Kinesis Architect
-------------------------------------------------------------------------------
-.. raw:: html
-    :file: ./kinesis-architect.html
 
-
-Throughput Optimization
+Basic
 ------------------------------------------------------------------------------
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
@@ -19,15 +18,41 @@ Throughput Optimization
     :local:
 
 
-Optimize Write Throughput - Choose the right Partition Key
+Kinesis Architect
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. raw:: html
+    :file: ./kinesis-architect.html
+
+
+Kinesis vs Kafka
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Advance
+------------------------------------------------------------------------------
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
+
+
+Throughput Optimization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
+
+
+Optimize Producer - Choose the right Partition Key
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 1. choose the key high cardinality, like order id, device id if N >> n_shard
 2. if you have to use low cardinality key for strong ordering purpose, you can append suffix
 3. if ordering doesn't matter, you can append random suffix
 
 
-Optimize Write Throughput - Batch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optimize Producer - Batch
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 without batch::
 
     events = [
@@ -60,8 +85,8 @@ with batch::
     )
 
 
-Optimize Write Throughput - Aggregation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optimize Producer - Aggregation
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 without aggregation::
 
     temperature_measurement_events = ...
@@ -110,15 +135,16 @@ with aggregation::
     )
 
 
-Optimize Consumption Speed - Slow Consumer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optimize Consumer - Slow Consumer
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. raw:: html
     :file: ./optimize-consumption-slow-consumer.html
 
 - Trade off: you have to ensure "atomic" for each read
 
-Optimize Consumption Speed - Aggregation First
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Optimize Consumer - Aggregation First
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Aggregate many records into one consumption action. Example: each event is a data change event of Dynamodb stream (update event), you can merge before writing to target database.
 
 .. raw:: html
@@ -126,7 +152,7 @@ Aggregate many records into one consumption action. Example: each event is a dat
 
 
 Multi Tenant
-------------------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 What is Multi Tenant in the Context of Message Streaming Middleware System:
 
 Why Multi Tenant:
@@ -186,14 +212,12 @@ Reference:
 
 
 Stream Scalability
-------------------------------------------------------------------------------
-Keys:
-
-1.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+:ref:`kinesis-resharding-a-stream`
 
 
 Failure Handling
-------------------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Keys:
 

@@ -1,12 +1,25 @@
-Resharding a Stream
+.. _kinesis-resharding-a-stream:
+
+Kinesis - Resharding a Stream
 ==============================================================================
+Keywords: Kinesis, Scale, Shard, Reshard
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
     :local:
 
-Ref:
 
-- Resharding a Stream: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding.html?shortFooter=true
+Why Resharding?
+------------------------------------------------------------------------------
+一个 Kinesis Stream 的吞吐量是和 Shard 的数量线性相关的. 每个 Shard 的吞吐量限制如下:
+
+- Write:
+    - 1MB / sec, 或是 1000 records / sec
+- Read:
+    - 2MB / sec, shared by all consumer (You can use Enhanced-fan-out if you need more read quota), 5 Transaction read per sec.
+
+当你的 shard 负载过高, 你就需要增加 shard, 如果你有很多 shard 负载太低有很多浪费, 则你需要减少 shard.
 
 你可以执行两种操作:
 
@@ -14,10 +27,20 @@ Ref:
 - Merge Shard:
 
 
+Ref:
+
+- Quotas and Limits: https://docs.aws.amazon.com/streams/latest/dev/service-sizes-and-limits.html
+- Resharding a Stream: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding.html
+
+
+
+
 Strategies for Resharding (再分片策略)
 ------------------------------------------------------------------------------
 
-- Ref: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding-strategies.html
+Ref:
+
+- Strategies for Resharding: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding-strategies.html
 
 分片通常是为了提高吞吐量. 我们先讨论提高吞吐量的情况, 再讨论减少的情况.
 
