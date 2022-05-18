@@ -21,18 +21,17 @@ Why Resharding?
 
 当你的 shard 负载过高, 你就需要增加 shard, 如果你有很多 shard 负载太低有很多浪费, 则你需要减少 shard.
 
-你可以执行两种操作:
-
-- Split Shard:
-- Merge Shard:
-
-
 Ref:
 
 - Quotas and Limits: https://docs.aws.amazon.com/streams/latest/dev/service-sizes-and-limits.html
 - Resharding a Stream: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding.html
 
+How does Re-sharding Work?
+------------------------------------------------------------------------------
+你可以执行两种操作:
 
+- Split Shard:
+- Merge Shard:
 
 
 Strategies for Resharding (再分片策略)
@@ -55,6 +54,7 @@ Ref:
 
 Sharding Hash Principal (哈希分片原理)
 ------------------------------------------------------------------------------
+Kinesis Load Balance 的算法是和 Dynamodb 一样的, 都使用了 :ref:`consistent-hash-algorithm`.
 
 Kinesis 使用 md5 算法对 ``PartitionKey`` 进行哈希. 而结果是一个 128 bit (32 个 16 进制字符) 结果. 是一个 0 ~ 340282366920938463463374607431768211455 (2 ^ 128 - 1) 之间的数, 我们用 0 ~ N 来表示, 这个叫做 ``KeyRange``. 每个 Kinesis Stream Shard 都有一个 HashValue 上限和下限, 落在这个范围内的 Record 就会被分配到这个 Shard 上.
 
