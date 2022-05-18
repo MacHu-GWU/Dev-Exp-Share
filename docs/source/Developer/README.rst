@@ -1,6 +1,6 @@
-.. _open-source-software:
+.. _developer:
 
-Open Source Software
+Developer
 ==============================================================================
 
 .. autotoctree::
