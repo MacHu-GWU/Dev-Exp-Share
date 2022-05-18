@@ -12,3 +12,13 @@ How it looks like:
 
 .. raw:: html
    :file: sample.html
+
+Multi Tab Example::
+
+    .. raw:: html
+        :file: sample-multi-tab.html
+
+How it looks like:
+
+.. raw:: html
+   :file: sample-multi-tab.html
