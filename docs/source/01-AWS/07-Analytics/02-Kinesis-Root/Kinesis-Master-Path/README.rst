@@ -137,6 +137,7 @@ with aggregation::
 
 Optimize Consumer - Slow Consumer
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 .. raw:: html
     :file: ./optimize-consumption-slow-consumer.html
 
@@ -214,6 +215,10 @@ Reference:
 Stream Scalability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 :ref:`kinesis-resharding-a-stream`
+
+
+
+
 
 
 Failure Handling

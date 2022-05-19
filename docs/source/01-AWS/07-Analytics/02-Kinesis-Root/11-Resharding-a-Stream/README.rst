@@ -26,30 +26,29 @@ Ref:
 - Quotas and Limits: https://docs.aws.amazon.com/streams/latest/dev/service-sizes-and-limits.html
 - Resharding a Stream: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding.html
 
-How does Re-sharding Work?
-------------------------------------------------------------------------------
-你可以执行两种操作:
 
-- Split Shard:
-- Merge Shard:
+How does Re-sharding Work? (Reshard 的内部原理)
+------------------------------------------------------------------------------
+这个和 :ref:`consistent-hash-algorithm` 中的模式类似. 增加 shard 就是增加物理节点, 也就是将已有的 Ring 分裂. 减少 shard 就是合并两个相邻的 Ring. 你可以先用列出所有 shard 的信息, 然后根据 `Shard Level Monitoring <https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html#kinesis-metrics-shard>`_ 的监控数据找出负载过低或是过高的 shard, 然后用下面的 API 进行 分裂 / 合并 即可.
+
+- **List Shard**: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis.html#Kinesis.Client.list_shards
+- **Split Shard**: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis.html#Kinesis.Client.split_shard
+- **Merge Shard**: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis.html#Kinesis.Client.merge_shards
 
 
 Strategies for Resharding (再分片策略)
 ------------------------------------------------------------------------------
-
-Ref:
-
-- Strategies for Resharding: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding-strategies.html
-
-分片通常是为了提高吞吐量. 我们先讨论提高吞吐量的情况, 再讨论减少的情况.
-
-通常由3种策略:
+一共有 3 种策略:
 
 1. 直接将每片都分裂成两个, 提高一倍的吞吐量. 使用 ``update_shard_count`` API, 直接指定最终的 Shard 数量.
 2. 找到 hot shard, 将吞吐量大的 shard 分片. 使用 ``split_shard`` API.
 3. 找到 cold shard, 将吞吐量小的 shard 合并. 使用 ``merge_shard`` API.
 
-其中对于 1, 所有的细节都是自动实现的. 对于 2 你需要指定 ``NewStartingHashKey``. 这跟 Sharding 的 Hashkey range 的原理有关.
+其中对于 1, 所有的细节都是自动实现的. 对于 2 你需要指定 ``NewStartingHashKey``. 这跟 Sharding 的 Hash key range 的原理有关 (跟 consistent hash 的原理一样).
+
+Ref:
+
+- Strategies for Resharding: https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding-strategies.html
 
 
 Sharding Hash Principal (哈希分片原理)
@@ -67,19 +66,16 @@ Kinesis 使用 md5 算法对 ``PartitionKey`` 进行哈希. 而结果是一个 1
 
 Splitting a Shard (增加吞吐量)
 ------------------------------------------------------------------------------
-
 通常将吞吐量过大的 Shard 分片, 增加吞吐量.
 
 
 Merging Two Shard (减少 Shard 浪费)
 ------------------------------------------------------------------------------
-
 通常用于将吞吐量少的 Shard 合并, 减少费用, 因为 Amazon 按照 Shard 数量收费.
 
 
 After Resharding (重分片之后发生的事)
 ------------------------------------------------------------------------------
-
 无论是你 将一个 Shard 再分片, 还是合并多个 Shard. **这个过程都不是瞬间完成的. 那么在这个过程中, Producer 和 Consumer 会受到什么影响? 以及相关的 Shard 上的数据又会被怎样移来移去呢?**
 
 **在你执行 Resharding 的过程中, Stream 是 Inactive 的**. 此时可以 ``PutRecords`` 但是不能 ``GetRecords``. **也就是 只能写, 不能读**. 你需要在你的代码中加入异常处理的部分, 当捕获到 Stream Inactive 的错误时, 要进行等待重试, 直到 Stream 恢复 Active.
@@ -92,8 +88,9 @@ After Resharding (重分片之后发生的事)
 **Split时的情况**
 
 - 平时 Parent 处于 Open State.
-- 执行 Split Shard 或是 Update Shard Count 之后, Parent 变成 Close State, 此时写入到 Parent 上的新数据会被 route 到 Child 上, 在 Resharding 之后你仍然可以使用 GetRecords 从 Parent Shard 上读取数据, 在完成之前是也就是 只能写, 不能读的状态. 而 Parent 上的旧数据仍然在 Parent 上.
+- 执行 Split Shard 或是 Update Shard Count 之后, Parent 变成 Close State, 此时写入到 Parent 上的新数据会被 route 到 Child 上. 在 Resharding 之后你仍然可以使用 GetRecords 从 Parent Shard 上读取数据, 不过你读不到在执行 Resharding 之后的新数据, 因为新数据都被 route 到 Child Shard 上了.  在完成之前是也就是 只能写, 不能读的状态. 而 Parent 上的旧数据仍然在 Parent 上.
 - 过了 Retention Period 之后, 里面的数据已经无法 Accessible 了, 此时 Parent 处于 Expire State.
+
 
 在同一个 Shard 上的数据顺序是得到保证的. 所以如果你希望 Resharding 不会影响读取, 那么你需要优先从 Parent 上读取数据, 然后再从 Child 上读取. 当你看到 ``getRecordsResult.getNextShardIterator`` 返回 ``null`` 时, 你就知道 Parent 上已经没有数据了.
 
