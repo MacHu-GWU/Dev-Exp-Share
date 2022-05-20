@@ -16,3 +16,8 @@ DBA (Database Administration) 是 数据库管理员, 主要负责架设, 维护
 App Developer 是 应用开发者, 主要工作是使用 DB 来搭建应用的数据库后台. 往往不参与数据库的运维, 但是要对数据库的特性有概念, 比如如何利用索引和表设计来提高性能.
 
 两者相比较而言, DBA 需要对数据库实现的底层有更深的了解, 例如存储引擎. 并且要为数据库的稳定性负责. 而 App Developer 的知识体系主要是数据建模, 索引, 查询, 基本的性能调优策略.
+
+
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
