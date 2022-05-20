@@ -68,8 +68,6 @@ bsm = BotoSesManager(profile_name="aws_data_lab_sanhe_us_east_2")
 context.attach_boto_session(boto_ses=bsm.boto_ses)
 dir_here = Path.dir_here(__file__)
 path_all_csv = Path(dir_here, "all.csv")
-path_train_csv = Path(dir_here, "train.csv")
-path_test_csv = Path(dir_here, "test.csv")
 path_records_csv = Path(dir_here, "records.csv")
 path_labels_csv = Path(dir_here, "labels.csv")
 path_tasks_with_labels_csv = Path(dir_here, "tasks_with_labels.csv")
@@ -280,12 +278,136 @@ def s0_download_sample_data_from_aws_doc():
     Path(dir_here, "dblp_acm_labels.csv").write_text(s3path_label.read_text())
 
 
-# with s3path.open("r") as f:
-#     df = pd.read_csv(f)
-#     print(df)
-#     print(df.columns)
+def s2_generate_dataset():
+    n_label_set_id = 1000
+    n_label_per_set = 20
+    n_sample_list = [10, 6, 3, 1]
+    assert n_label_per_set == sum(n_sample_list)
+
+    id = 0
+    tid = 0
+    rows = list()
+    for label_set_id in range(1, 1 + n_label_set_id):
+        for label, n_sample in enumerate(n_sample_list, start=1):
+            tid += 0
+            true_person = TruePerson.random(tid)
+            for _ in range(n_sample):
+                id += 1
+                person = true_person.to_person()
+                row = dict(
+                    labeling_set_id=f"labeling_set_id_{label_set_id}",
+                    label=f"label_{label}",
+                    id=f"id_{id}",
+                    tid=f"tid_{tid}",
+                    firstname=person.firstname,
+                    lastname=person.lastname,
+                    phone=person.phone,
+                )
+                rows.append(row)
+
+    columns_all = "labeling_set_id,label,id,tid,firstname,lastname,phone".split(",")
+    columns_records = "id,firstname,lastname,phone".split(",")
+    columns_labels = "labeling_set_id,label,id,firstname,lastname,phone".split(",")
+    columns_tasks_with_labels = "labeling_set_id,label,id,tid,firstname,lastname,phone".split(",")
+    columns_tasks = "id,firstname,lastname,phone".split(",")
+
+    df = pd.DataFrame(rows, columns=columns_all)
+
+    indices = list(df.index)
+    indices_records = random.sample(indices, int(df.shape[0] * 0.7))
+    indices_records.sort()
+    indices_tasks = list(set(indices).difference(indices_records))
+    indices_tasks.sort()
+
+    df_records = df.loc[indices_records, columns_records]
+    df_labels = df.loc[indices_records, columns_labels]
+    df_tasks_with_labels = df.loc[indices_tasks, columns_tasks_with_labels]
+    df_tasks = df.loc[indices_tasks, columns_tasks]
+
+    print(f"df_records has {df_records.shape[0]} rows")
+    print(f"df_labels has {df_labels.shape[0]} rows")
+    print(f"df_tasks_with_labels has {df_tasks_with_labels.shape[0]} rows")
+    print(f"df_tasks has {df_tasks.shape[0]} rows")
+
+    # Dump to local
+    df_records.to_csv(path_records_csv, sep=",", index=False)
+    df_labels.to_csv(path_labels_csv, sep=",", index=False)
+    df_tasks_with_labels.to_csv(path_tasks_with_labels_csv, sep=",", index=False)
+    df_tasks.to_csv(path_tasks_csv, sep=",", index=False)
+
+    # Create glue catalog database / tables
+    db_name = "learn_glue_find_matches"
+    tb_name_records = "records"
+    tb_name_labels = "labels"
+    tb_name_tasks = "tasks"
+
+    databases = wr.catalog.databases(boto3_session=bsm.boto_ses)
+    if db_name not in databases["Database"].to_list():
+        print(f"create database {db_name}")
+        wr.catalog.create_database(db_name)
+
+    s3path_prefix = S3Path.from_s3_uri(
+        "s3://aws-data-lab-sanhe-for-everything-us-east-2/poc/2022-05-18-glue-find-matches/find-matches/"
+    )
+    s3path_records = S3Path(s3path_prefix, "records")
+    s3path_labels = S3Path(s3path_prefix, "labels")
+    s3path_tasks = S3Path(s3path_prefix, "tasks")
+
+    s3path_prefix.delete_if_exists()
+    tables = wr.catalog.tables(database=db_name, boto3_session=bsm.boto_ses)
+
+    # Dump to S3
+    print(f"create table {db_name}.{tb_name_records}")
+    wr.s3.to_csv(
+        df=df_records,
+        path=s3path_records.uri,
+        dataset=True,
+        sep=",",
+        index=False,
+        header=True,
+        database=db_name,
+        table=tb_name_records,
+        mode="overwrite",
+        boto3_session=bsm.boto_ses,
+    )
+    s3path = s3path_records.iter_objects().one()
+    print(f"preview at {s3path.uri} or {s3path.console_url}")
+
+    print(f"create table {db_name}.{tb_name_labels}")
+    wr.s3.to_csv(
+        df=df_labels,
+        path=s3path_labels.uri,
+        dataset=True,
+        sep=",",
+        index=False,
+        header=True,
+        database=db_name,
+        table=tb_name_labels,
+        mode="overwrite",
+        boto3_session=bsm.boto_ses,
+    )
+    s3path = s3path_labels.iter_objects().one()
+    print(f"preview at {s3path.uri} or {s3path.console_url}")
+
+    print(f"create table {db_name}.{tb_name_tasks}")
+    wr.s3.to_csv(
+        df=df_tasks,
+        path=s3path_tasks.uri,
+        dataset=True,
+        sep=",",
+        index=False,
+        header=True,
+        database=db_name,
+        table=tb_name_tasks,
+        mode="overwrite",
+        boto3_session=bsm.boto_ses,
+    )
+    s3path = s3path_tasks.iter_objects().one()
+    print(f"preview at {s3path.uri} or {s3path.console_url}")
+
 
 if __name__ == "__main__":
     # s0_download_sample_data_from_aws_doc()
-    s1_generate_dataset()
+    # s1_generate_dataset()
+    s2_generate_dataset()
     pass
