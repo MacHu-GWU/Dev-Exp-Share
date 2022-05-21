@@ -105,20 +105,28 @@ AWS CodeCommit Lambda Trigger
 
 ``commit-to-branch.json``:
 
-.. literalinclude:: ./commit-to-branch.json
+.. literalinclude:: ./lambda-trigger/commit-to-branch.json
     :language: javascript
 
 ``commit-to-master.json``:
 
-.. literalinclude:: ./commit-to-master.json
+.. literalinclude:: ./lambda-trigger/commit-to-master.json
     :language: javascript
 
 ``create-branch.json``:
 
-.. literalinclude:: ./create-branch.json
+.. literalinclude:: ./lambda-trigger/create-branch.json
     :language: javascript
 
 ``merge-to-master.json``:
 
-.. literalinclude:: ./merge-to-master.json
+.. literalinclude:: ./lambda-trigger/merge-to-master.json
     :language: javascript
+
+
+Use boto3 to start CodeBuild Job
+------------------------------------------------------------------------------
+示例代码请参考 :ref:`aws-codebuild-trigger-build-job-with-boto3`
+
+- https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/codebuild.html#CodeBuild.Client.start_build
+
