@@ -38,6 +38,58 @@ AWS CodeCommit 也有 event, 你在 Console -> CodeCommit -> Repositories -> Not
 
 本质上来说这个 Trigger 的规则是由 AWS 用户自己实现的, 而不是像 circle ci 等一样由 ci 平台托管的. 虽然带来了额外工作, 但是给予了用户最大的权限和开放度能自定义想要的 CI 流程. 可以适应任何复杂的企业级项目管理流程.
 
+这里列出了常见的 Event 所对应的 SNS Notification Message (不是 Lambda event, 只是 notification 的 string message 被 json 解析后的形式)
+
+``approval-message.json``:
+
+.. literalinclude:: ./notification-event/approval-message.json
+    :language: javascript
+
+``comment-to-pull-request-message.json``:
+
+.. literalinclude:: ./notification-event/comment-to-pull-request-message.json
+    :language: javascript
+
+``commit-to-branch-message.json``:
+
+.. literalinclude:: ./notification-event/commit-to-branch-message.json
+    :language: javascript
+
+``commit-to-master-message.json``:
+
+.. literalinclude:: ./notification-event/commit-to-master-message.json
+    :language: javascript
+
+``commit-to-pull-request-branch-message.json``:
+
+.. literalinclude:: ./notification-event/commit-to-pull-request-branch-message.json
+    :language: javascript
+
+``create-branch-message.json``:
+
+.. literalinclude:: ./notification-event/create-branch-message.json
+    :language: javascript
+
+``create-pull-request-message.json``:
+
+.. literalinclude:: ./notification-event/create-pull-request-message.json
+    :language: javascript
+
+``merge-to-master-message.json``:
+
+.. literalinclude:: ./notification-event/merge-to-master-message.json
+    :language: javascript
+
+``reply-to-comment-message.json``:
+
+.. literalinclude:: ./notification-event/reply-to-comment-message.json
+    :language: javascript
+
+``rule-override-message.json``:
+
+.. literalinclude:: ./notification-event/rule-override-message.json
+    :language: javascript
+
 
 AWS CodeCommit Lambda Trigger
 ------------------------------------------------------------------------------

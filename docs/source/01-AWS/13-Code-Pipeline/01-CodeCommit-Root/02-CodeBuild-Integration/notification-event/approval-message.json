@@ -1,0 +1,33 @@
+{
+    "account": "669508176277",
+    "detailType": "CodeCommit Pull Request State Change",
+    "region": "us-east-2",
+    "source": "aws.codecommit",
+    "time": "2022-05-21T16:00:18Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/b4b0b3a068d4f7add4ed0e7c965b88cd1ba26af2",
+    "detail": {
+        "approvalStatus": "APPROVE",
+        "sourceReference": "refs/heads/f2",
+        "lastModifiedDate": "Sat May 21 15:56:38 UTC 2022",
+        "author": "arn:aws:iam::669508176277:user/sanhe",
+        "isMerged": "False",
+        "pullRequestStatus": "Open",
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: learn_codebuild. User: arn:aws:sts::669508176277:assumed-role/sanhe-assume-role-for-iam-test/sanhe. Event: Updated. Pull request name: 2. Additional information: A user has changed their approval state for the pull request. State change: APPROVE. For more information, go to the AWS CodeCommit console https://us-east-2.console.aws.amazon.com/codesuite/codecommit/repositories/learn_codebuild/pull-requests/2?region=us-east-2.",
+        "destinationReference": "refs/heads/master",
+        "callerUserArn": "arn:aws:sts::669508176277:assumed-role/sanhe-assume-role-for-iam-test/sanhe",
+        "creationDate": "Sat May 21 15:50:51 UTC 2022",
+        "pullRequestId": "2",
+        "title": "f2",
+        "revisionId": "2f21662363cd735c44f3e9ef66c62a2bb157a4c7049edf6d021c6d87bcce7f22",
+        "repositoryNames": [
+            "learn_codebuild"
+        ],
+        "destinationCommit": "ad4def2926fb6e8873d036b5c1fcd369e9b06687",
+        "event": "pullRequestApprovalStateChanged",
+        "sourceCommit": "6b1b688dd10c83db424d62790891855ac6c9968d"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-2:669508176277:learn_codebuild"
+    ],
+    "additionalAttributes": {}
+}
