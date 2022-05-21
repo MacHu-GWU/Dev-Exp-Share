@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "96a67fd0-cb60-5786-8844-24d3c181b9c0",
+                "TopicArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events",
+                "Subject": null,
+                "Message": "{\"account\":\"669508176277\",\"detailType\":\"CodeCommit Repository State Change\",\"region\":\"us-east-2\",\"source\":\"aws.codecommit\",\"time\":\"2022-05-21T15:43:27Z\",\"notificationRuleArn\":\"arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/b4b0b3a068d4f7add4ed0e7c965b88cd1ba26af2\",\"detail\":{\"referenceFullName\":\"refs/heads/f2\",\"repositoryId\":\"8cf05543-b91f-4e87-8a1b-3a7feda723c4\",\"referenceType\":\"branch\",\"commitId\":\"8e2d5964dad30b67fc92c2604d5d0616f1a9fba6\",\"callerUserArn\":\"arn:aws:iam::669508176277:user/sanhe\",\"event\":\"referenceUpdated\",\"repositoryName\":\"learn_codebuild\",\"oldCommitId\":\"222f6054f137a5b3b64e838da2ce50ddf395cfdb\",\"referenceName\":\"f2\"},\"resources\":[\"arn:aws:codecommit:us-east-2:669508176277:learn_codebuild\"],\"additionalAttributes\":{}}",
+                "Timestamp": "2022-05-21T15:43:29.898Z",
+                "SignatureVersion": "1",
+                "Signature": "TK7Rup+Isff9UjgzQIfQDJFolqKY28jPCmsoxziTwJQVq24MfjPLSkWjFC8iy5Ca1VtxN2+uX49mDYgMUFcQ96Ds7qp4rKE0w6ntJ2yUM4OpAHPJ04pYsrVq+zmJF89cED2gwO/5JfhM3AzfcmIkozaDWscXp75inpwbTIuHh16ENJq/0kJiFBSHrZEUZAd4OAzZZFq1oR7T4pY2oEf6RPKzb9eZuib9+j80Y6OP0cDnP7m+4UZcSfryrXh5r158yliW+gvRZFwNha/Tqgdc7cSPSRrVdAvhagVvwVlx3Sq7bfnPVhLbPeZiLQ653lk3g7M23jH1JfY915OSw5w8kw==",
+                "SigningCertUrl": "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+                "UnsubscribeUrl": "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}

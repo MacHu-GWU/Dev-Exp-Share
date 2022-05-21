@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-2:669508176277:codestar-notifications-learn_codebuild:cc121445-a6c7-403c-8f8a-4a593a9c72e1",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "e016535f-7ea9-5e9a-ba52-085c77101272",
+                "TopicArn": "arn:aws:sns:us-east-2:669508176277:codestar-notifications-learn_codebuild",
+                "Subject": null,
+                "Message": "{\"account\":\"669508176277\",\"detailType\":\"CodeCommit Repository State Change\",\"region\":\"us-east-2\",\"source\":\"aws.codecommit\",\"time\":\"2022-05-21T15:38:31Z\",\"notificationRuleArn\":\"arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/0d060b4676ba9c289413cb9ec3a005095eb06970\",\"detail\":{\"referenceFullName\":\"refs/heads/f2\",\"repositoryId\":\"8cf05543-b91f-4e87-8a1b-3a7feda723c4\",\"referenceType\":\"branch\",\"commitId\":\"ad4def2926fb6e8873d036b5c1fcd369e9b06687\",\"callerUserArn\":\"arn:aws:iam::669508176277:user/sanhe\",\"event\":\"referenceCreated\",\"repositoryName\":\"learn_codebuild\",\"referenceName\":\"f2\"},\"resources\":[\"arn:aws:codecommit:us-east-2:669508176277:learn_codebuild\"],\"additionalAttributes\":{}}",
+                "Timestamp": "2022-05-21T15:38:33.907Z",
+                "SignatureVersion": "1",
+                "Signature": "Q74YZGiYl6a3iQyUoD4cTLdzbOtaYPx5w6qdFvHQ8fv509GOn31xfl2ff5T8njds0Z5TgJeS2FUnOHqEr14jq4JPuRoTELb8yEWkCYYGffhDsFqd3TimdBTynsUBOFnj5YFC3TCoGDt6tw1mDvHJAB24LRrNwBckrgXoyogGJfYNwNT2w6M+rGRRNpDwbSTRykev5USHnVIvVujNVLlY7JbfRujXAYOr/2FcMgAum4MX3glVYogNuKnnXicUnF1x/Rg9Q0BkN45iZnEXAdwAjFDyycf9/PhTthDT8awDM88UUZhEkG36rUeCKkpkM6HLthkC2omTPOaZCeWtxt8g+w==",
+                "SigningCertUrl": "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+                "UnsubscribeUrl": "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-2:669508176277:codestar-notifications-learn_codebuild:cc121445-a6c7-403c-8f8a-4a593a9c72e1",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
