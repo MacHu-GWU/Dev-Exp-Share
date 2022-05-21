@@ -1,0 +1,27 @@
+{
+    "Records": [
+        {
+            "awsRegion": "us-east-2",
+            "codecommit": {
+                "references": [
+                    {
+                        "commit": "b741de430b1febc1998217456b4cd0845b3c1865",
+                        "ref": "refs/heads/f1/act1"
+                    }
+                ]
+            },
+            "customData": null,
+            "eventId": "c027e758-2fe2-4cf2-a4c9-1b79513d7b88",
+            "eventName": "ReferenceChanges",
+            "eventPartNumber": 1,
+            "eventSource": "aws:codecommit",
+            "eventSourceARN": "arn:aws:codecommit:us-east-2:111122223333:learn_codebuild",
+            "eventTime": "2022-05-21T14:09:45.539+0000",
+            "eventTotalParts": 1,
+            "eventTriggerConfigId": "8ac5c8d3-2831-4974-97f2-fa08be2e6c82",
+            "eventTriggerName": "codecommit-learn_codebuild-trigger",
+            "eventVersion": "1.0",
+            "userIdentityARN": "arn:aws:iam::111122223333:user/sanhe"
+        }
+    ]
+}

@@ -1,8 +1,8 @@
-.. _aws-code-commit:
+.. _aws-codecommit-basic:
 
-Code Commit
+CodeCommit Basic
 ==============================================================================
-Keywords: AWS Code Commit, CodeCommit, Git
+Keywords: AWS CodeCommit, Code Commit, Git
 
 什么是 Code Commit? Code Commit 其实就是 Git 服务器的实现, Code Commit Console 相当于一个用户界面远没有 GitHub 友好的 GitHub. 允许用户在 Console 里查看文件, 发起 Pull Request, 进行 Code Review.
 
