@@ -25,4 +25,4 @@ def add_two(x, y):
     return res
 
 
-add_two(x=1, y=2, verbose=False)
+add_two(x=1, y=2)

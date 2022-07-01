@@ -193,7 +193,7 @@ if __name__ == "__main__":
     # e4_logger_with_name_case1()
     # e4_logger_with_name_case2()
     # e5_filter()
-    e6_disable_and_enable_by_handler()
-    # disable_and_enable_logger()
+    # e6_disable_and_enable_by_handler()
+    disable_and_enable_logger()
 
     pass
