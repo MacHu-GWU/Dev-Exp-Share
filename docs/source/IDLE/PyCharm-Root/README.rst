@@ -13,3 +13,4 @@ PyCharm 是 JetBrain 公司出品的一款 Python 专用 IDLE (大规模集成�
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst

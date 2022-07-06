@@ -11,7 +11,7 @@ Story BackLog
 ------------------------------------------------------------------------------
 
 
-Step Out of Comfort Zone and Pick Up Skill Fast as Required
+2022-06-27 AWS DLA Bridge Water Design Lab - Step Out of Comfort Zone and Pick Up Skill Fast as Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Situation
 
@@ -52,7 +52,7 @@ Result
     3. 我提出的这种 Convince 客户的 method 提高了我们 Design Lab 整体的 CSAT. 并且为 AWS 培养了 5 个 L4 -> L5 的 Data Lab Architect.
 
 
-Convince Customer That has Very Strong Opinion
+2022-06-27 AWS DLA Bridge Water Design Lab - Convince Customer That has Very Strong Opinion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Situation
 
@@ -79,3 +79,40 @@ Result
 
     1. 这次的 Design Lab 非常成功, 我获得了 5/5 Customer Satisfaction (CSAT). 客户决定 moving forward 去用我的 solution build 一个系统. 这将会给我们带来 1.2M / Y revenue
     2. 客户, 以及 AWS customer account 都给我发来了 accolade, 感谢我做的 contribution
+
+
+2022-06-07 AWS DLA College Board Design Lab - Accomplish a Very important job with Very Limited Timeline
+------------------------------------------------------------------------------
+Situation
+
+    在 AWS Data Lab 做 Data Lab Architect 的时候, 有一个 DLA 在做 Design Lab 的前一天病了, 并且由于 Account Team 的 delay, 本应该有的 2-3 个跟客户的 preparation call 我们一次都没有做, 我们什么信息都没有. Schedule 已经被 Delay 2 次了, 我们不能再 Delay 了, 不然很可能会失去这个即将使用 Neptune Graph Database 的客户. 由于我在 Data Lab 以善于处理极大的不确定性的情况, 所以 Account Team, Project Manager 以及我的 Manager 找到我希望我能接手这个 Lab.
+
+Task
+
+    我面临的情况是, 平时需要 2 周准备, 跟客户开 3 次会了解情况和需求. 而我下午 1 点接到请求, 第二天下午 1 点就要做 lab 了, 目的是给客户做出 Solution Design, 不失去这个客户. 并且我只有一个非常 rough 的信息, 客户想要一个 Data Lineage and Data Traffic Monitoring 的系统, 客户的 Data 系统是什么, Traffic 是怎么样的, 对于 Lineage 和 traffic monitoring 的定义是什么我完全不知道.
+
+Action
+
+    1. 分析这里的关键
+        - 缺少信息
+        - 不确定性大
+        - 客户已经 Delay 了几次有点 frustrated, 临时换 DLA 让客户很 concern
+    2. 首先解决缺少信息的问题. 现在没有机会跟客户 meeting 了解需求了, 我只能从 Account Team 他们跟客户以前开过会的人里获得有限的信息. 重点是了解客户的需求的大方向, 了解到最关键的挑战是他们的 Data Catalog 数量很多, 并且在不断变化. 以及了解客户 Delay 多次, 不满意的原因, 是一直没有找到有合适 Engineer Skill 的 DLA.
+    3. 第二解决不确定性大. 通常的 Design Lab 的 preparation 是从用户的 UseCase spread out 出去, 找到很多的 challenge, 然后一个一个的解决. 而我们现在没有这些信息, 不可能这么做. 于是我决定我在晚上围绕着已有的信息, 做了一个 Top-Down 的 framework, 这个 framework 很复杂, 能解决几乎所有的问题, 但是根据客户的需求我们要做很多取舍. 因为我认为从一个 Comprehensive Framework 然后根据用户的需求 converge 成一个具体的 System, 这种模式我能更好的控制 Conversation 和 Expectation. 避免用户想要的太多, 而我没有足够的准备时间去一一解决这个问题. 这个方法的问题是如果我的 framework off the track 就完蛋了. 所以我非常小心的设计这个 framework 使得它能更 general 一点, 以适应不同的情况, 并给出了 option 1, 2, 3.
+    4. 第三解决客户不是很高兴. 这是客户第一次跟 AWS 做 Data Lab, 就遇到了多次 Delay. 我需要在解决客户的问题的同时, 保持一个更快的 response time. 这个 Lab 做完之后, 我 prioritize 了我写 lab report 的时间, 更快的交付了 Lab Artifacts. 在 2 个月内定义了 3 个 post lab activity, 并且都进行了 Lead. 让用户觉得等待是值得的.
+
+Result
+
+    1. 客户最终决定使用我 Propose 的 Neptune 方案来 Track 他们的 Data Catalog. 继续使用 AWS 的 Big Data Eco system.
+    2. 在 3 个月后客户又继续做了 Build Lab, moving to production with AWS.
+
+
+2022-05-12 AWS DLA Cox-Auto Design Lab -
+------------------------------------------------------------------------------
+Situation
+
+Task
+
+Action
+
+Result

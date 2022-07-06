@@ -5,7 +5,6 @@ Plugins
 Install Pluggin:
 
 1. ``Settings`` -> ``Pluggin``
-2. 
 
 - Install, Upda te and Uninstall Pluggin: https://www.jetbrains.com/help/pycharm/installing-updating-and-uninstalling-repository-plugins.html
 - Browser Community Pluggin: https://plugins.jetbrains.com/
