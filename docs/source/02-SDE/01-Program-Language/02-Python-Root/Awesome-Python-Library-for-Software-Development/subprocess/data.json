@@ -1,0 +1,22 @@
+{
+    "version": "2.0",
+    "common_config": {
+        "aws_account_id": "111122223333"
+    },
+    "envs": {
+        "dev": {
+            "artifacts": [
+                {
+                    "name": "boto3",
+                    "type": "python-module",
+                    "uri": "s3://my-artifacts/python-module/boto3/0.0.1"
+                },
+                {
+                    "name": "botocore",
+                    "type": "python-module",
+                    "uri": "s3://my-artifacts/python-module/boto3/1.2.3"
+                }
+            ]
+        }
+    }
+}
