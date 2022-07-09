@@ -11,6 +11,8 @@ Keywords: AWS CodeCommit, Code Commit, Git
     :depth: 1
     :local:
 
+.. sectnum::
+
 
 在 Mac 电脑上像平常使用 GitHub Desktop 一样使用 Code Commit
 ------------------------------------------------------------------------------
