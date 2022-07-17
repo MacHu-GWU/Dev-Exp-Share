@@ -4,8 +4,10 @@ PyCharm Remote Development
 PyCharm 专业版 其中最为杀手级的功能可能要属 Remote Development 了. 他可以允许你将代码实时同步到远程服务器上, 并用远程服务器上的 Python 或是 Bash 一键用快捷键执行. 能在本地编辑代码库, 同时直接能看到远程服务器的文件目录.
 
 .. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
 
 Reference:
 

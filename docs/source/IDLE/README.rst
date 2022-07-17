@@ -1,4 +1,6 @@
-Operation System (OS) Docs
+.. _idle:
+
+IDLE
 ==============================================================================
 .. autotoctree::
     :maxdepth: 1
