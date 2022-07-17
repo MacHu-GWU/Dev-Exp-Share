@@ -9,12 +9,20 @@ zsh The ZShell
     :local:
 
 
+注: 本文的所有内容均有自动化脚本实现自动安装, 请前往 https://github.com/MacHu-GWU/laptop/tree/master/home, 参考 ``configure-zsh.py`` 脚本.
+
+
+Summary
+------------------------------------------------------------------------------
+zsh (Z Shell) 是 1990 年的一个项目, 只比 bash 的 1989 年晚一年出现. 发展了 30 年已经成为了事实上最强大, 社区生态最活跃, 插件最多的 shell. MacOS 在 2019-10-07 之后还让 zsh 成了系统默认的 shell. 跟 bash 的兼容性也很好. 非常适合作为开发者电脑上的 shell.
+
+
 Install zsh
 ------------------------------------------------------------------------------
 在 MacOS 从 Catalina 2019-10-07 以后 zsh 就取代了 bash 成为默认的 shell 了. 当然你也可以自己安装一个更高版本的. 具体可以参考下面的文档:
 
 - Installing the Z Shell (zsh) on Linux, Mac OS X and Windows: https://gist.github.com/derhuerst/12a1558a4b408b3b2b6e
-- ohmyzsh - nstalling ZSH: https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
+- ohmyzsh - installing ZSH: https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
 
 MacOS:
 
@@ -33,6 +41,13 @@ Linux - Centos / Redhat:
 .. code-block:: bash
 
     sudo yum update && sudo yum -y install zsh
+
+
+Install oh-my-zsh
+------------------------------------------------------------------------------
+``oh-my-zsh`` 是一个 zsh 的插件管理系统. zsh 的插件管理系统有很多, 但是 ``oh-my-zsh`` 可能是社区活跃度最高, 最流行, 配置最简单的.
+
+- oh-my-zsh 官网: https://ohmyz.sh/
 
 
 zsh Plugin System
@@ -102,6 +117,20 @@ zsh Shell 内置有一套快捷键绑定设置, 这套设置是可以在启动�
 - ``⌃ + w``: **删除光标之前的单词**
 - ``⌃ + k``: **删除从光标到行尾的内容**
 - ``⌃ + t``: 交换光标和之前的字符
+
+
+My Favorite Theme - powerlevel10k
+------------------------------------------------------------------------------
+`powerlevel10k <https://github.com/romkatv/powerlevel10k>`_ 可能是 zsh 最强大的主题了. 纵观这个代码库, star 达到了恐怖的 30K, 完成度极高, 自定义自由度极高.
+
+- Installation: 因为这个主题要和 oh-my-zsh 配合使用, 所以参考 ``Installation -> Oh My Zsh`` 一节的文档, 将其安装在 ``~/.oh-my-zsh/custom/theme`` 目录下. 然后再在 ``.zshrc`` 中设置 ``ZSH_THEME="powerlevel10k/powerlevel10k"``
+- Wizard: 第一次使用时会出现一个 configuration wizard, 问你一些问题然后自动生成 ``p10k`` 的配置文件, 该配置文件在 ``~/.p10k.zsh`` 处. 如果你对当前配置不满意, 你可以用 ``p10k configure`` 命令重新配置一遍.
+- PyCharm Terminal Emoji Issue: Pycharm `有一个 Bug 会导致 PyCharm 自带的 Terminal emulator 无法显示 UTF-8 Emoji 图标 <https://youtrack.jetbrains.com/issue/IDEA-118832>`_. 解决方法是在 ``~/.zshrc`` 配置文件中添加 ``export LANG="en_US.UTF-8"`` 和 ``export LC_ALL="en_US.UTF-8"`` 两行, 使得 Shell 知道你的字符编码是 UTF-8. 然后在 PyCharm 上方的菜单里的 Help 菜单里选择 Edit Custom VM Option, 然后添加一行 ``-Dfile.encoding=UTF-8``, 这能告诉 Java VM 的字符编码为 UTF-8. 然后重启 PyCharm 后再进入 zsh 就能正常显示 Emojii 图标了.
+
+Ref:
+
+- Theme Homepage: https://github.com/romkatv/powerlevel10k
+- Display Emojii in PyCharm Terminal: https://youtrack.jetbrains.com/issue/IDEA-118832
 
 
 Add newline to Oh My ZSH Theme
