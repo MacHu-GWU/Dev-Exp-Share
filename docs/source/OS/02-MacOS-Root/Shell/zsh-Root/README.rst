@@ -12,12 +12,12 @@ zsh The ZShell
 注: 本文的所有内容均有自动化脚本实现自动安装, 请前往 https://github.com/MacHu-GWU/laptop/tree/master/home, 参考 ``configure-zsh.py`` 脚本.
 
 
-Summary
+01. Summary
 ------------------------------------------------------------------------------
 zsh (Z Shell) 是 1990 年的一个项目, 只比 bash 的 1989 年晚一年出现. 发展了 30 年已经成为了事实上最强大, 社区生态最活跃, 插件最多的 shell. MacOS 在 2019-10-07 之后还让 zsh 成了系统默认的 shell. 跟 bash 的兼容性也很好. 非常适合作为开发者电脑上的 shell.
 
 
-Install zsh
+02. Install zsh
 ------------------------------------------------------------------------------
 在 MacOS 从 Catalina 2019-10-07 以后 zsh 就取代了 bash 成为默认的 shell 了. 当然你也可以自己安装一个更高版本的. 具体可以参考下面的文档:
 
@@ -43,14 +43,14 @@ Linux - Centos / Redhat:
     sudo yum update && sudo yum -y install zsh
 
 
-Install oh-my-zsh
+03. Install oh-my-zsh
 ------------------------------------------------------------------------------
 ``oh-my-zsh`` 是一个 zsh 的插件管理系统. zsh 的插件管理系统有很多, 但是 ``oh-my-zsh`` 可能是社区活跃度最高, 最流行, 配置最简单的.
 
 - oh-my-zsh 官网: https://ohmyz.sh/
 
 
-zsh Plugin System
+04. zsh Plugin System
 ------------------------------------------------------------------------------
 zsh 有着强大的插件系统. 官网有个 GitHub Repo, 下面是 zsh 社区的各种插件: https://github.com/zsh-users.
 
@@ -59,19 +59,55 @@ zsh 有着强大的插件系统. 官网有个 GitHub Repo, 下面是 zsh 社区�
 zsh plugin manager 有很多种, **但是大部分的 plugin 作者都建议优先使用源代码安装的方式**. 因为 plugin manager 的作者可能无法把所有的 zsh 插件都测试到, 所以不能保证 100% 稳定. 而大部分的 plugin 的作用方式都是把源代码 clone 到本地, 然后再用 source 的方式加载, 这种方式是完全可控的.
 
 
-zsh Syntax Highlight Plugin
+05. zsh Syntax Highlight Plugin
 ------------------------------------------------------------------------------
 和 fish 类似的语法高亮. 绿色表示命令正确, 红色表示命令不正确.
 
 - Plugin Homepage: https://github.com/zsh-users/zsh-syntax-highlighting
 
+**如何自定义颜色**:
 
-zsh Auto Suggestion Plugin
+简单来说 zsh-syntax-highlighting 的原理就是自定义了各种 parser, 然后给对应的 token 设置不同的格式. 你在 https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/highlighters/main/main-highlighter.zsh 文件里可以找到各种格式的对应代码, 以及各种 token 类型的名字. 然后在你的 ``.zshrc`` 文件里 source 的下面覆盖这些默认配置即可, 具体操作可以参考 `这篇讨论 <https://blog.patshead.com/2012/01/using-and-customizing-zsh-syntax-highlighting-with-oh-my-zsh.html>`_:
+
+.. code-block:: bash
+
+    source $ZSH/custom/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+    ZSH_HIGHLIGHT_STYLES[default]=none
+    ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
+    ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=green
+    ZSH_HIGHLIGHT_STYLES[alias]=none
+    ZSH_HIGHLIGHT_STYLES[builtin]=none
+    ZSH_HIGHLIGHT_STYLES[function]=none
+    ZSH_HIGHLIGHT_STYLES[command]=none
+    ZSH_HIGHLIGHT_STYLES[precommand]=none
+    ZSH_HIGHLIGHT_STYLES[commandseparator]=none
+    ZSH_HIGHLIGHT_STYLES[hashed-command]=none
+    ZSH_HIGHLIGHT_STYLES[path]=none
+    ZSH_HIGHLIGHT_STYLES[globbing]=none
+    ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
+    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
+    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
+    ZSH_HIGHLIGHT_STYLES[assign]=none
+
+**Fix PyCharm Terminal Color Schema**
+
+配置了 zsh syntax highlight 之后, PyCharm Terminal 中的颜色显示有时候会跟系统 Terminal 中的差别很大. 这不是由于 zsh syntax highlight 引起的, 这是由于 PyCharm Color Schema 引起的. 你可以进入 Color Schema -> Console Color 菜单里查看 ASCII color 在 Terminal 中的显式情况.
+
+.. image:: ./Fix-PyCharm-Terminal-Color-Schema.png
+
+
+06. zsh Auto Suggestion Plugin
 ------------------------------------------------------------------------------
 - Plugin Homepage: https://github.com/zsh-users/zsh-autosuggestions
 
 
-zsh Auto Complete Plugin
+07. zsh Auto Complete Plugin
 ------------------------------------------------------------------------------
 zsh 的 autocomplete 插件堪称神器, 传统 shell 的补全跟 zsh 的智能补全完全没法比.
 
@@ -93,7 +129,7 @@ zsh 的 autocomplete 插件堪称神器, 传统 shell 的补全跟 zsh 的智能
     - Ctrl + S 进入搜索历史命令菜单, 优先展示最老的命令. 和 Ctrl + R 类似.
 
 
-zsh Keybinding
+08. zsh Keybinding
 ------------------------------------------------------------------------------
 Keywords: zsh, key, keybinding, keymap, shortcut, 快捷键
 
@@ -119,7 +155,7 @@ zsh Shell 内置有一套快捷键绑定设置, 这套设置是可以在启动�
 - ``⌃ + t``: 交换光标和之前的字符
 
 
-My Favorite Theme - powerlevel10k
+09. My Favorite Theme - powerlevel10k
 ------------------------------------------------------------------------------
 `powerlevel10k <https://github.com/romkatv/powerlevel10k>`_ 可能是 zsh 最强大的主题了. 纵观这个代码库, star 达到了恐怖的 30K, 完成度极高, 自定义自由度极高.
 
@@ -133,7 +169,7 @@ Ref:
 - Display Emojii in PyCharm Terminal: https://youtrack.jetbrains.com/issue/IDEA-118832
 
 
-Add newline to Oh My ZSH Theme
+10. Add newline to Oh My ZSH Theme
 ------------------------------------------------------------------------------
 有的 Theme (例如大名鼎鼎的 `agnoster <https://gist.github.com/agnoster/3712874>`_) 会显示完整的路径名, 这样会导致光标的起始位置不确定, 有时会在屏幕的很右边, 导致每次要去找这个光标.
 
