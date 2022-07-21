@@ -82,3 +82,5 @@ Delete Venv:
     poetry env remove test-O3eWbxRl-py3.7
 
 Add and Install
+
+    poetry install --with
