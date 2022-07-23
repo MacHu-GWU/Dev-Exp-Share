@@ -11,3 +11,4 @@ Continuous Integration / Continuous Delivery (CI/CD or CICD) Docs
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst

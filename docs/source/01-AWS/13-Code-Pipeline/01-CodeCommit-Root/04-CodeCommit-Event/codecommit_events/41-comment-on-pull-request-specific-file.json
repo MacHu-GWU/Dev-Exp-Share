@@ -1,0 +1,34 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Comment on Pull Request",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T04:52:40Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "beforeCommitId": "a24b68b588a02baf581770bd925b647f1d0bcd25", // previous commit id
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: aws_lbd_ci_example-project. The user: arn:aws:iam::111122223333:user/sanhe made a comment or replied to a comment. The comment was made on the following Pull Request: 7. For more information, go to the AWS CodeCommit console https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/aws_lbd_ci_example-project/pull-requests/7/activity#bada6ff5-1443-45cf-a32f-25bdd2a654b6%3A6c55007e-493e-4c59-89c9-a5a42eac38c0?region=us-east-1",
+        "repositoryId": "73dedff5-98a7-4115-ae14-5598e60956d7",
+        "commentId": "bada6ff5-1443-45cf-a32f-25bdd2a654b6:6c55007e-493e-4c59-89c9-a5a42eac38c0",
+        "afterCommitId": "974cc92c85782989dbee8ec27650feaf10dcca0f", // current PR commit id
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "event": "commentOnPullRequestCreated",
+        "pullRequestId": "7",
+        "repositoryName": "aws_lbd_ci_example-project"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {
+        "commentedLine": null,
+        "resourceArn": "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project",
+        "comments": [
+            {
+                "authorArn": "arn:aws:iam::111122223333:user/sanhe",
+                "commentText": "Hello Alice"
+            }
+        ],
+        "commentedLineNumber": null,
+        "filePath": "README.rst"
+    }
+}

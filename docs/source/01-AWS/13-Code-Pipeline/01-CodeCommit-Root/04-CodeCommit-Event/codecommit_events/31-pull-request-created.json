@@ -1,0 +1,42 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Pull Request State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T04:28:08Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "sourceReference": "refs/heads/feat/test-codecommit-event",
+        "lastModifiedDate": "Tue Jul 19 04:28:05 UTC 2022",
+        "author": "arn:aws:iam::111122223333:user/sanhe",
+        "isMerged": "False",
+        "pullRequestStatus": "Open",
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: aws_lbd_ci_example-project. User: arn:aws:iam::111122223333:user/sanhe. Event: Created. Pull request name: 4. Additional information: A pull request was created with the following ID: 4. The title of the pull request is: feat/test-codecommit-event. For more information, go to the AWS CodeCommit console https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/aws_lbd_ci_example-project/pull-requests/4?region=us-east-1.",
+        "destinationReference": "refs/heads/master",
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "creationDate": "Tue Jul 19 04:28:05 UTC 2022",
+        "pullRequestId": "4",
+        "revisionId": "fb07cc3978ed660f4517fbc6aff97daade22b246e9df212b2550ba76569acb6f",
+        "title": "feat/test-codecommit-event",
+        "repositoryNames": [
+            "aws_lbd_ci_example-project"
+        ],
+        "destinationCommit": "3c46a6ebbe1055446e83fb9757ad9c3f2d1d8b4f", // old master branch commit id
+        "event": "pullRequestCreated",
+        "sourceCommit": "54948ed28d641a4bc9d67844adc5dcbcbf4cab12" // pull request commit id
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {
+        "numberOfFilesAdded": "0",
+        "numberOfFilesDeleted": "0",
+        "numberOfFilesModified": "1",
+        "changedFiles": [
+            {
+                "changeType": "M",
+                "filePath": "README.rst"
+            }
+        ]
+    }
+}

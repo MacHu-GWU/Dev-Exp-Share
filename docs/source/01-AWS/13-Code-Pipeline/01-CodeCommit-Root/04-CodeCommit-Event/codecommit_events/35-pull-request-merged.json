@@ -1,0 +1,33 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Pull Request State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T04:42:06Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "sourceReference": "refs/heads/feat/test-codecommit-event",
+        "lastModifiedDate": "Tue Jul 19 04:41:55 UTC 2022",
+        "author": "arn:aws:iam::111122223333:user/sanhe",
+        "isMerged": "True",
+        "pullRequestStatus": "Closed",
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: aws_lbd_ci_example-project. User: arn:aws:iam::111122223333:user/sanhe. Event: Updated. Pull request name: 6. Additional information: The pull request merge status has been updated. The status is merged. For more information, go to the AWS CodeCommit console https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/aws_lbd_ci_example-project/pull-requests/6?region=us-east-1.",
+        "destinationReference": "refs/heads/master",
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "creationDate": "Tue Jul 19 04:41:13 UTC 2022",
+        "pullRequestId": "6",
+        "title": "feat/test-codecommit-event",
+        "revisionId": "95fe786cc4ac17112f98f5037d595246917209b7bea6a9205465f43a09bbf694",
+        "repositoryNames": [
+            "aws_lbd_ci_example-project"
+        ],
+        "destinationCommit": "3c46a6ebbe1055446e83fb9757ad9c3f2d1d8b4f", // old master commit
+        "event": "pullRequestMergeStatusUpdated",
+        "mergeOption": "FAST_FORWARD_MERGE",
+        "sourceCommit": "a24b68b588a02baf581770bd925b647f1d0bcd25" // pull request commit
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {}
+}
