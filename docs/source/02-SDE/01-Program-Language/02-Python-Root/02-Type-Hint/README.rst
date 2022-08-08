@@ -33,3 +33,9 @@ Ref:
 
 - https://docs.python.org/3/library/typing.html#typing.TYPE_CHECKING
 - https://stackoverflow.com/questions/39740632/python-type-hinting-without-cyclic-imports
+
+
+One Method Rtype Depends On Other Method Rtype
+------------------------------------------------------------------------------
+.. literalinclude:: ./one_method_rtype_depends_on_other_method_rtype.py
+   :language: python
