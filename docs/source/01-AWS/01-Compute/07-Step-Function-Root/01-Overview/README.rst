@@ -15,11 +15,6 @@ Step Function 是一种将许多 Computation 组织到一起的中间件. 通过
 
 最初 Step Function 完全是围绕 AWS Lambda Function 构建的, 但后来已经能够支持几乎所有的 AWS 的服务了.
 
-- doc: https://aws.amazon.com/documentation/step-functions/
-- amazon state language doc: https://states-language.net/spec.html
-- Step Function Use Case: https://aws.amazon.com/step-functions/use-cases/
-- Orchestrate multiple ETL jobs using AWS Step Functions and AWS Lambda: https://aws.amazon.com/blogs/big-data/orchestrate-multiple-etl-jobs-using-aws-step-functions-and-aws-lambda/
-
 
 Step Function 在生产中主要用来做什么?
 ------------------------------------------------------------------------------
@@ -39,3 +34,7 @@ Step Function 使用的是由 Amazon 开发的 `Amazon State Language (ASL) <htt
 
 参考资料
 ------------------------------------------------------------------------------
+- AWS Step Function Doc: https://aws.amazon.com/documentation/step-functions/
+- Amazon State Language doc: https://states-language.net/spec.html
+- Step Function Use Case: https://aws.amazon.com/step-functions/use-cases/
+- Orchestrate multiple ETL jobs using AWS Step Functions and AWS Lambda: https://aws.amazon.com/blogs/big-data/orchestrate-multiple-etl-jobs-using-aws-step-functions-and-aws-lambda/
