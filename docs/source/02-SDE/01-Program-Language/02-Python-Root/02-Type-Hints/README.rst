@@ -2,13 +2,14 @@
 
 Type Hint in Python
 ==============================================================================
-Keywords: Python, typing, type hint, type hint, mypy
+Keywords: Python, typing, type hint, type hints, typehint, typehints, mypy
 
 
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
 
 
 Avoid Cyclic Import for Type Hint
@@ -35,7 +36,16 @@ Ref:
 - https://stackoverflow.com/questions/39740632/python-type-hinting-without-cyclic-imports
 
 
+Distinguish Class Attribute and Instance Attribute Type Hint
+------------------------------------------------------------------------------
+.. literalinclude:: ./class_attr_and_instance_attr.py
+   :language: python
+
+
 One Method Rtype Depends On Other Method Rtype
 ------------------------------------------------------------------------------
 .. literalinclude:: ./one_method_rtype_depends_on_other_method_rtype.py
+   :language: python
+
+.. literalinclude:: ./generic_more_complicate.py
    :language: python
