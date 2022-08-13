@@ -35,3 +35,7 @@ person = Person(name="alice")
 
 Person.name.
 person.name.
+
+def main():
+    Person.name.
+    person.name.

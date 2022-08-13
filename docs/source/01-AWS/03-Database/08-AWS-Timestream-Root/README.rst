@@ -3,6 +3,11 @@
 AWS Timestream
 ==============================================================================
 
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
+
+
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
