@@ -1,6 +1,6 @@
-.. _aws-dynamodb-docs:
+.. _aws-dynamodb-root:
 
-AWS DynamoDB Docs
+AWS DynamoDB Root
 ==============================================================================
 
 .. autotoctree::

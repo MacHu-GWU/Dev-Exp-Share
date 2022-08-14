@@ -19,7 +19,6 @@ With CodeCommit
 .. literalinclude:: ./start_build_with_codecommit.py
    :language: python
 
-
 .. code-block:: python
 
     {

@@ -1,13 +1,41 @@
-.. _aws-codecommit-codebuild-integration:
+.. _aws-codecommit-codebuild-CICD-example:
 
-CodeBuild Integration
+AWS CodeCommit and CodeBuild CI/CD Example
 ==============================================================================
-Keywords: AWS CodeCommit, Code Commit, CodeBuild, Code Build, Integration
+Keywords: AWS CodeCommit, Code Commit, CodeBuild, Code Build, CI, CD, CICD
 
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
     :local:
+
+
+Summary
+------------------------------------------------------------------------------
+一套 CI/CD Pipeline 主要包含两个部分, 一个 Git 代码仓库, 一个 CI Job Run 环境.
+
+- Git Repo:
+    - 目的: 开发者在上面进行开发, 保存代码的历史记录. 所有对 Git 的操作, 包括 commit, branch, PR, comment, approve, merge 都会触发 Git Event, 根据这些 event 来决定是否, 如何进行后续的 CI Job Run.
+    - 可选的产品: 市场上的 Git 托管产品很多, GitHub, GitLab, BitBucket, AWS CodeCommit 等, AWS CodeCommit 的好处是会将详细的 Git Event 给用户, 让用户自己决定如何对这些 event 做出响应.
+- CI Job Run:
+    - 目的: 提供一个轻量的代码运行环境, 能运行自动化脚本, 构建代码, 测试代码, 部署 APP. 这里有基于虚拟机 VM 的, 也有基于容器 Container 的.
+    - 可选的产品: 有 GitHub action, CircleCI, AWS CodeBuild 等. AWS CodeBuild 的好处是跟 AWS 结合的比较紧密, 省去了配置跟 AWS 相关的权限的麻烦.
+
+总结下来就是 AWS 的这两个服务的特点是自定义程度极高, 虽然配置起来稍微复杂了点, 但是你有最高的自由度.
+
+本文主要介绍如何用 AWS CodeCommit 和 AWS CodeBuild 这两个产品搭建一个 CI/CD Pipeline.
+
+
+Architecture
+------------------------------------------------------------------------------
+首先我们来看一下架构.
+
+.. raw:: html
+    :file: aws-codecommit-and-codebuild-cicd.drawio.html
+
+1. **Trigger Build Job**: 目前 Git Event 和 Build Job 之间并没有打通. 在 GitHub 上这是通过服务器上的 Web `hook <https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90>`_ 实现的. 原理上就是通过 GitHub 服务器上的 hook 自动化脚本, 将 git event 转化成用户友好的 JSON, 然后选择发送到其他外部系统上, 从而实现自动化. 而 AWS CodeCommit 的内置了 Notification Rule 功能, 能将 Git Event 发送到 SNS Topic, 然后 SNS Topic 触发 AWS Lambda, 由于 Lambda 可以是任何语言任何代码, 基本上能做到任何事情, 这就实现了 AWS CodeCommit 和任何外部系统的打通. 当然本文主要说的是与 CodeBuild 之间的打通.
+2. **Post Build Job Automation**: CodeBuild Job 本身也有 Notification Rule 功能, 能将例如 Start, Failed, Success 以及每个 Phase 的开始结束的这些 event 发送到 SNS. 和之前一样, 我们可以用 AWS Lambda 对其进行处理, 从而实现自动通知, 报警等功能.
+3. **Artifacts**: Build Job Run 的输出有 test report 结果. 这些结果可以被发送到办公聊天软件中自动通报. 并且 build 的成功失败消息也能被发送到聊天软件中. 另外 Build Job Run 的输出还包括 Artifacts, 以供后续的部署. 而这些 Artifacts 则可以保存到 S3 中.
 
 
 当代码 Push 到 CodeCommit 时, 如何自动触发 CodeBuild?

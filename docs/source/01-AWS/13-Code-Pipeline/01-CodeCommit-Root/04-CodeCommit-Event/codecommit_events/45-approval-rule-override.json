@@ -1,0 +1,33 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Pull Request State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T05:02:40Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "sourceReference": "refs/heads/feat/test-comment-and-approval",
+        "lastModifiedDate": "Tue Jul 19 04:57:19 UTC 2022",
+        "author": "arn:aws:iam::111122223333:user/sanhe",
+        "isMerged": "False",
+        "pullRequestStatus": "Open",
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: aws_lbd_ci_example-project. User: arn:aws:iam::111122223333:user/sanhe. Event: Updated. Pull request name: 7. Additional information: An override event has occurred for the approval rules for this pull request. Override status: OVERRIDE. For more information, go to the AWS CodeCommit console https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/aws_lbd_ci_example-project/pull-requests/7?region=us-east-1.",
+        "destinationReference": "refs/heads/master",
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "creationDate": "Tue Jul 19 04:51:27 UTC 2022",
+        "pullRequestId": "7",
+        "title": "feat/test-comment-and-approval",
+        "revisionId": "50b45d896fb0b4d7decb47cfae88b35bfc231fadf256588762f66bd3b79bfc39",
+        "repositoryNames": [
+            "aws_lbd_ci_example-project"
+        ],
+        "destinationCommit": "a24b68b588a02baf581770bd925b647f1d0bcd25",
+        "event": "pullRequestApprovalRuleOverridden",
+        "sourceCommit": "974cc92c85782989dbee8ec27650feaf10dcca0f",
+        "overrideStatus": "OVERRIDE"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {}
+}

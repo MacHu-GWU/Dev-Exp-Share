@@ -1,0 +1,32 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Pull Request State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T04:36:48Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "sourceReference": "refs/heads/feat/test-codecommit-event",
+        "lastModifiedDate": "Tue Jul 19 04:36:43 UTC 2022",
+        "author": "arn:aws:iam::111122223333:user/sanhe",
+        "isMerged": "False",
+        "pullRequestStatus": "Closed",
+        "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: aws_lbd_ci_example-project. User: arn:aws:iam::111122223333:user/sanhe. Event: Updated. Pull request name: 5. Additional information: The pull request status has been updated. The status is closed. For more information, go to the AWS CodeCommit console https://us-east-1.console.aws.amazon.com/codesuite/codecommit/repositories/aws_lbd_ci_example-project/pull-requests/5?region=us-east-1.",
+        "destinationReference": "refs/heads/master",
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "creationDate": "Tue Jul 19 04:36:06 UTC 2022",
+        "pullRequestId": "5",
+        "title": "feat/test-codecommit-event",
+        "revisionId": "82f19ec1b7f42509fbb7bb8690684c24524591ac24e2a8368c017e2ad0ce303a",
+        "repositoryNames": [
+            "aws_lbd_ci_example-project"
+        ],
+        "destinationCommit": "3c46a6ebbe1055446e83fb9757ad9c3f2d1d8b4f", // old master branch commit id
+        "event": "pullRequestStatusChanged",
+        "sourceCommit": "a24b68b588a02baf581770bd925b647f1d0bcd25" // pull request commit id
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {}
+}

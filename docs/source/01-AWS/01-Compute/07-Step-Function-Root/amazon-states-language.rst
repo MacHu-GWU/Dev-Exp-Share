@@ -223,8 +223,69 @@ $['store'][0]['book']
 In this discussion, “raw input” means the JSON text that is the input to a state. “Result” means the JSON text that a state generates, for example from external code invoked by a Task State, the combined result of the branches in a Parallel State, or the value of the “Result” field in a Pass state. “Effective input” means the input after the application of InputPath and Parameters, and “effective output” means the final state output after processing the result with ResultPath and OutputPath.
 
 
-``InputPath``, ``Parameters``, ``OutputPath``, ``DefaultPath``
+``InputPath``, ``Parameters``, ``ResultSelector``, ``OutputPath``
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+下面我们来详细解读一下与 输入输出 数据处理相关的关键字:
+
+- ``InputPath``
+- ``Parameter``
+- ``ResultSelector``
+- ``ResultPath``
+- ``OutputPath``
+
+我们以连续的 3 个 Lambda Function 为例. 我们将其称为 f1, f2, f3. 其中我们 **专注于观察位于中间的第二个 Lambda Function, f2**.
+
+首先我们要区分两个概念, 一个是 Task State, 这个 State 本身就是 invoke 一个 Lambda Function. 另一个是实际的 Action, 这里就是 Lambda Function 本身. 我们将两者简称为 "State" 和 "Action". Action 很好理解, 实际进行运算的实体本身有一个 Input / Output, 我们叫做 "**Action IO**". 而 State 作为对 Action 的封装, 也有一个 Input / Output, 我们叫做 "**State IO**". 这两个概念是搞清楚 Step Function 中 Input / Output 的关键.
+
+.. note::
+
+    注意, Action IO, State IO 是笔者自创的概念, 只是为了便于说明和理解.
+
+然后我们来了解一下在一个 Task State 被执行的过程中, Input / Output 数据是如何被传递的. 这里我们要参考一个 `官方的流程图 <https://docs.aws.amazon.com/step-functions/latest/dg/ouconcepts-input-output-filtering.html>`_
+
+1. 从上一个 State 接收 Output. 这将作为我们的 "State Input"
+2. "State Input" 经过 "一些 Input 处理" 变成了 "Action Input"
+3. "Action Input" 被真正计算单元所执行, 返回了 "Action Output"
+4. "Action Output" 经过 "一些 Ouput 处理" 变成了 "State Output" 返回, 并传递给下一个 State 作为它的 Input
+
+可以看出, 这套流程中的 "一些处理" 才是真正的关键. 下面我们详细了解一下我们有哪些手段可以对输入和输出进行处理.
+
+首先我们要理解一个概念 "Payload Template". 其实这就是大名鼎鼎的 Linux 下 JSON 处理工具 `jq <https://stedolan.github.io/jq/tutorial/>`_ 的选择器. 负责从一个 JSON 中选择部分数据, 经过简单计算, 构成一个新的 JSON.
+
+- ``InputPath``: 选择 "State Input" 的 **单个 JSON 节点** 作为 "Action Input"
+- ``Parameter``: 使用 "Payload Template" 从 "State Input" 中选择数据并生成 "Action Input"
+- ``OutputPath``: 和 ``InputPath`` 类似, 选择 "Action Output" 的 **单个 JSON 节点** 作为 "State Output"
+- ``ResultSelector``: 使用 "Payload Template" 从 "Action Output" 中选择数据并生成 "State Output"
+- ``ResultPath``: 有的时候我们希望在 Output 中带上 Input 的信息. ResultPath 就是做这件事的::
+
+    # State Input
+    {
+        "master": {
+            "detail": [1, 2, 3]
+        }
+    }
+
+    # Action Output
+    {
+        "value": 6
+    }
+
+    # ResultPath
+    $.master.result.sum
+
+    # State Output
+    {
+        "master": {
+            "detail": [1, 2, 3],
+            "result": {
+                "sum": {
+                    "value": 6
+                }
+            }
+        }
+    }
+
 
 1. The value of “InputPath” MUST be a Path, which is applied to a State’s raw input to select some or all of it; that selection is used by the state, for example in passing to Resources in Task States and Choices selectors in Choice States.
 
