@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
+迷你 Enum 枚举 小工具
+
 Enum 标准库被引入时还没有 typing. 很多时候你的 enum.Enum.value 是有类型的. 而如果你
-用自带的迭代器等方法返回枚举数据的时候, 你就失去了 type hints.
+用自带的迭代器等方法返回枚举数据的时候, 你就失去了 type hints 的信息. 而如果你要自己
+定义迭代器方法, 那么你需要手动的定义这个返回值的 type hints. 如果你的 Enum 很多的时候,
+难道你要一个个的去手动输入 type hints 吗? 这样做显然不 Pythonic.
 
 本例给出了一个解决方案, 可以轻易在不侵入已有代码的情况下, 拥有更加友好的 type hint.
 """
@@ -14,7 +18,7 @@ ENUM = T.TypeVar("ENUM")
 ENUM_VALUE = T.TypeVar("ENUM_VALUE")
 
 
-class EnumGetter(T.Generic[ENUM, ENUM_VALUE]):
+class EnumHelper(T.Generic[ENUM, ENUM_VALUE]):
     enum_class: ENUM = None
 
     @classmethod
@@ -39,14 +43,14 @@ class EnumGetter(T.Generic[ENUM, ENUM_VALUE]):
             return key.value
 
     @classmethod
-    def iter_keys(cls) -> T.List[str]:
+    def iter_names(cls) -> T.List[str]:
         return [
             enum.name
             for enum in cls.enum_class
         ]
 
     @classmethod
-    def iter_enum(cls) -> T.List[ENUM]:
+    def iter_enums(cls) -> T.List[ENUM]:
         return list(cls.enum_class)
 
     @classmethod
@@ -63,29 +67,18 @@ class EnumGetter(T.Generic[ENUM, ENUM_VALUE]):
             for enum in cls.enum_class
         ]
 
+    @classmethod
+    def has_name(cls, key: str) -> bool:
+        return key in cls.enum_class.__members__
 
-class NameEnum(enum.Enum):
-    alice = "Alice"
-    bob = "Bob"
+    @classmethod
+    def has_enum(cls, enum_: enum.Enum) -> bool:
+        return enum_ in cls.enum_class
 
+    _values: list = None
 
-class NameGetter(EnumGetter[NameEnum, str]):
-    enum_class = NameEnum
-
-
-assert NameGetter.get_name("alice") == "alice"
-assert NameGetter.get_name(NameEnum.alice) == "alice"
-
-assert NameGetter.get_enum("alice") is NameEnum.alice
-assert NameGetter.get_enum(NameEnum.alice) is NameEnum.alice
-
-assert NameGetter.get_value("alice") == "Alice"
-assert NameGetter.get_value(NameEnum.alice) == "Alice"
-
-assert NameGetter.iter_keys()[0] == "alice"
-assert NameGetter.iter_enum()[0] is NameEnum.alice
-assert NameGetter.iter_values()[0] == "Alice"
-
-assert NameGetter.iter_items()[0][0] == "alice"
-assert NameGetter.iter_items()[0][1] is NameEnum.alice
-assert NameGetter.iter_items()[0][2] == "Alice"
+    @classmethod
+    def has_value(cls, value) -> bool:
+        if cls._values is None:
+            cls._values = [e.value for e in cls.enum_class]
+        return value in cls._values
