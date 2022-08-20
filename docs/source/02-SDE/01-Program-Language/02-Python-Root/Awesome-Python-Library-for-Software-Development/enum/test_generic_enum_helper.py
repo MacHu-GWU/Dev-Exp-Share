@@ -2,7 +2,7 @@
 
 import os
 import enum
-from generic_enum_getter import EnumHelper
+from generic_enum_helper import EnumHelper
 
 
 class NameEnum(enum.Enum):
