@@ -29,3 +29,16 @@ Best Practice
 ------------------------------------------------------------------------------
 .. literalinclude:: ./best_practice.py
    :language: python
+
+
+Generic Enum Getter
+------------------------------------------------------------------------------
+.. literalinclude:: ./generic_enum_getter.py
+   :language: python
+
+
+.. toctree::
+   :maxdepth:
+   :caption: Notebooks:
+
+   enum-tutorial
