@@ -51,8 +51,6 @@ String
     s = edcba
 
 
-
-
 Function
 ------------------------------------------------------------------------------
 在 Lua 中定义函数非常简单, 其中 ``function``, ``return``, ``end`` 是关键字.
@@ -140,5 +138,92 @@ Function
 
 Table
 ------------------------------------------------------------------------------
+Lua 中有且只有一个数据结构 Table. 它即是链表, 也是哈希表, 还能实现模块, 面向对象等功能.
 
-Table
+
+
+
+Table as Dict
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+我们这里用 Python 中的 dict 来类比, 看看把 Table 当哈希表用是什么感觉.
+
+.. literalinclude:: ./table_as_dict.lua
+   :language: lua
+
+::
+
+    # output
+    --- access value from key
+    t["a"] = 1
+    --- iterate key value pair:
+    key = a, value = 1
+    key = b, value = 2
+    --- iterate key only pair:
+    key = a
+    key = b
+    --- iterate value only pair:
+    value = 1
+    value = 2
+    --- check if table has certain key
+    table has key "b": true
+    table has key "c": false
+    --- assign key value pair
+    t["b"] = 20, t["c"] = 30
+    key = c, value = 30
+    key = b, value = 20
+    ❯ lua table_as_dict.lua
+    --- access value from key
+    t["a"] = 1
+    --- iterate key value pair:
+    key = b, value = 2
+    key = a, value = 1
+    --- iterate key only pair:
+    key = b
+    key = a
+    --- iterate value only pair:
+    value = 2
+    value = 1
+    --- check if table has certain key
+    table has key "b": true
+    table has key "c": false
+    --- assign key value pair
+    t["b"] = 20, t["c"] = 30
+    --- delete key value pair
+    key = b, value = 20
+    key = c, value = 30
+    --- get number of pairs in table
+    2
+
+
+Table as List
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+我们这里用 Python 中的 list 来类比, 看看把 Table 当列表用是什么感觉.
+
+.. literalinclude:: ./table_as_list.lua
+   :language: lua
+
+::
+
+    #output
+    --- get element by index, lua index start from 1
+    t[1] = a
+    t[2] = b
+    --- get the last item in the list
+    e
+    --- get the second last item in the list
+    d
+    --- iterate a list
+    ind = 1, value = a
+    ind = 2, value = b
+    ind = 3, value = c
+    ind = 4, value = d
+    ind = 5, value = e
+    --- iterate the slice of the list
+    ind = 2, value = b
+    ind = 3, value = c
+    ind = 4, value = d
+    --- append to the end
+    f
+    --- remove the last element end
+    nil
+    e
