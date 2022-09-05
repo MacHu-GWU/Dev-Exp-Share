@@ -67,6 +67,7 @@ Function
     :depth: 1
     :local:
 
+
 定义函数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 第一个例子, 函数里面可以有参数, Lua 是动态语言, 参数是没有类型的. 如果一个参数被定义了, 但是却没有被赋值, 那么它的默认值是 nil.
@@ -134,6 +135,14 @@ Function
     # output
     alice
     bob
+
+
+定义 Key Value 风格的参数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在 Lua 中给函数传递参数都是 positioned, 也就是只按照位置顺序传递参数. 如果你记不住这些参数的位置, 想要用 key value 的方式调用函数, 那么你只能将函数变为只有一个参数的形式, 而且这个参数是一个 table, 然后在函数内部都用 arg.key 的形式调用这些值即可.
+
+.. literalinclude:: ./function_04_key_value_arg.lua
+   :language: lua
 
 
 Table
@@ -227,3 +236,23 @@ Table as List
     --- remove the last element end
     nil
     e
+
+
+Local and Global Variable
+------------------------------------------------------------------------------
+在 lua 中, 如果你不声明 ``local`` 就定义变量, 那么这个变量就是全局变量. 全局变量可以在函数内部被修改. 一般好的 lua 代码中所有的变量都应该定义成局部变量才能避免出 bug. 请看下面的例子:
+
+.. literalinclude:: ./local_and_global_variable.lua
+   :language: lua
+
+::
+
+    # output
+    inside function a = 2
+    outside function a = 2
+    inside function b = 2
+    outside function b = 1
+    inside function c = 2
+    outside function c = 2
+    inside function d = 2
+    outside function d = 1
