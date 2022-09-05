@@ -256,3 +256,13 @@ Local and Global Variable
     outside function c = 2
     inside function d = 2
     outside function d = 1
+
+
+OOP
+------------------------------------------------------------------------------
+.. literalinclude:: ./oop_basic.lua
+   :language: lua
+
+Reference:
+
+- https://www.twle.cn/l/yufei/lua53/lua-basic-object-oriented.html
