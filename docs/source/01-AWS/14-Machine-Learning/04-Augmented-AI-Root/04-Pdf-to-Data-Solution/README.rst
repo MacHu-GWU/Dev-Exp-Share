@@ -1,13 +1,25 @@
-PDF to Data Solution
+Text Insight Solution
 ==============================================================================
+Keywords: text insight, unstructured document to structured data
 
-.. raw:: html
-    :file: ./pdf-to-data-solution.drawio.html
+
+Summary
+------------------------------------------------------------------------------
+"Text Insight" is an "Unstructured Document to Structured Data" solution that can extract high quality, machine readable, structured data from PDF, Image, or any None Text data format (has potential to extend to process Audio / Video). Target vertical industry include:
+
+- Law Service
+- Financial Document
 
 
 Architect
 ------------------------------------------------------------------------------
+.. raw:: html
+    :file: ./pdf-to-data-solution.drawio.html
+
+
 .. tab:: 1. Raw Data
+
+    User or Machine uploads raw document to S3 bucket.
 
     S3 Folder Structure:
 
@@ -20,7 +32,7 @@ Architect
 
 .. tab:: 3. Textract
 
-    Once the text extract is done, Textract will store the Machine Readable extracted data in JSON to S3 bucket. Since this process may takes long (if it is 100+ pages PDF), you can configure to send an notification to the SNS topic when it is done.
+    Once the text-extract operation is done, Textract will store the "machine readable extracted data" in JSON format in S3 bucket. Since this process may takes long (if it is 100+ pages PDF), you can configure to send an notification to the SNS topic when it is done.
 
 .. tab:: 4. Extracted Text
 
@@ -71,7 +83,7 @@ Architect
 
 .. tab:: 7. Comprehend
 
-    Once the detect entity operation is done, it will store the machine readable detected entities data in JSON to S3 Bucket.
+    Once the detect-entity operation is done, it will store the machine readable detected entities data in JSON in S3 Bucket.
 
 .. tab:: 8. Detected Entities
 
@@ -99,15 +111,45 @@ Architect
 
 .. tab:: 10. Human In Loop
 
-    A HIL task is created by the Lambda Function
+    A HIL task is created by the Lambda Function.
 
 .. tab:: 11. Human Review
 
     The Human workers receive the assign HIL, and be able to provide feed back in HIL GUI.
 
+    Sample GUI:
+
+    .. image:: ./hil-ui.png
+
 .. tab:: 12. HIL Output
 
     The HIL output data will be saved to S3 bucket.
+
+    Sample HIL Output:
+
+    .. code-block:: python
+
+        [
+          {
+            "Change Reason1": "looks weird",
+            "True Prediction1": "sanhe prediction",
+            "predicted1": "0.1544346809387207",
+            "predicted2": "0.4938497543334961",
+            "predicted3": "0.23486430943012238",
+            "rating1": {
+              "agree": true,
+              "disagree": false
+            },
+            "rating2": {
+              "agree": false,
+              "disagree": true
+            },
+            "rating3": {
+              "agree": true,
+              "disagree": false
+            }
+          }
+        ]
 
 .. tab:: 13. Save to Data Store
 
