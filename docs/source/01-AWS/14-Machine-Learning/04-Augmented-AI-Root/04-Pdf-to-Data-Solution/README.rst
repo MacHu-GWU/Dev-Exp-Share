@@ -16,13 +16,15 @@ Architect
 
 .. tab:: 2. Trigger Text Tract
 
-    NA
+    Once the raw file been uploaded to S3 bucket, the S3 put object event will trigger a Lambda Function, and the Lambda Function calls the Textract **async** API.
 
 .. tab:: 3. Textract
 
-    NA
+    Once the text extract is done, Textract will store the Machine Readable extracted data in JSON to S3 bucket. Since this process may takes long (if it is 100+ pages PDF), you can configure to send an notification to the SNS topic when it is done.
 
 .. tab:: 4. Extracted Text
+
+    The extracted text data is stored in S3 bucket
 
     The Machine readable extracted data:
 
@@ -61,40 +63,56 @@ Architect
 
 .. tab:: 5. SNS Topic
 
-    NA
+    Textract will send a message to SNS topic when the async operation is done. It can trigger subsequence job as required.
 
-.. tab:: 6. Trigger Textract
+.. tab:: 6. Trigger Comprehend
 
-    NA
+    The SNS message triggers a Lambda Function that invoke the Comprehend API, try to detect entities from extracted text. The input of the comprehend is the "Human readable extracted text" data.
 
 .. tab:: 7. Comprehend
 
-    NA
+    Once the detect entity operation is done, it will store the machine readable detected entities data in JSON to S3 Bucket.
 
 .. tab:: 8. Detected Entities
 
-    NA
+    Sample comprehend output data:
+
+    .. code-block:: python
+
+        # Machine readable extracted text
+        {
+            "Entities": [
+                {
+                    "Score": 0.851378858089447,
+                    "Type": "ORGANIZATION",
+                    "Text": "CENTER FOR MEDICARE",
+                    "BeginOffset": 0,
+                    "EndOffset": 86
+                },
+                ...
+            ]
+        }
 
 .. tab:: 9. Trigger HIL
 
-    NA
+    The Comprehend output JSON file creation event will trigger a Lambda Function, and the Lambda Function can do necessary post process on Textract and Comprehend output, and it will trigger the Human in Loop to verify the quality of extracted data.
 
 .. tab:: 10. Human In Loop
 
-    NA
+    A HIL task is created by the Lambda Function
 
 .. tab:: 11. Human Review
 
-    NA
+    The Human workers receive the assign HIL, and be able to provide feed back in HIL GUI.
 
 .. tab:: 12. HIL Output
 
-    NA
+    The HIL output data will be saved to S3 bucket.
 
 .. tab:: 13. Save to Data Store
 
-    NA
+    The creation HIL Output event will trigger a Lambda Function that merges HIL output with the Textract / Comprehend output, and store validated data to final Data Store.
 
 .. tab:: 14. Data Store
 
-    NA
+    The required structured data of the original document will be stored in proper data store backend for future use.
