@@ -245,8 +245,8 @@ if __name__ == "__main__":
     # create_a2i_execution_role()
     # delete_a2i_execution_role()
 
-    # create_human_task_ui()
-    # delete_human_task_ui()
+    create_human_task_ui()
+    delete_human_task_ui()
 
     # create_flow_definition()
     # delete_flow_definition()
