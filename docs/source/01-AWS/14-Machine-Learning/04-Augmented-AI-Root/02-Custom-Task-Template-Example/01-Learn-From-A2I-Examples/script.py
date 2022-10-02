@@ -90,4 +90,4 @@ if __name__ == "__main__":
     )
     # config.delete_human_task_ui()
     # config.create_human_task_ui()
-    # config.start_human_loop()
+    config.start_human_loop()
