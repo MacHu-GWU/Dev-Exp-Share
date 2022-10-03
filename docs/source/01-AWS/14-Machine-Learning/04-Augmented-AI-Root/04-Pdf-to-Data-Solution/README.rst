@@ -1,6 +1,6 @@
 Text Insight Solution
 ==============================================================================
-Keywords: text insight, unstructured document to structured data
+Keywords: text insight solution, unstructured document to structured data, pdf to data
 
 
 Summary
@@ -9,6 +9,8 @@ Summary
 
 - Law Service
 - Financial Document
+- Insurance Document
+- Health Care Document
 
 
 Architect
@@ -158,3 +160,7 @@ Architect
 .. tab:: 14. Data Store
 
     The required structured data of the original document will be stored in proper data store backend for future use.
+
+.. tab:: 15. Status Tracker Dynamodb
+
+    The entire workflow has multiple steps, we could store the status information for each step in Dynamodb and be able to use a simple query to continues the workflow from any step.
