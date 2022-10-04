@@ -31,3 +31,38 @@ Mock 的作用
 
 .. literalinclude:: ./test_example4.py
    :language: python
+
+
+Patch a Variable
+------------------------------------------------------------------------------
+这个例子我们介绍了如何 mock 一个 模块内的 变量的值.
+
+使用 Mock 有一个重点: "假设你有一个 变量/函数 你需要 mock 它的行为, 千万不要在你定义它的地方 Mock, 而是要在你 **使用** 它的地方 mock"
+
+首先我们有这样一个模块::
+
+    my_package
+    |--- app.py
+    |--- constant.py
+
+.. literalinclude:: ./my_package/constant.py
+   :language: python
+
+.. literalinclude:: ./my_package/app.py
+   :language: python
+
+可以看出 ``my_package.constant.key1`` 是在 ``constant.py`` 模块中被定义的, 而是在 ``my_package.app.print_constant`` 函数中被使用的. 我们现在要来测试 ``print_constant`` 函数, 不过我们想要替换掉 ``key1`` 的值.
+
+.. literalinclude:: ./test_patch_a_variable.py
+   :language: python
+
+最后的结果是这样的::
+
+    do test with mock
+    constant.key1 = value111
+    constant.key2 = value2
+    constant.key3 = value3
+    without mock
+    constant.key1 = value1
+    constant.key2 = value2
+    constant.key3 = value3

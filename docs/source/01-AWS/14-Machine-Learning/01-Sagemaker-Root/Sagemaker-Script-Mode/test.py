@@ -9,7 +9,7 @@ RandomForestRegressor().set_params(
 
 )
 
-model = SKLearn()
+model = SKLearn().deploy().delete_model()
 
 model.fit()
 model.deploy().delete_model()
