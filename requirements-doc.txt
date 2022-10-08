@@ -13,3 +13,4 @@ rstobj==0.0.7                           # generate list table from data
 # Theme
 furo==2021.8.31                         # modern doc theme
 pygments                                # live RestructuredText preview
+IPython
