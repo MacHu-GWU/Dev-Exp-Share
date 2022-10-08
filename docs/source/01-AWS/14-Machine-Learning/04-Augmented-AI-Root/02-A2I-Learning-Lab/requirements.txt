@@ -3,3 +3,5 @@ smart_open
 boto3
 boto_session_manager
 s3pathlib
+box
+python_liquid

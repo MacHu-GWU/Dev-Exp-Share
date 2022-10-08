@@ -1,0 +1,45 @@
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<style>
+    table, tr, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+</style>
+
+<crowd-form>
+    <div>
+        <h1>Instructions</h1>
+        <p>Please review this application and provide your decision. </p>
+    </div>
+
+    <h1> Application </h1>
+
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        {% for row in task.input.application %}
+        <tr>
+            <td>{{ row.key }}</td>
+            <td>{{ row.value }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><strong>ML Prediction</strong></td>
+            <td>{{ task.input.ml_prediction }}</td>
+        </tr>
+    </table>
+
+    <h1> Your Decision </h1>
+    <p>
+        <input type="radio" id="approve" name="human_decision" value="1" required>
+        <label for="approve">Approve</label>
+    </p>
+    <p>
+        <input type="radio" id="deny" name="human_decision" value="0" required>
+        <label for="deny">Deny</label>
+    </p>
+</crowd-form>
