@@ -1,0 +1,5 @@
+pathlib_mate
+smart_open
+boto3
+boto_session_manager
+s3pathlib

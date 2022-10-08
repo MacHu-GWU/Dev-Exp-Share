@@ -31,15 +31,24 @@ class Config:
 
     @property
     def task_ui_arn(self):
-        return f"arn:aws:sagemaker:{self.bsm.aws_region}:{self.bsm.aws_account_id}:human-task-ui/{self.task_ui_name}"
+        return (
+            f"arn:aws:sagemaker:{self.bsm.aws_region}:{self.bsm.aws_account_id}:"
+            f"human-task-ui/{self.task_ui_name}"
+        )
 
     @property
     def task_ui_console_url(self):
-        return f"https://console.aws.amazon.com/a2i/home?region={self.bsm.aws_region}#/worker-task-templates/{self.task_ui_name}"
+        return (
+            f"https://console.aws.amazon.com/a2i/home?"
+            f"region={self.bsm.aws_region}#/worker-task-templates/{self.task_ui_name}"
+        )
 
     @property
     def flow_definition_arn(self):
-        return f"arn:aws:sagemaker:{self.bsm.aws_region}:{self.bsm.aws_account_id}:flow-definition/{self.flow_definition_name}"
+        return (
+            f"arn:aws:sagemaker:{self.bsm.aws_region}:{self.bsm.aws_account_id}:"
+            f"flow-definition/{self.flow_definition_name}"
+        )
 
     def create_human_task_ui(self, tags: dict = None) -> dict:
         print(f"Creating {self.task_ui_arn} ...")
@@ -63,8 +72,24 @@ class Config:
         print(f"Success, verify at {self.task_ui_console_url}")
         return response
 
+    # --- Start Human in Loop
+    @property
+    def labeling_workforce_console_url(self) -> str:
+        return (
+            f"https://{self.bsm.aws_region}.console.aws.amazon.com/sagemaker/"
+            f"groundtruth?region={self.bsm.aws_region}#/labeling-workforces"
+        )
+
+    def get_hil_console_url(self, hil_id: str) -> str:
+        return (
+            f"https://{self.bsm.aws_region}.console.aws.amazon.com/a2i/home?"
+            f"region={self.bsm.aws_region}#/human-review-workflows/"
+            f"{self.flow_definition_name}/human-loops/{hil_id}"
+        )
+
     def start_human_loop(self):
         print("Start human loop ...")
+        print(f"You can enter the labeling portal from {self.labeling_workforce_console_url}")
         response = self.a2i_client.start_human_loop(
             HumanLoopName=str(uuid.uuid4()),
             FlowDefinitionArn=self.flow_definition_arn,
@@ -72,12 +97,11 @@ class Config:
                 "InputContent": self.hil_data_file.read_text(encoding="utf-8")
             }
         )
-        human_loop_arn = response["HumanLoopArn"]
-        human_loop_id = human_loop_arn.split("/")[-1]
-        human_loop_console_url = f"https://{self.bsm.aws_region}.console.aws.amazon.com/a2i/home?region={self.bsm.aws_region}#/human-review-workflows/{self.flow_definition_name}/human-loops/{human_loop_id}"
-        print(f"Processing, preview HIL status at {human_loop_console_url}")
-        labeling_workforces_console_url = f"https://{self.bsm.aws_region}.console.aws.amazon.com/sagemaker/groundtruth?region={self.bsm.aws_region}#/labeling-workforces"
-        print(f"You can enter the labeling portal from {labeling_workforces_console_url}")
+        hil_arn = response["HumanLoopArn"]
+        hil_id = hil_arn.split("/")[-1]
+        hil_console_url = self.get_hil_console_url(hil_id)
+        print(f"Processing, preview HIL status at {hil_console_url}")
+
 
 
 if __name__ == "__main__":

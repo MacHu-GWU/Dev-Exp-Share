@@ -41,7 +41,7 @@ class Config:
 
     @property
     def a2i_execution_role_name(self):
-        return f"{self.project_name}-a2i_execution_role"
+        return f"{self.project_name_slug}-a2i-execution-role"
 
     @property
     def a2i_execution_role_arn(self):
