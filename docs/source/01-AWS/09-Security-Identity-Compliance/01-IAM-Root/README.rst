@@ -1,5 +1,10 @@
-Identity Authentication Management (IAM) Docs
+Identity Authentication Management (IAM) Root
 ==============================================================================
+
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
+
 
 .. contents::
     :local:
