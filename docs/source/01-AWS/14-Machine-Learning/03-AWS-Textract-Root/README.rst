@@ -45,3 +45,7 @@ Textract 发送给 SNS 的 Message 其实是一个 Json dump 成 String 的形�
             }
         ]
     }
+
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst

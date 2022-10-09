@@ -1,3 +1,0 @@
-pathlib_mate
-s3pathlib
-python-liquid
