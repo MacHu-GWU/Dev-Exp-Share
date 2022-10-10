@@ -6,4 +6,4 @@ Keywords: A2I, Augmented AI, HIL, Human In Loop, Lab
    :maxdepth: 2
    :caption: Contents:
 
-   notebooks/a2i-learning-lab
+   a2i-learning-lab
