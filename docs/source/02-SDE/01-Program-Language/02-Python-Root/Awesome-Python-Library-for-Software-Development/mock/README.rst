@@ -31,3 +31,110 @@ Mock 的作用
 
 .. literalinclude:: ./test_example4.py
    :language: python
+
+
+Patch a Variable
+------------------------------------------------------------------------------
+这个例子我们介绍了如何 mock 一个 模块内的 变量的值.
+
+使用 Mock 有一个重点: "假设你有一个 变量/函数 你需要 mock 它的行为, 千万不要在你定义它的地方 Mock, 而是要在你 **使用** 它的地方 mock"
+
+首先我们有这样一个模块::
+
+    my_package
+    |--- app.py
+    |--- constant.py
+
+.. literalinclude:: ./my_package/constant.py
+   :language: python
+
+.. literalinclude:: ./my_package/app.py
+   :language: python
+
+可以看出 ``my_package.constant.key1`` 是在 ``constant.py`` 模块中被定义的, 而是在 ``my_package.app.print_constant`` 函数中被使用的. 我们现在要来测试 ``print_constant`` 函数, 不过我们想要替换掉 ``key1`` 的值.
+
+.. literalinclude:: ./test_patch_a_variable.py
+   :language: python
+
+最后的结果是这样的::
+
+    do test with mock
+    constant.key1 = value111
+    constant.key2 = value2
+    constant.key3 = value3
+    without mock
+    constant.key1 = value1
+    constant.key2 = value2
+    constant.key3 = value3
+
+
+Patch a Function
+------------------------------------------------------------------------------
+在这个例子里我们重点介绍了如何 mock 一个 模块内的 函数的返回值.
+
+使用 Mock 有一个重点: "假设你有一个 变量/函数 你需要 mock 它的行为, 千万不要在你定义它的地方 Mock, 而是要在你 **使用** 它的地方 mock"
+
+首先我们有这样一个模块::
+
+    my_package
+    |--- app.py
+    |--- helpers.py
+
+.. literalinclude:: ./my_package/helpers.py
+   :language: python
+
+.. literalinclude:: ./my_package/app.py
+   :language: python
+
+可以看出 ``my_package.helpers.utc_now`` 是在 ``helpers.py`` 模块中被定义的, 而是在 ``my_package.app.print_now`` 函数中被使用的. 我们现在要来测试 ``print_now`` 函数, 不过我们想要替换掉 ``utc_now`` 的值.
+
+.. literalinclude:: ./test_patch_a_function.py
+   :language: python
+
+最后的结果是这样的::
+
+    do test with mock
+    now is 2000-01-01 00:00:00+00:00
+    without mock
+    now is 2022-10-04 16:57:16.373059+00:00
+
+
+Patch a Class Property and Method
+------------------------------------------------------------------------------
+在这个例子我们重点介绍了如何 mock 一个 模块内的 类 的 property 函数以及普通的 method 函数的.
+
+首先我们有这样一个模块::
+
+    my_package
+    |--- app.py
+    |--- config.py
+
+.. literalinclude:: ./my_package/config.py
+   :language: python
+
+.. literalinclude:: ./my_package/app.py
+   :language: python
+
+mock 一个 property
+
+.. literalinclude:: ./test_patch_a_property.py
+   :language: python
+
+最后的结果是这样的::
+
+    do test with mock
+    config.project_name = my-project-dev
+    without mock
+    config.project_name = my-project-prod
+
+mock 一个 method
+
+.. literalinclude:: ./test_patch_a_method.py
+   :language: python
+
+最后的结果是这样的::
+
+    do test with mock
+    config.make_db_table_name = this_is_mock_table_prod
+    without mock
+    config.make_db_table_name = my_table_prod

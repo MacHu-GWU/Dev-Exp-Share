@@ -26,7 +26,7 @@ Summary
 
        notebooks/Example 1
 
-4. Make sure you add ``IPython`` to your ``requirements-doc.txt`` file, otherwise the Sphinx Doc cannot show Syntax Highlight in Code Block
+4. Make sure you add ``IPython`` to your ``requirements-doc.txt`` file, otherwise the Sphinx Doc cannot show **Syntax Highlight** in Code Block.
 
 Reference:
 

@@ -18,3 +18,4 @@ Compliance, 审计, 让第三方监控所有的系统, 所有的操作, 是由�
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst
