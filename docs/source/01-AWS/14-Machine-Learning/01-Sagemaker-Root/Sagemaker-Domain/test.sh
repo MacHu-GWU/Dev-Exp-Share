@@ -1,1 +1,0 @@
-aws s3 ls --profile foa_workshop

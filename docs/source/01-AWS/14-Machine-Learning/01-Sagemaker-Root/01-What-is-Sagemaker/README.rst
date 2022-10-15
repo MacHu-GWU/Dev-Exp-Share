@@ -1,6 +1,5 @@
 What is Sagemaker
 ==============================================================================
-
 .. contents::
     :class: this-will-duplicate-information-and-it-is-still-useful-here
     :depth: 1
@@ -9,6 +8,8 @@ What is Sagemaker
 
 前言
 ------------------------------------------------------------------------------
+市场上曾经有很多公司想要创建一套为 ML 服务的云基础设施. 而为 ML 的基础设施应该做成什么样的产品, 以什么样的方式让用户使用, 如何解决 ML 中的痛点, 业内并没有一套标准答案, 因为这个话题实在是太新了. AWS Sagemaker 算是市场上第一个比较成熟, 并且用户上手比较容易, 通用性较强的产品了.
+
 Sagemaker 这款产品和其他的 AWS 产品不太一样, 很难用一句话让任何人理解 Sagemaker 到底是一个什么产品, 能解决什么问题. 因为机器学习是一个比较大的话题, 如果没有真正全程经历一个机器学习模型的 研发, 测试, 调优, 部署, 监控, 反馈 这一整套流程, 是很难理解这些流程中有哪些痛点的. 所以为了能理解 Sagemaker 的原理和价值, 我们先来回顾一下机器学习开发的整个流程, 看看在没有 Sagemaker 的过程中是数据科学家会和工程师的日常是怎样的.
 
 
@@ -82,7 +83,7 @@ Sagemaker 这款产品和其他的 AWS 产品不太一样, 很难用一句话让
 - 在数据科学家看来用训练好的模型作预测仅仅是 ``my_model.predict([1, 3, 5, 7])`` 一行代码, 但我们要将其部署成服务你看看上面有多少步骤, 工作之繁琐令人却步
 
 
-AWS SageMaker 是如何解决这一问题的
+AWS SageMaker 是如何传统开发流程的痛点的
 ------------------------------------------------------------------------------
 AWS Sagemaker 它有三大杀手工具:
 
@@ -93,12 +94,9 @@ AWS Sagemaker 它有三大杀手工具:
 2. 对机器学习中的各个步骤进行编排, 也叫做 Sagemaker Pipeline, 你可以将其理解为一个专门为 ML 设计的 Step Function.
     - SageMaker Pipelines Overview: https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-sdk.html
     - Get started with SageMaker Pipelines: https://sagemaker-examples.readthedocs.io/en/latest/sagemaker-pipelines/index.html
-3. 对 Jupyter Lab 进行二次开发, 和 Sagemaker AWS Console 高度整合, 使得你在浏览器里就能开发.
+3. 对 Jupyter Lab 进行二次开发, 和 Sagemaker AWS Console 高度整合, 使得你在浏览器里就能开发, 监控 ML 资源.
 
-Sagemaker Python SDK: https://sagemaker.readthedocs.io/en/stable/
 
-- https://docs.aws.amazon.com/sagemaker/latest/dg/studio-entity-status.html
-
-Reference:
-
+参考资料
+------------------------------------------------------------------------------
 - Sagemaker Python SDK: https://sagemaker.readthedocs.io/en/stable/
