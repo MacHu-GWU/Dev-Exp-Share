@@ -29,3 +29,9 @@ Script Mode 的核心是 entry point script, 跟 docker 里的 entry point scrip
 ------------------------------------------------------------------------------
 
 - 如何编写 Training Script 的官方文档: https://sagemaker.readthedocs.io/en/stable/frameworks/sklearn/using_sklearn.html#preparing-the-scikit-learn-training-script
+
+
+如何在不 Build Docker Image 的情况下的在 Script Mode 中使用额外的 Python Library
+------------------------------------------------------------------------------
+Script Mode
+

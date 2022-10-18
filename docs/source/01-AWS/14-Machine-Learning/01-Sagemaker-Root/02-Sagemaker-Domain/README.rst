@@ -66,6 +66,11 @@ Delete Sagemaker Domain
 要删掉 Domain, 就要删掉上面所有的 User Profile; 要删掉 User Profile, 就要删掉所有与之相关的 App. 其中 Jupyter Server App 要被删掉, 就要先删掉 EFS (不然会无限自动启动, 我也不知道这么做对不对, 反正删掉 EFS 之后就不会无限启动了). 你按照这个顺序反过来即可. 详情请参考 `这篇文档 <https://docs.aws.amazon.com/sagemaker/latest/dg/gs-studio-delete-domain.html>`_
 
 
+Sagemaker Domain 底层架构
+------------------------------------------------------------------------------
+这里有个 **巨坑**. 虽然 Sagemaker Domain 是有 VPC Mode 这个选项, 但是无论是 Sagemaker Studio App, 还是 Jupyter Notebook, 还是 Remote Training, 还是 Endpoint, 实际都 **不在** 你自己的 VPC 上运行. 而是在一个 AWS 内部的 Isengard Account 上运行的. 所以你的 VPC 的 Security Group 不影响你的 Sagemaker 资源. 你的 VPC 只用来部署 EFS 文件系统, 以及如果你需要 call AWS API 的时候可以用 VPC Endpoint 将流量限制在 AWS Network 以内, 而不走公网.
+
+
 参考资料
 ------------------------------------------------------------------------------
 - Amazon SageMaker Machine Learning Environments 详细介绍了 Domain, Studio, RStudio, Canvas 等概念和用法: https://docs.aws.amazon.com/sagemaker/latest/dg/domain.html
