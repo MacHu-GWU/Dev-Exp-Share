@@ -33,5 +33,13 @@ Script Mode 的核心是 entry point script, 跟 docker 里的 entry point scrip
 
 如何在不 Build Docker Image 的情况下的在 Script Mode 中使用额外的 Python Library
 ------------------------------------------------------------------------------
-Script Mode
+**问题**
+
+    我们在 Jupyter Notebook 上开发了一个 ML 模型. 但是在开发的过程中我们需要用 ``%pip install ...`` 安装了一些第三方依赖. 而我的 ML 模型需要用到这些依赖. 我们如何在 Remote Training 以及 Deploy Endpoint 的时候包含这些依赖呢?
+
+**分析问题的本质**
+
+    我们用 Sklearn 举例. Script Mode 的本质就是 Sagemaker 自己管理着一个 Docker Container. 里面安装了 Python 以及一些 Sklearn 的依赖. 而你本地的 Jupyter Notebook 的 Kernel 里也有一些依赖. 这个问题的本质就是找到 AWS Managed Docker Container 和你开发用的 Jupyter Notebook 中的依赖列表的差异.
+
+    这个差异
 

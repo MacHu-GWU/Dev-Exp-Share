@@ -1,5 +1,12 @@
 Setup IAM For Build Lab
 ==============================================================================
+
+
+Setup IAM Role for Build Lab Decision Tree
+------------------------------------------------------------------------------
+.. raw:: html
+    :file: ./setup-iam-role-for-build-lab.drawio.html
+
 - ``your-common-prefix``
 
 ::
@@ -30,9 +37,11 @@ Setup IAM For Build Lab
                     "iam:UpdateRoleDescription"
                 ],
                 "Resource": [
-                    "arn:aws:iam::279139072714:role/your-common-prefix*",
-                    "arn:aws:iam::279139072714:policy/your-common-prefix*"
+                    "arn:aws:iam::111122223333:role/your-common-prefix*",
+                    "arn:aws:iam::111122223333:policy/your-common-prefix*"
                 ]
             }
         ]
     }
+
+
