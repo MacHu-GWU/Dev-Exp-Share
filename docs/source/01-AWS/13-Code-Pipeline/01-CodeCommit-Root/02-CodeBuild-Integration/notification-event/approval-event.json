@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "79ff9296-9064-5d83-9228-c9959eb05308",
+                "TopicArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events",
+                "Subject": null,
+                "Message": "{\"account\":\"669508176277\",\"detailType\":\"CodeCommit Pull Request State Change\",\"region\":\"us-east-2\",\"source\":\"aws.codecommit\",\"time\":\"2022-05-21T16:00:18Z\",\"notificationRuleArn\":\"arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/b4b0b3a068d4f7add4ed0e7c965b88cd1ba26af2\",\"detail\":{\"approvalStatus\":\"APPROVE\",\"sourceReference\":\"refs/heads/f2\",\"lastModifiedDate\":\"Sat May 21 15:56:38 UTC 2022\",\"author\":\"arn:aws:iam::669508176277:user/sanhe\",\"isMerged\":\"False\",\"pullRequestStatus\":\"Open\",\"notificationBody\":\"A pull request event occurred in the following AWS CodeCommit repository: learn_codebuild. User: arn:aws:sts::669508176277:assumed-role/sanhe-assume-role-for-iam-test/sanhe. Event: Updated. Pull request name: 2. Additional information: A user has changed their approval state for the pull request. State change: APPROVE. For more information, go to the AWS CodeCommit console https://us-east-2.console.aws.amazon.com/codesuite/codecommit/repositories/learn_codebuild/pull-requests/2?region=us-east-2.\",\"destinationReference\":\"refs/heads/master\",\"callerUserArn\":\"arn:aws:sts::669508176277:assumed-role/sanhe-assume-role-for-iam-test/sanhe\",\"creationDate\":\"Sat May 21 15:50:51 UTC 2022\",\"pullRequestId\":\"2\",\"title\":\"f2\",\"revisionId\":\"2f21662363cd735c44f3e9ef66c62a2bb157a4c7049edf6d021c6d87bcce7f22\",\"repositoryNames\":[\"learn_codebuild\"],\"destinationCommit\":\"ad4def2926fb6e8873d036b5c1fcd369e9b06687\",\"event\":\"pullRequestApprovalStateChanged\",\"sourceCommit\":\"6b1b688dd10c83db424d62790891855ac6c9968d\"},\"resources\":[\"arn:aws:codecommit:us-east-2:669508176277:learn_codebuild\"],\"additionalAttributes\":{}}",
+                "Timestamp": "2022-05-21T16:00:20.787Z",
+                "SignatureVersion": "1",
+                "Signature": "JDfUj829uWuZj18NVZP7S2DV7GsLmRlIa8Z0BYcN1uZQBei1nhtOhzh3BWRo41aZdF7pZuyfrUdOKEtAsY0xRVGhxNadFz47jFUsDMIU+8y5xi4ZYoj+kKkiZQpiAmVkctlbAA4lHI/Fjidbjsag8MSa+OYhxGMn6IfQAZje3i/elCthQB1uTb7tcr7kdwfkIpUbcxL5T5pXDYouRuVfN/CbCIJOZZUNBP6frFUMenDxp7Sn6aP7OWNrN7NfaXX0ANljhprSCaQM/SXGoXtB+QeRe6geCvdgEBdq0UUG3cUuOj7uaIN0uCFW7dIXL1Wq5/E5zHM+CUoJGTnr8pvwcQ==",
+                "SigningCertUrl": "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+                "UnsubscribeUrl": "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}

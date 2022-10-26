@@ -1,0 +1,23 @@
+{
+    "account": "501105007192",
+    "detailType": "CodeCommit Repository State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T05:04:54Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:501105007192:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "referenceFullName": "refs/heads/master",
+        "repositoryId": "73dedff5-98a7-4115-ae14-5598e60956d7",
+        "referenceType": "branch",
+        "commitId": "e622622f2771fa02afa943959c3902617bc19e60",
+        "callerUserArn": "arn:aws:iam::501105007192:user/sanhe",
+        "event": "referenceUpdated",
+        "repositoryName": "aws_lbd_ci_example-project",
+        "oldCommitId": "974cc92c85782989dbee8ec27650feaf10dcca0f",
+        "referenceName": "master"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:501105007192:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {}
+}

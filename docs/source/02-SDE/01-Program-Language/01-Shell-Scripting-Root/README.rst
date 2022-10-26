@@ -21,3 +21,4 @@ bash 和 sh 都是 Unix 系统上兼容性较好的终端. 其中 bash 功能比
 
 .. autotoctree::
     :maxdepth: 1
+    :index_file: README.rst

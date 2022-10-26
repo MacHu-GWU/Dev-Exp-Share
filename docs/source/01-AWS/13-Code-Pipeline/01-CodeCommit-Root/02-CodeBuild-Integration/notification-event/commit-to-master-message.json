@@ -1,0 +1,23 @@
+{
+    "account": "669508176277",
+    "detailType": "CodeCommit Repository State Change",
+    "region": "us-east-2",
+    "source": "aws.codecommit",
+    "time": "2022-05-21T15:35:52Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/0d060b4676ba9c289413cb9ec3a005095eb06970",
+    "detail": {
+        "referenceFullName": "refs/heads/master",
+        "repositoryId": "8cf05543-b91f-4e87-8a1b-3a7feda723c4",
+        "referenceType": "branch",
+        "commitId": "ad4def2926fb6e8873d036b5c1fcd369e9b06687",
+        "callerUserArn": "arn:aws:iam::669508176277:user/sanhe",
+        "event": "referenceUpdated",
+        "repositoryName": "learn_codebuild",
+        "oldCommitId": "d24c305f0dd3ba47fea7a8895b1753486f53d896",
+        "referenceName": "master"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-2:669508176277:learn_codebuild"
+    ],
+    "additionalAttributes": {}
+}

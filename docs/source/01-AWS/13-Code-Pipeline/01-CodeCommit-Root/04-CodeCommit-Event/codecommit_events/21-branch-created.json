@@ -1,0 +1,22 @@
+{
+    "account": "111122223333",
+    "detailType": "CodeCommit Repository State Change",
+    "region": "us-east-1",
+    "source": "aws.codecommit",
+    "time": "2022-07-19T04:22:50Z",
+    "notificationRuleArn": "arn:aws:codestar-notifications:us-east-1:111122223333:notificationrule/0bcb473a29ad36160baa29e4954acb6c02106840",
+    "detail": {
+        "referenceFullName": "refs/heads/feat/test-codecommit-event",
+        "repositoryId": "73dedff5-98a7-4115-ae14-5598e60956d7",
+        "referenceType": "branch",
+        "commitId": "3c46a6ebbe1055446e83fb9757ad9c3f2d1d8b4f", // the commit id when it is created
+        "callerUserArn": "arn:aws:iam::111122223333:user/sanhe",
+        "event": "referenceCreated",
+        "repositoryName": "aws_lbd_ci_example-project",
+        "referenceName": "feat/test-codecommit-event"
+    },
+    "resources": [
+        "arn:aws:codecommit:us-east-1:111122223333:aws_lbd_ci_example-project"
+    ],
+    "additionalAttributes": {}
+}

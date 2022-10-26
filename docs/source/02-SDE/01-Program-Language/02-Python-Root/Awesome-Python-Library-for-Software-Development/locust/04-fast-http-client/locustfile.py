@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
 """
 假设我们的 API 是一个接受 ``{"name": "Alice"}`` 返回 ``"Hello Alice"`` 的一个 POST

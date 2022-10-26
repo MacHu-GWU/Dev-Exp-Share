@@ -1,22 +1,18 @@
+.. _launch-and-ssh-to-ec2:
+
 Launch and SSH to EC2
 ==============================================================================
-
-本文内容:
-
-- 启动 EC2 虚拟机
-- SSH 连接至 EC2
+本文主要介绍了如何使用 SSH 连接到 AWS EC2.
 
 
 Step1. Launch EC2
 ------------------------------------------------------------------------------
-
 本质上 EC2 就是使用 虚拟机软件, 例如 VMWare, 在亚马逊的数据中心上运行的虚拟机. 虚拟机主要作为服务器使用, 这里面 90% 以上的服务器是 Linux.
 
 
 
 Step2. Connect via SSH
 ------------------------------------------------------------------------------
-
 Grant access to your pem key:
 
 .. code-block:: bash
@@ -70,7 +66,6 @@ Step3. Connect via SSH the Better Way
 
 Step4. Copy file or dir between EC2 and local machine via SSH Copy
 ------------------------------------------------------------------------------
-
 Reference:
 
 - Linux – How to Securely Copy Files Using SCP examples: https://haydenjames.io/linux-securely-copy-files-using-scp/
@@ -89,3 +84,9 @@ Reference:
 
     # Copy directory from local host to a EC2:
     $ scp -i {path-to-your-pem-file} -r <path-to-dir> <username>@<ec2-ip>:<path-to-ec2-dir>
+
+
+Tool
+------------------------------------------------------------------------------
+.. literalinclude:: ./ssh_to_ec2.py
+   :language: python

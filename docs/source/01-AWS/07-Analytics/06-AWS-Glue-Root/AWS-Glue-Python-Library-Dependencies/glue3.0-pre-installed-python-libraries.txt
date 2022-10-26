@@ -1,0 +1,41 @@
+# this list is from the aws blog
+# https://aws.amazon.com/blogs/big-data/developing-aws-glue-etl-jobs-locally-using-a-container/
+# I run the ``pip freeze`` command inside of the docker container,
+# and compare the package name to the glue 2.0 list
+boto3==1.18.50
+botocore==1.20.106
+certifi==2022.6.15
+chardet==3.0.4
+cycler==0.10.0
+Cython==0.29.4
+docutils==0.19
+enum34==1.1.10
+fsspec==2021.8.1
+idna==3.3
+jmespath==0.10.0
+joblib==1.0.1
+kiwisolver==1.3.2
+matplotlib==3.4.3
+mpmath==1.2.1
+numpy==1.19.5
+pandas==1.3.2
+patsy==0.5.1
+pmdarima==1.8.2
+ptvsd==4.3.2
+pyarrow==5.0.0
+pydevd==2.5.0
+pyhocon==0.3.58
+PyMySQL==1.0.2
+pyparsing==3.0.9
+pytz==2021.1
+requests==2.28.1
+s3fs==2021.8.1
+s3transfer==0.5.0
+scikit-learn==0.24.2
+scipy==1.7.1
+six==1.16.0
+statsmodels==0.12.2
+subprocess32==3.5.4
+sympy==1.8
+tbats==1.1.0
+urllib3==1.26.10

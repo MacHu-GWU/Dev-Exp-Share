@@ -1,0 +1,14 @@
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "CodeNotification_publish",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "codestar-notifications.amazonaws.com"
+            },
+            "Action": "SNS:Publish",
+            "Resource": "arn:aws:sns:us-east-2:111122223333:${your-sns-topic-name}"
+        }
+    ]
+}

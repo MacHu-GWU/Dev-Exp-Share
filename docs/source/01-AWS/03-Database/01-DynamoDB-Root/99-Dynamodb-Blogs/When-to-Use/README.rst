@@ -11,6 +11,7 @@ Reference:
 - How to determine if Amazon DynamoDB is appropriate for your needs, and then plan your migration: https://aws.amazon.com/blogs/database/how-to-determine-if-amazon-dynamodb-is-appropriate-for-your-needs-and-then-plan-your-migration/
 - Best Practices for Migrating from an RDBMS to Amazon DynamoDB: https://d1.awsstatic.com/whitepapers/migration-best-practices-rdbms-to-dynamodb.pdf
 
+
 Is DynamoDB right for your use case?
 ------------------------------------------------------------------------------
 You should consider using DynamoDB if you:
@@ -49,9 +50,9 @@ Some unsuitable workloads for DynamoDB include:
 - Online analytical processing (OLAP)/data warehouse implementations. These types of applications generally require distribution and the joining of fact and dimension tables that inherently provide a normalized (relational) view of your data.
 - Binary large object (BLOB) storage. DynamoDB can store binary items up to 400 KB, but DynamoDB is not generally suited to storing documents or images. A better architectural pattern for this implementation is to store pointers to Amazon S3 objects in a DynamoDB table.
 
+
 DynamoDB migration planning
 ------------------------------------------------------------------------------
-
 1. Developer training
 2. Data conversion
 3. Data migration

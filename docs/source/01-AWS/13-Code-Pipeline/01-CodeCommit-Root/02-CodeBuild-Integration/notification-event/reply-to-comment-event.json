@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "bb5561a2-4034-5819-97bb-3aa14e362b9e",
+                "TopicArn": "arn:aws:sns:us-east-2:669508176277:codecommit-events",
+                "Subject": null,
+                "Message": "{\"account\":\"669508176277\",\"detailType\":\"CodeCommit Comment on Pull Request\",\"region\":\"us-east-2\",\"source\":\"aws.codecommit\",\"time\":\"2022-05-21T15:56:48Z\",\"notificationRuleArn\":\"arn:aws:codestar-notifications:us-east-2:669508176277:notificationrule/b4b0b3a068d4f7add4ed0e7c965b88cd1ba26af2\",\"detail\":{\"beforeCommitId\":\"ad4def2926fb6e8873d036b5c1fcd369e9b06687\",\"inReplyTo\":\"ec20a16a-8a59-428a-8cf6-21e13f9e1905:4da0c6fa-4f25-4f05-ae9a-257abab10b9a\",\"notificationBody\":\"A pull request event occurred in the following AWS CodeCommit repository: learn_codebuild. The user: arn:aws:iam::669508176277:user/sanhe made a comment or replied to a comment. The comment was made on the following Pull Request: 2. For more information, go to the AWS CodeCommit console https://us-east-2.console.aws.amazon.com/codesuite/codecommit/repositories/learn_codebuild/pull-requests/2/activity#ec20a16a-8a59-428a-8cf6-21e13f9e1905%3Afac1aad9-f376-4894-8b6a-58991671b124?region=us-east-2\",\"repositoryId\":\"8cf05543-b91f-4e87-8a1b-3a7feda723c4\",\"commentId\":\"ec20a16a-8a59-428a-8cf6-21e13f9e1905:fac1aad9-f376-4894-8b6a-58991671b124\",\"afterCommitId\":\"6b1b688dd10c83db424d62790891855ac6c9968d\",\"callerUserArn\":\"arn:aws:iam::669508176277:user/sanhe\",\"event\":\"commentOnPullRequestCreated\",\"pullRequestId\":\"2\",\"repositoryName\":\"learn_codebuild\"},\"resources\":[\"arn:aws:codecommit:us-east-2:669508176277:learn_codebuild\"],\"additionalAttributes\":{\"commentedLine\":null,\"resourceArn\":\"arn:aws:codecommit:us-east-2:669508176277:learn_codebuild\",\"comments\":[{\"authorArn\":\"arn:aws:iam::669508176277:user/sanhe\",\"commentText\":\"My comment\"},{\"authorArn\":\"arn:aws:iam::669508176277:user/sanhe\",\"commentText\":\"Whats up\"}],\"commentedLineNumber\":null,\"filePath\":null}}",
+                "Timestamp": "2022-05-21T15:56:50.874Z",
+                "SignatureVersion": "1",
+                "Signature": "pMrtFSBhU6w1ldrRe+WiF7PTjJs/2KmCNBEyZs2vDG+Wnj1YraEu6MVohpTU+REIe3GyG/sU03fMK8vzKRS/m3MHVwrPMrl+VtvSSuPvGM3a54+BSNtyAiKmk6VXUUF+M0rJ5nRBNn8OiqGzZtZNZg0POrUHesfNXjERhcmbhvO1XvnSBIL9vctI3aPuwXimdKVEip3CFIocoTcv/Ydi+jtr0bIuSRrRicOKDEsBRShJ/M0q3madvIHHljgk3L4zYeYu2R+PScr8pOkCA4Zu9cYGdLmDWqBqTsV5BKKaEeqFxm8X1t4l3j0o9FbGQmNfqiBOmLH0GRafxYV7PNVY6A==",
+                "SigningCertUrl": "https://sns.us-east-2.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+                "UnsubscribeUrl": "https://sns.us-east-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-2:669508176277:codecommit-events:7998ffb1-7b42-4685-97d4-0fc133dd82ab",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
