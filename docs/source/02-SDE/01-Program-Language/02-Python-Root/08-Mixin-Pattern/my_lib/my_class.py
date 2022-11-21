@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# content of: my_class.py
 
 from .base import MyClass as Base
 from .mixin1 import Mixin1
