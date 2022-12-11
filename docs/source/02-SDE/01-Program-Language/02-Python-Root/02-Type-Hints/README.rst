@@ -4,12 +4,9 @@ Type Hint in Python
 ==============================================================================
 Keywords: Python, typing, type hint, type hints, typehint, typehints, mypy
 
-
-.. contents::
-    :class: this-will-duplicate-information-and-it-is-still-useful-here
-    :depth: 1
-    :local:
-
+.. autotoctree::
+    :maxdepth: 1
+    :index_file: README.rst
 
 
 Avoid Cyclic Import for Type Hint
