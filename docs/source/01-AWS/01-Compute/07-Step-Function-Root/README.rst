@@ -2,7 +2,7 @@
 
 AWS Step Function Root
 ==============================================================================
-Keywords: AWS Step Function, StepFunction, SFN, Root
+Keywords: AWS Step Function, StepFunction, SFN, State Machine, StateMachine, Root
 
 .. autotoctree::
     :maxdepth: 1
