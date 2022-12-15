@@ -29,7 +29,7 @@ The High Level Overview of the Solution
 .. code-block:: javascript
 
     {
-      "PipelineExecutionArn": "MyData"
+      "PipelineExecutionArn.$": "$.PipelineExecutionArn"
     }
 
 2. ``DescribePipelineExecution`` API 具体的输出的 JSON 的格式是怎样的, Status 在哪个 Key 下我们是不知道的. 这个在 API Spec 文档里有但是很难找. 一个简单的办法就是直接试着运行一次, 然后让它直接 fail, 通过查 Execution Log 中的 Output 来了解 JSON 的具体格式.
