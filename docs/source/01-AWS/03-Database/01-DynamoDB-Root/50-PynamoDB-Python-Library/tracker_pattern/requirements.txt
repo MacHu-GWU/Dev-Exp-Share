@@ -1,0 +1,3 @@
+pynamodb==5.3.4
+s3pathlib==1.2.1
+boto_session_manager==1.3.1
