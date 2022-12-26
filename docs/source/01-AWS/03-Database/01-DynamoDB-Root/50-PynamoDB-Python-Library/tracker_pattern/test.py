@@ -1,74 +1,60 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import subprocess
-from pathlib import Path
 
-dir_here = Path(__file__).absolute().parent
-dir_htmlcov = dir_here / "htmlcov"
-path_cov_index_html = dir_htmlcov / "index.html"
-
-# virtual environment
-dir_bin = Path(sys.executable).parent
-bin_pytest = dir_bin / "pytest"
-
-
-def _run_cov_test(
-    bin_pytest: str,
-    script: str,
-    module: str,
-    root_dir: str,
-    htmlcov_dir: str,
-):
-    """
-    A simple wrapper around pytest + coverage cli command.
-    :param bin_pytest: the path to pytest executable
-    :param script: the path to test script
-    :param module: the dot notation to the python module you want to calculate
-        coverage
-    :param root_dir: the dir to dump coverage results binary file
-    :param htmlcov_dir: the dir to dump HTML output
-    """
-    args = [
-        bin_pytest,
-        "-s",
-        "--tb=native",
-        f"--rootdir={root_dir}",
-        f"--cov={module}",
-        "--cov-report",
-        "term-missing",
-        "--cov-report",
-        f"html:{htmlcov_dir}",
-        script,
-    ]
-    print(" ".join(args))
-    subprocess.run(args)
-
-
-def run_cov_test(script: str, module: str, preview: bool = False):
-    _run_cov_test(
-        bin_pytest=f"{bin_pytest}",
-        script=script,
-        module=module,
-        root_dir=f"{dir_here}",
-        htmlcov_dir=f"{dir_htmlcov}",
-    )
-    if preview:
-        subprocess.run(["open", f"{path_cov_index_html}"])
-
-
-# ------------------------------------------------------------------------------
-# Unit test start here
-# ------------------------------------------------------------------------------
 import pytest
+import enum
 import time
-from tracker import StatusEnum, Tracker, LockError, IgnoreError, EPOCH, utc_now
+from tracker import (
+    LockError,
+    IgnoreError,
+    EPOCH,
+    utc_now,
+    Tracker as BaseTracker,
+)
 
-job_id = "test"
+
+class StatusEnum(int, enum.Enum):
+    s00_todo = 0
+    s03_in_progress = 3
+    s06_failed = 6
+    s09_success = 9
+    s10_ignore = 10
+
+
+class Tracker(BaseTracker):
+    DEFAULT_STATUS = StatusEnum.s00_todo.value
+
+    def start_job(
+        self,
+    ) -> "Tracker":
+        """
+        This is just an example of how to use :meth:`Tracker.start`.
+
+        A job should always have four related status codes:
+
+        - in process status
+        - failed status
+        - success status
+        - ignore status
+
+        If you have multiple type of jobs, I recommend creating multiple
+        wrapper functions like this for each type of jobs. And ensure that
+        the "ignore" status value is the largest status value among all,
+        and use the same "ignore" status value for all type of jobs.
+        """
+        return self.start(
+            in_process_status=StatusEnum.s03_in_progress.value,
+            failed_status=StatusEnum.s06_failed.value,
+            success_status=StatusEnum.s09_success.value,
+            ignore_status=StatusEnum.s10_ignore.value,
+        )
 
 
 class UserError(Exception):
     pass
+
+
+job_id = "test"
 
 
 class TestTracker:
@@ -305,4 +291,58 @@ class TestTracker:
 
 
 if __name__ == "__main__":
+    import sys
+    import subprocess
+    from pathlib import Path
+
+    dir_here = Path(__file__).absolute().parent
+    dir_htmlcov = dir_here / "htmlcov"
+    path_cov_index_html = dir_htmlcov / "index.html"
+
+    # virtual environment
+    dir_bin = Path(sys.executable).parent
+    bin_pytest = dir_bin / "pytest"
+
+    def _run_cov_test(
+        bin_pytest: str,
+        script: str,
+        module: str,
+        root_dir: str,
+        htmlcov_dir: str,
+    ):
+        """
+        A simple wrapper around pytest + coverage cli command.
+        :param bin_pytest: the path to pytest executable
+        :param script: the path to test script
+        :param module: the dot notation to the python module you want to calculate
+            coverage
+        :param root_dir: the dir to dump coverage results binary file
+        :param htmlcov_dir: the dir to dump HTML output
+        """
+        args = [
+            bin_pytest,
+            "-s",
+            "--tb=native",
+            f"--rootdir={root_dir}",
+            f"--cov={module}",
+            "--cov-report",
+            "term-missing",
+            "--cov-report",
+            f"html:{htmlcov_dir}",
+            script,
+        ]
+        print(" ".join(args))
+        subprocess.run(args)
+
+    def run_cov_test(script: str, module: str, preview: bool = False):
+        _run_cov_test(
+            bin_pytest=f"{bin_pytest}",
+            script=script,
+            module=module,
+            root_dir=f"{dir_here}",
+            htmlcov_dir=f"{dir_htmlcov}",
+        )
+        if preview:
+            subprocess.run(["open", f"{path_cov_index_html}"])
+
     run_cov_test(__file__, "tracker", preview=False)
