@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+This module implements the status tracking using DynamoDB as the backend.
+"""
+
 import typing as T
 import uuid
 import enum
+import traceback
 from datetime import datetime, timezone
 from functools import cached_property
 from contextlib import contextmanager
 
-
-import pynamodb
 from pynamodb.models import (
     Model,
     PAY_PER_REQUEST_BILLING_MODE,
@@ -58,18 +61,50 @@ class StatusAndTaskIdIndex(GlobalSecondaryIndex):
 
 
 class LockError(Exception):
+    """
+    Raised when a task worker is trying to work on a locked task.
+    """
+
     pass
 
 
 class IgnoreError(Exception):
+    """
+    Raised when a task is already in "ignore" status (You need to define).
+    """
+
     pass
 
 
-_update_context: T.Dict[str, T.Dict[str, T.Any]] = dict()
+# update context manager in-memory cache
+_update_context: T.Dict[
+    str,  # the Dynamodb item hash key
+    T.Dict[
+        str,  # item attribute name
+        T.Dict[
+            str,  # there are three key, "old" (value), "new" (value), "act" (update action)
+            T.Any,
+        ],
+    ],
+] = dict()
 
 
 class Tracker(Model):
     """
+    The DynamoDB ORM model for the status tracking. You can use one
+    DynamoDB table for multiple status tracking jobs.
+
+    Concepts:
+
+    - job: a high-level description of a job, the similar task on different
+        items will be grouped into one job. ``job_id`` is the unique identifier
+        for a job.
+    - task: a specific task on a specific item. ``task_id`` is the unique identifier
+        for a task.
+    - status: an integer value to indicate the status of a task. The closer to
+        the end, the value should be larger, so we can compare the values.
+
+    Attributes:
 
     :param key: The unique identifier of the task. It is a compound key of
         job_id and task_id. The format is ``{job_id}{separator}{task_id}``
@@ -78,8 +113,9 @@ class Tracker(Model):
     :param update_time: when the task status is updated
     :param retry: how many times the task has been retried
     :param lock: a concurrency control mechanism. It is an uuid string.
-    :param lock_time:
+    :param lock_time: when this task is locked.
     :param data: arbitrary data in python dictionary.
+    :param errors: arbitrary error data in python dictionary.
     """
 
     class Meta:
@@ -110,10 +146,12 @@ class Tracker(Model):
 
     status_and_task_id_index = StatusAndTaskIdIndex()
 
-    SEP = "____"
+    SEP = "____"  # the separator string between job_id and task_id
+    # how many digits the max status code have, this ensures that the
+    # status can be used in comparison
     STATUS_ZERO_PAD = 2
-    MAX_RETRY = 3
-    LOCK_EXPIRE_SECONDS = 3600
+    MAX_RETRY = 3  # how many retry is allowed before we ignore it
+    LOCK_EXPIRE_SECONDS = 900  # how long the lock will expire
 
     @classmethod
     def make_key(cls, job_id: str, task_id: str) -> str:
@@ -131,7 +169,7 @@ class Tracker(Model):
     def task_id(self) -> str:
         return self.key.split(self.SEP)[1]
 
-    @cached_property
+    @property
     def status(self) -> int:
         return int(self.value.split(self.SEP)[1])
 
@@ -140,25 +178,50 @@ class Tracker(Model):
         return cls.get(cls.make_key(job_id, task_id))
 
     @classmethod
-    def _make(
+    def make(
         cls,
         job_id: str,
         task_id: str,
         status: int,
+        data: T.Optional[dict] = None,
     ) -> "Tracker":
-        obj = cls(
+        """
+        A factory method to create new instance of a tracker. It won't save
+        to DynamoDB.
+        """
+        kwargs = dict(
             key=cls.make_key(job_id, task_id),
             value=cls.make_value(job_id, status),
+        )
+        if data is not None:
+            kwargs["data"] = data
+        return cls(**kwargs)
+
+    @classmethod
+    def new(
+        cls,
+        job_id: str,
+        task_id: str,
+        data: T.Optional[dict] = None,
+    ) -> "Tracker":
+        """
+        A factory method to create new instance of a tracker and save it to
+        DynamoDB.
+        """
+        obj = cls.make(
+            job_id=job_id,
+            task_id=task_id,
+            status=StatusEnum.s00_todo.value,
+            data=data,
         )
         obj.save()
         return obj
 
     @classmethod
-    def new(cls, job_id: str, task_id: str) -> "Tracker":
-        return cls._make(job_id, task_id, StatusEnum.s00_todo.value)
-
-    @classmethod
     def delete_all(cls) -> int:
+        """
+        Delete all item in a DynamoDB table.
+        """
         ith = 0
         with cls.batch_write() as batch:
             for ith, item in enumerate(cls.scan(), start=1):
@@ -166,70 +229,170 @@ class Tracker(Model):
         return ith
 
     def is_locked(self) -> bool:
+        """
+        Check if the task is locked.
+        """
         if self.lock is None:
             return False
         else:
             now = utc_now()
             return (now - self.lock_time).total_seconds() < self.LOCK_EXPIRE_SECONDS
 
+    def _setup_update_context(self):
+        _update_context[self.key] = dict()
+
+    def _rollback_update_context(self):
+        for attr_name, dct in _update_context[self.key].items():
+            setattr(self, attr_name, dct["old"])
+
+    def _flush_update_context(self):
+        actions = [dct["act"] for dct in _update_context[self.key].values()]
+        if len(actions):
+            # print("flushing update data to Dyanmodb")
+            # print(f"actions: {actions}")
+            # pynamodb update API will apply the updated data to the current
+            # item object.
+            self.update(actions=actions)
+
+    def _teardown_update_context(self):
+        del _update_context[self.key]
+
     @contextmanager
     def update_context(self) -> "Tracker":
+        """
+        A context manager to update the attributes of the task.
+        If the update fails, the attributes will be rolled back to the original
+        value.
+
+        Usage::
+
+            tracker = Tracker.new(job_id="my-job", task_id="task-1")
+            with tracker.update_context():
+                tracker.set_status(StatusEnum.s03_in_progress)
+                tracker.set_data({"foo": "bar"})
+        """
         try:
-            _update_context[self.key] = dict()
+            self._setup_update_context()
             yield self
+            self._flush_update_context()
         except Exception as e:
+            self._rollback_update_context()
             raise e
         finally:
-            actions = list(_update_context[self.key].values())
-            # print(f"execute update: {actions}")
-            if len(actions):
-                self.update(actions=actions)
-            del _update_context[self.key]
+            self._teardown_update_context()
 
     def set_status(self, status: int) -> "Tracker":
+        """
+        Set the status of the task. Don't do this directly::
+
+            self.value = self.make_value(self.job_id, ...)
+        """
+        _update_context[self.key]["value"] = {"old": self.value}
         self.value = self.make_value(self.job_id, status)
-        _update_context[self.key]["value"] = Tracker.value.set(self.value)
+        _update_context[self.key]["value"]["new"] = self.value
+        _update_context[self.key]["value"]["act"] = Tracker.value.set(self.value)
         return self
 
     def set_update_time(self, update_time: T.Optional[datetime] = None) -> "Tracker":
+        """
+        Set the update time of the task. Don't do this directly::
+
+            self.update_time = ...
+        """
+        _update_context[self.key]["update_time"] = {"old": self.update_time}
         if update_time is None:
             update_time = utc_now()
         self.update_time = update_time
-        _update_context[self.key]["update_time"] = Tracker.update_time.set(
+        _update_context[self.key]["update_time"]["new"] = self.update_time
+        _update_context[self.key]["update_time"]["act"] = Tracker.update_time.set(
             self.update_time
         )
         return self
 
     def set_retry_as_zero(self) -> "Tracker":
+        """
+        Set the retry count to zero. Don't do this directly::
+
+            self.retry = 0
+        """
+        _update_context[self.key]["retry"] = {"old": self.retry}
         self.retry = 0
-        _update_context[self.key]["retry"] = Tracker.retry.set(self.retry)
+        _update_context[self.key]["retry"]["new"] = self.retry
+        _update_context[self.key]["retry"]["act"] = Tracker.retry.set(self.retry)
         return self
 
     def set_retry_plus_one(self) -> "Tracker":
+        """
+        Increase the retry count by one. Don't do this directly::
+
+            self.retry += 1
+        """
+        _update_context[self.key]["retry"] = {"old": self.retry}
         self.retry += 1
-        _update_context[self.key]["retry"] = Tracker.retry.set(Tracker.retry + 1)
+        _update_context[self.key]["retry"]["new"] = self.retry
+        _update_context[self.key]["retry"]["act"] = Tracker.retry.set(Tracker.retry + 1)
         return self
 
     def set_locked(self) -> "Tracker":
+        """
+        Set the lock of the task. Don't do this directly::
+
+            self.lock = ...
+            self.lock_time = ...
+        """
+        _update_context[self.key]["lock"] = {"old": self.lock}
+        _update_context[self.key]["lock_time"] = {"old": self.lock_time}
         self.lock = uuid.uuid4().hex
         self.lock_time = utc_now()
-        _update_context[self.key]["lock"] = Tracker.lock.set(self.lock)
-        _update_context[self.key]["lock_time"] = Tracker.lock_time.set(self.lock_time)
+        _update_context[self.key]["lock"]["new"] = self.lock
+        _update_context[self.key]["lock_time"]["new"] = self.lock_time
+        _update_context[self.key]["lock"]["act"] = Tracker.lock.set(self.lock)
+        _update_context[self.key]["lock_time"]["act"] = Tracker.lock_time.set(
+            self.lock_time
+        )
         return self
 
     def set_unlock(self) -> "Tracker":
+        """
+        Set the lock of the task to None. Don't do this directly::
+
+            self.lock = None
+        """
+        _update_context[self.key]["lock"] = {"old": self.lock}
         self.lock = None
-        _update_context[self.key]["lock"] = Tracker.lock.set(self.lock)
+        _update_context[self.key]["lock"]["new"] = self.lock
+        _update_context[self.key]["lock"]["act"] = Tracker.lock.set(self.lock)
         return self
 
     def set_data(self, data: T.Optional[dict]) -> "Tracker":
+        """
+        Logically the data attribute should be mutable,
+        make sure don't edit the old data directly
+        for example, don't do this::
+
+            self.data["foo"] = "bar"
+            self.set_data(self.data)
+
+        Please do this::
+
+            new_data = self.data.copy()
+            new_data["foo"] = "bar"
+            self.set_data(new_data)
+        """
+        _update_context[self.key]["data"] = {"old": self.data}
         self.data = data
-        _update_context[self.key]["data"] = Tracker.data.set(data)
+        _update_context[self.key]["data"]["new"] = self.data
+        _update_context[self.key]["data"]["act"] = Tracker.data.set(data)
         return self
 
     def set_errors(self, errors: T.Optional[dict]) -> "Tracker":
+        """
+        Similar to :meth:`Tracker.set_data`. But it is for errors.
+        """
+        _update_context[self.key]["errors"] = {"old": self.errors}
         self.errors = errors
-        _update_context[self.key]["data"] = Tracker.errors.set(errors)
+        _update_context[self.key]["errors"]["new"] = self.errors
+        _update_context[self.key]["errors"]["act"] = Tracker.errors.set(errors)
         return self
 
     @contextmanager
@@ -240,39 +403,75 @@ class Tracker(Model):
         success_status: int,
         ignore_status: int,
     ) -> "Tracker":
+        # Handle concurrent lock
         if self.is_locked():
             raise LockError(f"Task {self.key} is locked.")
 
-        # if self.retry >= self.MAX_RETRY:
-        #     raise Exception(f"Task {self.key} retry count exceeded {self.MAX_RETRY}, ignore it")
+        # Handle ignore status
+        if self.status == StatusEnum.s10_ignore.value:
+            raise IgnoreError(
+                f"Task {self.key} retry count already exceeded {self.MAX_RETRY}, "
+                f"ignore it."
+            )
 
         # mark as in progress
         with self.update_context():
             (self.set_status(in_process_status).set_update_time().set_locked())
 
-        with self.update_context():
-            try:
-                print("before yield")
-                yield self
-                print("after yield")
-                self.set_status(
-                    success_status
-                ).set_update_time().set_unlock().set_retry_as_zero()
-                print("end of success logic")
-            except Exception as e:
-                self.set_status(
-                    failed_status
-                ).set_update_time().set_unlock().set_errors(
-                    {"error": str(e)}
-                ).set_retry_plus_one()
-                if self.retry == 3:
-                    self.set_status(ignore_status)
-                print("end of failed logic")
-                raise e
+        try:
+            self._setup_update_context()
+            # print("before yield")
+            yield self
+            # print("after yield")
+            (
+                self.set_status(success_status)
+                .set_update_time()
+                .set_unlock()
+                .set_retry_as_zero()
+            )
+            # print("end of success logic")
+        except Exception as e:  # handling user code
+            # print("begin of error handling logic")
+            # reset the update context
+            self._teardown_update_context()
+            self._setup_update_context()
+            (
+                self.set_status(failed_status)
+                .set_update_time()
+                .set_unlock()
+                .set_errors(
+                    {"error": repr(e), "traceback": traceback.format_exc(limit=10)}
+                )
+                .set_retry_plus_one()
+            )
+            if self.retry >= self.MAX_RETRY:
+                self.set_status(ignore_status)
+            # print("end of error handling logic")
+            raise e
+        finally:
+            # print("begin of finally")
+            self._flush_update_context()
+            self._teardown_update_context()
+            # print("end of finally")
 
     def start_job(
         self,
     ) -> "Tracker":
+        """
+        This is just an example of how to use :meth:`Tracker.start`.
+
+        A job should always have four related status codes:
+
+        - in process status
+        - failed status
+        - success status
+        - ignore status
+
+        If you have multiple type of jobs, I recommend creating multiple
+        wrapper functions like this for each type of jobs. And ensure that
+        the "ignore" status value is the largest status value among all,
+        and use the same "ignore" status value for all type of jobs.
+        """
         return self.start(
             in_process_status=StatusEnum.s03_in_progress.value,
             failed_status=StatusEnum.s06_failed.value,
@@ -280,95 +479,19 @@ class Tracker(Model):
             ignore_status=StatusEnum.s10_ignore.value,
         )
 
-    # @classmethod
-    # def query_by_status(
-    #     cls,
-    #     status: T.Union[int, T.List[int]],
-    #     limit: int = 10,
-    # ) -> T.Iterable["TaskTracker"]:
-    #     if isinstance(status, list):
-    #         status_list = status
-    #     else:
-    #         status_list = [
-    #             status,
-    #         ]
-    #     for status in status_list:
-    #         yield from cls.job_id_and_status_index.query(
-    #             hash_key=cls.make_value(status),
-    #             limit=limit,
-    #         )
-
-
-# ------------------------------------------------------------------------------
-# Unit test start here
-# ------------------------------------------------------------------------------
-import os
-import pytest
-
-
-class TestCase:
     @classmethod
-    def setup_class(cls):
-        Tracker.delete_all()
-
-    def test(self):
-        self.case_1_lock()
-
-    def case_1_lock(self):
-        job_id = "test"
-        task_id = "t-1"
-
-        tracker = Tracker.new(job_id, task_id=task_id)
-        assert tracker.status == StatusEnum.s00_todo.value
-        assert tracker.lock is None
-
-        tracker = Tracker.get_one(job_id, task_id)
-        assert tracker.status == StatusEnum.s00_todo.value
-        assert tracker.lock is None
-
-        assert tracker.is_locked() is False
-
-        # lock it
-        with tracker.update_context():
-            tracker.set_locked()
-
-        # set loc
-
-        assert tracker.lock is not None
-        assert tracker.is_locked() is True
-
-        with tracker.start_job():
-            tracker.set_data({"message": "hello"})
-
-
-# if __name__ == "__main__":
-#     import random
-#
-#     # Tracker.create_table(wait=True)
-#
-
-
-#
-#     print("before start")
-#     with tracker.start(
-#         in_process_status=StatusEnum.s03_in_progress.value,
-#         failed_status=StatusEnum.s06_failed.value,
-#         success_status=StatusEnum.s09_success.value,
-#         ignore_status=StatusEnum.s10_ignore.value,
-#     ):
-#         raise Exception("Something went wrong!")
-#         data = {"a": random.randint(100, 199)}
-#         print(data)
-#         tracker.set_data(data)
-#         # if random.randint(1, 10) <= 5:
-#         #     raise Exception("Something went wrong!")
-#         # else:
-#         #     data = {"a": random.randint(100, 199)}
-#         #     print(data)
-#         #     tracker.set_data(data)
-#     print("after start")
-
-
-if __name__ == "__main__":
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    def query_by_status(
+        cls,
+        job_id: str,
+        status: T.Union[int, T.List[int]],
+        limit: int = 10,
+    ) -> T.Iterable["Tracker"]:
+        if isinstance(status, list):
+            status_list = status
+        else:
+            status_list = [status]
+        for status in status_list:
+            yield from cls.status_and_task_id_index.query(
+                hash_key=cls.make_value(job_id, status),
+                limit=limit,
+            )
