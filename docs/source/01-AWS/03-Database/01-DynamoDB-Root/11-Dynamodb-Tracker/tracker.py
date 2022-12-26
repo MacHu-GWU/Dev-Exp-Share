@@ -6,7 +6,6 @@ This module implements the status tracking using DynamoDB as the backend.
 
 import typing as T
 import uuid
-import enum
 import traceback
 from datetime import datetime, timezone
 from functools import cached_property
@@ -37,14 +36,6 @@ EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
 def utc_now() -> datetime:
     return datetime.utcnow().replace(tzinfo=timezone.utc)
-
-
-class StatusEnum(int, enum.Enum):
-    s00_todo = 0
-    s03_in_progress = 3
-    s06_failed = 6
-    s09_success = 9
-    s10_ignore = 10
 
 
 class StatusAndTaskIdIndex(GlobalSecondaryIndex):
@@ -152,6 +143,7 @@ class Tracker(Model):
     STATUS_ZERO_PAD = 2
     MAX_RETRY = 3  # how many retry is allowed before we ignore it
     LOCK_EXPIRE_SECONDS = 900  # how long the lock will expire
+    DEFAULT_STATUS = 0 # the default status code, means "to do", usually start from 0
 
     @classmethod
     def make_key(cls, job_id: str, task_id: str) -> str:
@@ -211,7 +203,7 @@ class Tracker(Model):
         obj = cls.make(
             job_id=job_id,
             task_id=task_id,
-            status=StatusEnum.s00_todo.value,
+            status=cls.DEFAULT_STATUS,
             data=data,
         )
         obj.save()
@@ -408,7 +400,7 @@ class Tracker(Model):
             raise LockError(f"Task {self.key} is locked.")
 
         # Handle ignore status
-        if self.status == StatusEnum.s10_ignore.value:
+        if self.status == ignore_status:
             raise IgnoreError(
                 f"Task {self.key} retry count already exceeded {self.MAX_RETRY}, "
                 f"ignore it."
@@ -453,31 +445,6 @@ class Tracker(Model):
             self._flush_update_context()
             self._teardown_update_context()
             # print("end of finally")
-
-    def start_job(
-        self,
-    ) -> "Tracker":
-        """
-        This is just an example of how to use :meth:`Tracker.start`.
-
-        A job should always have four related status codes:
-
-        - in process status
-        - failed status
-        - success status
-        - ignore status
-
-        If you have multiple type of jobs, I recommend creating multiple
-        wrapper functions like this for each type of jobs. And ensure that
-        the "ignore" status value is the largest status value among all,
-        and use the same "ignore" status value for all type of jobs.
-        """
-        return self.start(
-            in_process_status=StatusEnum.s03_in_progress.value,
-            failed_status=StatusEnum.s06_failed.value,
-            success_status=StatusEnum.s09_success.value,
-            ignore_status=StatusEnum.s10_ignore.value,
-        )
 
     @classmethod
     def query_by_status(
