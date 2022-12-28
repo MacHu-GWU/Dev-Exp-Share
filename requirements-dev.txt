@@ -56,7 +56,7 @@ sfm==0.0.17
 
 # common data transfer format
 superjson==0.0.13
-PyYAML==5.1
+PyYAML==5.4
 jsonpickle==1.4.2
 
 # fuzzy string match
