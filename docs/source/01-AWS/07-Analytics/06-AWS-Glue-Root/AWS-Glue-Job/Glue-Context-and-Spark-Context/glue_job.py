@@ -23,9 +23,7 @@ else:
     from pyspark.sql import SparkSession
 
     spark_ses = SparkSession.builder.getOrCreate()
-    print(spark_ses)
     spark_ctx = spark_ses.sparkContext
-    print(spark_ctx)
     glue_ctx = GlueContext(spark_ctx)
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])

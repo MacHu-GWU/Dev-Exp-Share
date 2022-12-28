@@ -12,6 +12,9 @@ Example:
 5. Copy and paste this script and Save
 6. Click Run
 7. Click "output logs" link and read the log
+
+Since glue1.0 has crazily long start up time, so I believe nobody wants to use
+it anymore.
 """
 
 import sys
@@ -37,9 +40,7 @@ else:
     from pyspark.sql import SparkSession
 
     spark_ses = SparkSession.builder.getOrCreate()
-    print(spark_ses)
     spark_ctx = spark_ses.sparkContext
-    print(spark_ctx)
     glue_ctx = GlueContext(spark_ctx)
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
