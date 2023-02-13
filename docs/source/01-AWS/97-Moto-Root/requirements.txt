@@ -1,0 +1,2 @@
+moto[all]
+pynamodb_mate>=5.3.4.6
