@@ -6,7 +6,7 @@ botocore==1.25.9
 boto-session-manager==0.0.4
 s3pathlib==1.0.10
 Faker==11.3.0
-numpy==1.21.2
+numpy==1.22.0
 pandas==1.3.3
 awswrangler==2.12.1
 rich==12.3.0
