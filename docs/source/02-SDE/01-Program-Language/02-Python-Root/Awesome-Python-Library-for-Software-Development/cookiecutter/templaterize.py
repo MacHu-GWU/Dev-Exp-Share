@@ -50,6 +50,7 @@ def mirror_file(
     content = path_before.read_bytes()
     try:
         text = content.decode("utf-8", errors="strict")
+        text = text.replace("{{", "{% raw %}{{{% endraw %}").replace("}}", "{% raw %}}}{% endraw %}")
         for k, v in mapper.items():
             text = text.replace(k, f"{{{{ cookiecutter.{v} }}}}")
         path_new.write_text(text)
@@ -104,23 +105,26 @@ def templaterize(
 
 if __name__ == "__main__":
     templaterize(
-        dir_src=Path("/Users/sanhehu/Documents/GitHub/afwf_example-project"),
+        dir_src=Path("/Users/sanhehu/Documents/CodeCommit/aws_python-project"),
         dir_dst=dir_tmp,
         mapper={
-            "afwf_example": "package_name",
+            "aws_python": "package_name",
             "Sanhe Hu": "author_name",
             "husanhe@gmail.com": "author_email",
-            "MacHu-GWU": "github_username",
         },
         ignore_dirs=[
             ".idea",
             ".git",
             ".venv",
             ".pytest_cache",
+            "build",
+            "dist",
             "htmlcov",
         ],
         ignore_files=[
             ".coverage",
+            ".current-env-name.json",
+            ".poetry-lock-hash.json",
             "requirements-main.txt",
             "requirements-dev.txt",
             "requirements-test.txt",
