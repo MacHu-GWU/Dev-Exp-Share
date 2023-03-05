@@ -1,6 +1,0 @@
-AWS Account Management Docs
-==============================================================================
-
-.. autotoctree::
-    :maxdepth: 1
-    :index_file: README.rst
