@@ -225,3 +225,23 @@ Ref:
 - AWS CloudFormation StackSets and AWS Organizations: https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html
 - Enable trusted access: https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html#integrate-enable-ta-cloudformation
 - Disable trusted access: https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html#integrate-disable-ta-cloudformation
+
+
+Create / Update a Stack Set
+------------------------------------------------------------------------------
+在开始之前, 我们很有必要搞清楚 StackSets 是如何一步步将 Infra 的改变部署到多个 Accounts 和 Region 的.
+
+1. 首先, 你得 ``create_stack_set``, 给绑定一个 Template. 这只是 Metadata, 我们还没决定部署到哪些 AWS Account 和 Region 上去呢.
+2. 然后要 ``create_stack_instances``, 这一步就要指定 OU, Accounts, Regions 了.
+3. 如果你要部署到更多的 Accounts, Regions 上, 那么你还是要用 ``create_stack_instances``.
+4. 如果你要更新 Template, 那么你要用 ``update_stack_set``, 一旦 Template 更改, 已经存在的 Stack Instances 就都会自动使用最新的 Template 部署更新.
+5. 如果 Template 没有更新, 你只是用最新的 Parameter Value 将更新应用到部分 Accounts, Regions 上, 那么你要用 ``update_stack_instances``. 这个 API 要求这些 Stack Instances 必须是已经存在的, 而且只能更新 Parameter Value. 如果你要更新 Template, 那么你得用 ``update_stack_set``.
+
+这里有几个 API, 我们一定要区分清楚:
+
+- create_stack_set:
+- update_stack_set:
+- delete_stack_set:
+- create_stack_instances:
+- update_stack_instances:
+- delete_stack_instances:
