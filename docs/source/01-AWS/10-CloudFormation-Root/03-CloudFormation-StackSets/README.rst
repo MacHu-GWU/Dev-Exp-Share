@@ -245,3 +245,25 @@ Create / Update a Stack Set
 - create_stack_instances:
 - update_stack_instances:
 - delete_stack_instances:
+
+
+Example 1 - Use Self Managed Option
+------------------------------------------------------------------------------
+下面这个脚本为 Admin Account 和 Target Account 批量配置所需的 IAM Role.
+
+.. literalinclude:: ./self_managed_advanced_setup.py
+   :language: python
+
+下面这个脚本使用了前一步创建的 IAM Role, 部署, 更新了一个 StackSet.
+
+.. literalinclude:: ./test_self_managed_advanced_setup.py
+   :language: python
+
+
+Example 2 - Use Service Managed Option
+------------------------------------------------------------------------------
+下面这个脚本部署, 更新了一个 StackSet. 可以看出来用 Organization 来管理 StackSets 的效率要高得多.
+
+.. literalinclude:: ./test_service_managed.py
+   :language: python
+

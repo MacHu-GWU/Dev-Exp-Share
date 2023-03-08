@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# standard library
-import typing as T
-import dataclasses
-
 # third party
 from boto_session_manager import BotoSesManager
 import cottonformation as cf
 from cottonformation.res import s3
-from aws_cloudformation.better_boto import upload_template_to_s3
 from aws_console_url import AWSConsole
 from rich import print as rprint
+
 
 def tag_dict_to_list(tags: dict):
     return [dict(Key=key, Value=value) for key, value in tags.items()]
@@ -72,44 +68,50 @@ aws_console = AWSConsole(
 # ------------------------------------------------------------------------------
 # create_stack_set
 # ------------------------------------------------------------------------------
-# console_url = aws_console.cloudformation.filter_service_managed_stack_set(stack_set_name)
-# print(f"preview stack set: {console_url}")
-# response = bsm_admin_account.cloudformation_client.create_stack_set(
-#     StackSetName=stack_set_name,
-#     TemplateBody=template.to_json(),
-#     PermissionModel="SERVICE_MANAGED",
-#     AutoDeployment=dict(
-#         Enabled=True,
-#         RetainStacksOnAccountRemoval=False,
-#     ),
-#     CallAs="DELEGATED_ADMIN",
-#     Tags=tag_dict_to_list(tags),
-# )
-# rprint(response)
+console_url = aws_console.cloudformation.filter_service_managed_stack_set(
+    stack_set_name
+)
+print(f"preview stack set: {console_url}")
+response = bsm_admin_account.cloudformation_client.create_stack_set(
+    StackSetName=stack_set_name,
+    TemplateBody=template.to_json(),
+    PermissionModel="SERVICE_MANAGED",
+    AutoDeployment=dict(
+        Enabled=True,
+        RetainStacksOnAccountRemoval=False,
+    ),
+    CallAs="DELEGATED_ADMIN",
+    Tags=tag_dict_to_list(tags),
+)
+rprint(response)
 
 # ------------------------------------------------------------------------------
 # create_stack_instances
 # ------------------------------------------------------------------------------
-# console_url = aws_console.cloudformation.get_stack_set_instances(stack_set_name, is_service_managed=True)
-# print(f"preview stack set instances: {console_url}")
-# response = bsm_admin_account.cloudformation_client.create_stack_instances(
-#     StackSetName=stack_set_name,
-#     DeploymentTargets=dict(
-#         OrganizationalUnitIds=[
-#             "r-rkp6",
-#         ]
-#     ),
-#     Regions=[
-#         "us-east-1",
-#     ],
-#     CallAs="DELEGATED_ADMIN",
-# )
-# rprint(response)
+console_url = aws_console.cloudformation.get_stack_set_instances(
+    stack_set_name, is_service_managed=True
+)
+print(f"preview stack set instances: {console_url}")
+response = bsm_admin_account.cloudformation_client.create_stack_instances(
+    StackSetName=stack_set_name,
+    DeploymentTargets=dict(
+        OrganizationalUnitIds=[
+            "r-rkp6",
+        ]
+    ),
+    Regions=[
+        "us-east-1",
+    ],
+    CallAs="DELEGATED_ADMIN",
+)
+rprint(response)
 
 # ------------------------------------------------------------------------------
 # update_stack_set
 # ------------------------------------------------------------------------------
-console_url = aws_console.cloudformation.get_stack_set_info(stack_set_name, is_service_managed=True)
+console_url = aws_console.cloudformation.get_stack_set_info(
+    stack_set_name, is_service_managed=True
+)
 print(f"preview stack set: {console_url}")
 response = bsm_admin_account.cloudformation_client.update_stack_set(
     StackSetName=stack_set_name,
@@ -123,16 +125,16 @@ rprint(response)
 # ------------------------------------------------------------------------------
 # update_stack_instances
 # ------------------------------------------------------------------------------
-# response = bsm_admin_account.cloudformation_client.update_stack_instances(
-#     StackSetName=stack_set_name,
-#     DeploymentTargets=dict(
-#         OrganizationalUnitIds=[
-#             "r-rkp6",
-#         ]
-#     ),
-#     Regions=[
-#         "us-east-1",
-#     ],
-#     CallAs="DELEGATED_ADMIN",
-# )
-# rprint(response)
+response = bsm_admin_account.cloudformation_client.update_stack_instances(
+    StackSetName=stack_set_name,
+    DeploymentTargets=dict(
+        OrganizationalUnitIds=[
+            "r-rkp6",
+        ]
+    ),
+    Regions=[
+        "us-east-1",
+    ],
+    CallAs="DELEGATED_ADMIN",
+)
+rprint(response)
