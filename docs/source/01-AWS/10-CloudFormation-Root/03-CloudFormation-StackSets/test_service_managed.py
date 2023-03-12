@@ -68,22 +68,22 @@ aws_console = AWSConsole(
 # ------------------------------------------------------------------------------
 # create_stack_set
 # ------------------------------------------------------------------------------
-console_url = aws_console.cloudformation.filter_service_managed_stack_set(
-    stack_set_name
-)
-print(f"preview stack set: {console_url}")
-response = bsm_admin_account.cloudformation_client.create_stack_set(
-    StackSetName=stack_set_name,
-    TemplateBody=template.to_json(),
-    PermissionModel="SERVICE_MANAGED",
-    AutoDeployment=dict(
-        Enabled=True,
-        RetainStacksOnAccountRemoval=False,
-    ),
-    CallAs="DELEGATED_ADMIN",
-    Tags=tag_dict_to_list(tags),
-)
-rprint(response)
+# console_url = aws_console.cloudformation.filter_service_managed_stack_set(
+#     stack_set_name
+# )
+# print(f"preview stack set: {console_url}")
+# response = bsm_admin_account.cloudformation_client.create_stack_set(
+#     StackSetName=stack_set_name,
+#     TemplateBody=template.to_json(),
+#     PermissionModel="SERVICE_MANAGED",
+#     AutoDeployment=dict(
+#         Enabled=True,
+#         RetainStacksOnAccountRemoval=False,
+#     ),
+#     CallAs="DELEGATED_ADMIN",
+#     Tags=tag_dict_to_list(tags),
+# )
+# rprint(response)
 
 # ------------------------------------------------------------------------------
 # create_stack_instances
@@ -109,32 +109,32 @@ rprint(response)
 # ------------------------------------------------------------------------------
 # update_stack_set
 # ------------------------------------------------------------------------------
-console_url = aws_console.cloudformation.get_stack_set_info(
-    stack_set_name, is_service_managed=True
-)
-print(f"preview stack set: {console_url}")
-response = bsm_admin_account.cloudformation_client.update_stack_set(
-    StackSetName=stack_set_name,
-    TemplateBody=template.to_json(),
-    PermissionModel="SERVICE_MANAGED",
-    CallAs="DELEGATED_ADMIN",
-    Tags=tag_dict_to_list(tags),
-)
-rprint(response)
+# console_url = aws_console.cloudformation.get_stack_set_info(
+#     stack_set_name, is_service_managed=True
+# )
+# print(f"preview stack set: {console_url}")
+# response = bsm_admin_account.cloudformation_client.update_stack_set(
+#     StackSetName=stack_set_name,
+#     TemplateBody=template.to_json(),
+#     PermissionModel="SERVICE_MANAGED",
+#     CallAs="DELEGATED_ADMIN",
+#     Tags=tag_dict_to_list(tags),
+# )
+# rprint(response)
 
 # ------------------------------------------------------------------------------
 # update_stack_instances
 # ------------------------------------------------------------------------------
-response = bsm_admin_account.cloudformation_client.update_stack_instances(
-    StackSetName=stack_set_name,
-    DeploymentTargets=dict(
-        OrganizationalUnitIds=[
-            "r-rkp6",
-        ]
-    ),
-    Regions=[
-        "us-east-1",
-    ],
-    CallAs="DELEGATED_ADMIN",
-)
-rprint(response)
+# response = bsm_admin_account.cloudformation_client.update_stack_instances(
+#     StackSetName=stack_set_name,
+#     DeploymentTargets=dict(
+#         OrganizationalUnitIds=[
+#             "r-rkp6",
+#         ]
+#     ),
+#     Regions=[
+#         "us-east-1",
+#     ],
+#     CallAs="DELEGATED_ADMIN",
+# )
+# rprint(response)

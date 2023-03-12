@@ -227,24 +227,53 @@ Ref:
 - Disable trusted access: https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html#integrate-disable-ta-cloudformation
 
 
-Create / Update a Stack Set
+Stack Set vs Stack Instances
 ------------------------------------------------------------------------------
-在开始之前, 我们很有必要搞清楚 StackSets 是如何一步步将 Infra 的改变部署到多个 Accounts 和 Region 的.
+在第一次接触 StackSets 的时候, 有一个误区是认为 StackSets 是 Stack 的等效概念. Stack 是在具体的 Account 和 Region 上被部署的实体, 里面包含了很多 Resources. 而 StackSet 只是 Stack 的 Metadata, 本身不包含任何 Resources. StackSet 只是负责根据 Metadata 来在各个 Account 和 Region 上创建 Stack Instances. 你可以把它理解为一个 Stack 的模板. 你可以在 StackSets 上部署多个 Stack Instances. 而 Stack Instance 才是在具体的 Account 和 Region 上 StackSet 的实例, 每一个 Stack Instance 一般会对应一个具体的 Stack. 它们的差别是 Stack Instance 有可能会创建 Stack 失败, 此时 Stack Instance 没有 Stack 与之对应.
 
-1. 首先, 你得 ``create_stack_set``, 给绑定一个 Template. 这只是 Metadata, 我们还没决定部署到哪些 AWS Account 和 Region 上去呢.
-2. 然后要 ``create_stack_instances``, 这一步就要指定 OU, Accounts, Regions 了.
-3. 如果你要部署到更多的 Accounts, Regions 上, 那么你还是要用 ``create_stack_instances``.
-4. 如果你要更新 Template, 那么你要用 ``update_stack_set``, 一旦 Template 更改, 已经存在的 Stack Instances 就都会自动使用最新的 Template 部署更新.
-5. 如果 Template 没有更新, 你只是用最新的 Parameter Value 将更新应用到部分 Accounts, Regions 上, 那么你要用 ``update_stack_instances``. 这个 API 要求这些 Stack Instances 必须是已经存在的, 而且只能更新 Parameter Value. 如果你要更新 Template, 那么你得用 ``update_stack_set``.
+我们在用 StackSet 管理 管理 IAC 的时候, 一般有以下四种情况:
 
-这里有几个 API, 我们一定要区分清楚:
+1. 第一次将 AWS Resources 通过 StackSet 部署到多个 Accounts / Regions 上.
+2. 保持 Accounts 和 Regions 不变, 改变 Template.
+3. 保持 Accounts 和 Regions 不变, Template 也不变, 但改变 Parameter.
+4. 保持 Template 不变, 新增或删除 Accounts 和 Regions.
 
-- create_stack_set:
-- update_stack_set:
-- delete_stack_set:
-- create_stack_instances:
-- update_stack_instances:
-- delete_stack_instances:
+如果我们既要改变 Template, 又要改变 Accounts 和 Regions. 那么我建议先改变 Template, 然后再改变 Accounts 和 Regions. 因为如果你先改变 Accounts 和 Reginos, 那么可能会将旧的 Template 部署到新的 Accounts 和 Regions 上, 然后你之后又要更新 Template. 而如果你先改变 Template, 那么当你增加新的 Accounts 和 Regions 上的时候, 就可以直接部署最新的 Template 了.
+
+下面我简要的描述一下这四种情况需要怎么做.
+
+1. 第一次将 AWS Resources 通过 StackSet 部署到多个 Accounts / Regions 上.
+    - 先调用 `create_stack_set <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/create_stack_set.html>`_ API, 用你定义的 Template 创建一个 StackSet
+    - 然后用 `create_stack_instances <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/create_stack_instances.html>`_ API, 在指定的 Accounts 和 Regions 上创建 Stack Instances. 这个 API 会在每个 Account 和 Region 上创建一个 Stack.
+    - 等待所有的 Stack instances 的状态都变为 ``CURRENT``.
+2. 保持 Accounts 和 Regions 不变, 改变 Template.
+    - 调用 `update_stack_set <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/update_stack_set.html>`_ API, 更新 StackSet 的 Template, 然后改变就会被自动的 propagate 到已经成功部署的所有的 Stack Instances 上.
+    - 等待所有的 Stack instances 的状态都变为 ``CURRENT``.
+3. 保持 Accounts 和 Regions 不变, Template 也不变, 但改变 Parameter.
+    - 调用 `update_stack_instances <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/update_stack_instances.html>`_ API, 更新 Stack Instances 的 Parameter.
+    - 等待所有的 Stack instances 的状态都变为 ``CURRENT``.
+4. 保持 Template 不变, 新增或删除 Accounts 和 Regions.
+    - 如果你既有增加又有删除, 则你需要分两次分别调用 `create_stack_instances <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/create_stack_instances.html>`_ 和 `delete_stack_instances <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/delete_stack_instances.html>`_ API.
+    - 增加的时候要等待所有的 Stack instances 的状态都变为 ``CURRENT``.
+    - 减少的时候要等待所有的 Stack instances 都被成功删除.
+
+当然, 以上的操作都是有可能出错或者失败的. 为了学会如何处理部署失败的情况, 我们需要了解 Stack Instance 的状态码含义. 以下的解释来自于 `官方文档 <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/list_stack_instances.html>`_:
+
+Status: 对一个 Stack Instance 的操作已经停止后的状态码. 操作进行中的其他状态码请参考 Detailed Status.
+
+- ``INOPERABLE``: 说明 ``DeleteStackInstances`` 的操作失败了, 导致目前的状态不稳定. 你对这个 StackSet 执行的任何修改都会 ignore 这个 stack instance. 修复这个问题的方法是先 delete 这个 stack instance, 然后手动到 Account 上 delete 这个 stack 并清理掉所有的 resources.
+- ``OUTDATED``: Stack Instance 的状态跟 StackSet definition 里的不一致. 有两种情况会导致这种状态:
+    - create / update stack set 的时候会自动把 change apply 到已经部署的 stack instance, 但没有成功. 一般是因为你的 Template 有问题. 解决这个问题的方法是修复你的 Template 然后运行 update stack set.
+- ``CURRENT``: Stack Instances 的状态跟 StackSet definition 的一致. 也就是通俗理解的 Succeeded.
+
+Detailed Status: 这是操作正在进行中的详细状态码, 你需要用 polling 的方式隔一段时间查询一下每个 Stack instances 的状态到哪里了.
+
+- ``CANCELLED`` : The operation in the specified account and Region has been canceled. This is either because a user has stopped the stack set operation, or because the failure tolerance of the stack set operation has been exceeded.
+- ``FAILED`` : The operation in the specified account and Region failed. If the stack set operation fails in enough accounts within a Region, the failure tolerance for the stack set operation as a whole might be exceeded.
+- ``INOPERABLE`` : A DeleteStackInstances operation has failed and left the stack in an unstable state. Stacks in this state are excluded from further UpdateStackSet operations. You might need to perform a DeleteStackInstances operation, with RetainStacks set to true , to delete the stack instance, and then delete the stack manually.
+- ``PENDING`` : The operation in the specified account and Region has yet to start.
+- ``RUNNING`` : The operation in the specified account and Region is currently in progress.
+- ``SUCCEEDED`` : The operation in the specified account and Region completed successfully.
 
 
 Example 1 - Use Self Managed Option
