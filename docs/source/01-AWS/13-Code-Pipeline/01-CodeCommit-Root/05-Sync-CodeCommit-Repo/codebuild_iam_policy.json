@@ -2,9 +2,6 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
             "Effect": "Allow",
             "Resource": [
                 "arn:aws:logs:*:${codecommit_aws_account_id}:log-group:/aws/codebuild/${codebuild_project_name}",
@@ -30,7 +27,6 @@
             ]
         },
         {
-            "Sid": "BackupS3BucketAccess",
             "Effect": "Allow",
             "Action": [
                 "s3:ListBucket",
@@ -46,12 +42,16 @@
             ]
         },
         {
-            "Sid": "CodeCommitActions",
             "Effect": "Allow",
             "Action": [
                 "codecommit:*"
             ],
             "Resource": "arn:aws:codecommit:*:${codecommit_aws_account_id}:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sts:GetCallerIdentity",
+            "Resource": "*"
         }
     ]
 }
