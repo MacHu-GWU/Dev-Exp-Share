@@ -296,3 +296,25 @@ Example 2 - Use Service Managed Option
 .. literalinclude:: ./test_service_managed.py
    :language: python
 
+
+IAM Role on Delegated Administrator Account
+------------------------------------------------------------------------------
+这里我有一个疑问, 设置 delegated admin 的时候指定了 account id, 并没有说具体的 Role. 那么是不是说只要在这个 account 上的 IAM Role, 只要它有 AWS CloudFormation 的权限, 都可以对整个 org 上的 CFT 进行操作? 经过我的验证, 答案是 YES.
+
+Trusted Entity::
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "AWS": [
+                        "arn:aws:iam::393783141457:root"
+                    ]
+                },
+                "Action": "sts:AssumeRole",
+                "Condition": {}
+            }
+        ]
+    }

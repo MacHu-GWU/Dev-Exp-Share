@@ -9,7 +9,6 @@ AWS Organization Accounts Management
 
 AWS Account 和 Organization 相关的术 语 和 概念
 ------------------------------------------------------------------------------
-
 在进入企业用户的 AWS 账号管理之前, **首先, 我们来了解一下 AWS Account 和 AWS Organization 的一些基本概念**.
 
 - Ref: https://aws.amazon.com/cn/blogs/china/aws-organizations-multi-account-management/
@@ -40,7 +39,6 @@ AWS Account 和 Organization 相关的术 语 和 概念
 
 禁止普通 IAM User 创建其他 IAM User, 并使用 Assume Role
 ------------------------------------------------------------------------------
-
 - Q: 为什么要禁止 IAM User 创建其他 IAM User?
 - A: 因为作为公司, 公司需要管理用户创建 IAM User 的行为, 并使用 IAM User 来追踪用户的使用行为. 如果允许用户自行创建其他的 IAM User, 那么公司就很难追踪这些新创建的 IAM User. 这叫做 preventing cascade creation.
 

@@ -1,14 +1,10 @@
 EC2 Instance Type
 ==============================================================================
-
-.. contents::
-    :depth: 1
-    :local:
+Keywords: AWS EC2 Instance Type
 
 
 Virtualization Type
 ------------------------------------------------------------------------------
-
 主要有 3 类虚拟机的实现方式:
 
 - **HVM**: Hardware assisted Virtual Machine. 也叫全虚拟化, EC2 的主力虚拟化方式. 全虚拟化或者叫硬件协助的虚拟化技术使用物理机CPU的虚拟化扩展来虚拟出虚拟机. 全虚拟化技术需要Intel VT或者AMD-V硬件扩展. Xen使用Qemu来仿真PC硬件, 包括BIOS, IDE硬盘控制器, VGA图形适配器(显卡), USB控制器, 网络适配器(网卡)等. 虚拟机硬件扩展被用来提高仿真的性能. 全虚拟化虚拟机不需要任何的内核支持. 这意味着, Windows操作系统可以作为Xen的全虚拟化虚拟机使用(众所周知, 除了微软没有谁可以修改Windows内核). 由于使用了仿真技术, 通常来说全虚拟化虚拟机运行效果要逊于半虚拟化虚拟机.
@@ -18,7 +14,6 @@ Virtualization Type
 
 Root Device Type
 ------------------------------------------------------------------------------
-
 存储方式:
 
 - **EBS**: EC2 主力存储方式, 使用弹性块作为存储方式, 原理上是将高性能的存储集群上的 volume 映射到 EC2 上的某个目录, 然后使用内部的高性能连接和虚拟机进行通信. **EBS 是有3 份冗余的, 而且在虚拟机关闭后, 你可以选择不删除 EBS 上的数据, 而且 EBS 上的数据可以被很容易的 Mount 到其他的 EC2 上, 或是 detach**.
@@ -27,8 +22,41 @@ Root Device Type
 
 Instance Type
 ------------------------------------------------------------------------------
+Instance Type Naming Convention:
 
-亚马逊的专门优化的虚拟机:
+- a: AMD processors (AMD 的芯片)
+- g: AWS Graviton processors (ARM) 架构
+- i: Intel processors
+- d: Instance store volumes
+- n: Network optimization
+- b: Block storage optimization
+- e: Extra storage or memory
+- z: High frequency
+
+按照不同用途分类:
+
+- General Purpose:
+    - Burstable performance: t4g, t3a, t3, t2
+- Compute Optimized:
+    - c5, c5n:
+    - c6g, c6gd, c6gn:
+    - c6i, c6id:
+    - c6in:
+    - hpc6a:
+- Memory Optimized:
+    - R5, R5a, R5b, R5n:
+    - R6a:
+    - Hpc6id:
+    - R6g, R6gd:
+    - R6i, R6id:
+    - R6in, R6idn:
+    - u-*:
+    - etc ...
+- Storage Optimized:
+    - d2:
+    - d3, d3en:
+
+按照不同用途分类的中文版:
 
 - A/T/M: general purpose, 普通目的. A 是 Arm, T 是比较常用的个人电脑级别, 内存一般不超过 32G, M 是服务器级, 高性能, 内存可以高达 384 G.
 - C: compute optimized, 高性能计算. 适合用于游戏服务器, 高性能 Web 服务器, 图像视频转码等.
@@ -38,4 +66,5 @@ Instance Type
 
 Reference:
 
-- https://aws.amazon.com/ec2/instance-types/
+- EC2 Instance Type Look up: https://aws.amazon.com/ec2/instance-types/
+- EC2 Instance Type Document: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
