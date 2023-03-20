@@ -1,0 +1,4 @@
+boto3
+s3pathlib
+pathlib_mate
+git-remote-codecommit
