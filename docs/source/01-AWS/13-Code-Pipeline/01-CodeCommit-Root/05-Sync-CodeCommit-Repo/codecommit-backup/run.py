@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 
 from boto_session_manager import BotoSesManager
 from s3pathlib import S3Path, context
@@ -27,14 +27,16 @@ retention_period = 30  # days
 
 def backup_one_repo(repo_name):
     # clone repo
+    repo_arn = f"arn:aws:codecommit:{bsm.aws_region}:{bsm.aws_account_id}:{repo_name}"
+    print(f"clone repo {repo_arn}")
     args = [
         "git",
         "clone",
-        "--quiet",
+        "-q",
         f"codecommit::{bsm.aws_region}://{repo_name}",
         f"{repo_name}",
     ]
-    subprocess.run(args, check=True)
+    subprocess.run(args, capture_output=True, check=True)
 
     # zip repo
     args = ["zip", "-yr", f"{repo_name}.zip", f"./{repo_name}"]
@@ -46,7 +48,6 @@ def backup_one_repo(repo_name):
     s3path = S3Path.from_s3_uri(s3_uri)
     s3path.upload_file(f"{repo_name}.zip", overwrite=False)
 
-    repo_arn = f"arn:aws:codecommit:{bsm.aws_region}:{bsm.aws_account_id}:{repo_name}"
     tags = {
         "tech:project_name": "codecommit-backup",
         "tech:source_repo_arn": repo_arn,
@@ -75,7 +76,7 @@ def backup_one_repo(repo_name):
 if __name__ == "__main__":
     bsm = BotoSesManager()
     context.attach_boto_session(bsm.boto_ses)
-    now = datetime.utcnow()
+    now = datetime.utcnow().replace(tzinfo=timezone.utc)
     for repo_name in repo_list:
         backup_one_repo(
             repo_name=repo_name,

@@ -53,7 +53,7 @@ Enterprise Read Solution
 
 **CodeCommit account setup**
 
-也就是 CodeCommit repo 所在的 AWS Account 的设置. 首先你要创建一个 IAM Role 给 CodeBuild 用. 这个 Role 需要能创建 CloudWatch log group (因为要打 log 上去), 能对 backup bucket 进行基本的操作, 以及能从 codecommit 上 pull 代码. 由于 IAM Role 是 global 的, 而 CodeBuild 是 regional 的, 所以这个 IAM Policy 里的 region 信息都是用的 ``*``.
+也就是 CodeCommit repo 所在的 AWS Account 的设置. **首先你要创建一个 IAM Role 给 CodeBuild 用**. 这个 Role 需要能创建 CloudWatch log group (因为要打 log 上去), 能对 backup bucket 进行基本的操作, 以及能从 codecommit 上 pull 代码. 由于 IAM Role 是 global 的, 而 CodeBuild 是 regional 的, 所以这个 IAM Policy 里的 region 信息都是用的 ``*``.
 
 .. literalinclude:: ./codebuild_iam_policy.json
    :language: python
@@ -61,6 +61,23 @@ Enterprise Read Solution
 - 你需要将 ``${codecommit_aws_account_id}`` 替换成 codecommit account id.
 - ``${codebuild_project_name}`` 替换成你这个 CodeBuild project 的名字, 我推荐就用 ``codecommit-backup`` 并在所有的 region 保持一致.
 - ``${backup_bucket}`` 和 ``${backup_folder}`` 与前面说的保持一致.
+
+**然后你要创建一个 CodeCommit repo**, 用于存放自动化脚本的逻辑. 这里有一个参考的 repo, 里面一共有 3 个文件 (其实有 4 个, ``.gitignore`` 我省略了). 这里的逻辑简单来说就是用 for loop 遍历所有需要备份的 repo, 然后把历史全部 clone 下来, zip 压缩, 然后上传到 S3, 并且对 S3 进行一些清理, 删除掉旧文件:
+
+.. literalinclude:: ./codecommit-backup/requirements.txt
+   :language: python
+
+.. literalinclude:: ./codecommit-backup/run.py
+   :language: python
+
+.. literalinclude:: ./codecommit-backup/buildspec.yml
+   :language: python
+
+**然后你要创建一个 CodeBuild project**, 用于运行上面的脚本. 这个 project 的配置都是标准的, 选择前面创建的 CodeCommit 的 main 作为 source. 不过你要确保你的 project name 和前面 IAM Role 的那一步保持一致, 也就是用 ``codecommit-backup``.
+
+创建好 CodeBuild project 后你就可以点 Start build 测试一次了. 等运行完之后就可以去 backup bucket 看看有没有文件了.
+
+**最后你可以创建一个 Trigger**, 让它每天跑一次, 这样你就可以每天自动备份你的 repo 了. 具体做法是在 Build project 里面点 "build trigger". 我个人喜欢每天凌晨 4 点运行一次.
 
 Reference:
 

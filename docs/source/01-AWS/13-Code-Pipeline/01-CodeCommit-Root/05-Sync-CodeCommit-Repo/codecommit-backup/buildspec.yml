@@ -5,5 +5,4 @@ phases:
       - pip install -r requirements.txt
   build:
     commands:
-      - env
       - python run.py

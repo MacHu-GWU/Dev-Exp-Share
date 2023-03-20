@@ -30,8 +30,9 @@
             "Effect": "Allow",
             "Action": [
                 "s3:ListBucket",
-                "s3:GetObjectAttributes",
+                "s3:GetObject",
                 "s3:GetObjectTagging",
+                "s3:GetObjectAttributes",
                 "s3:PutObject",
                 "s3:PutObjectTagging",
                 "s3:DeleteObject"
