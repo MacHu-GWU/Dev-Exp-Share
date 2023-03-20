@@ -29,7 +29,7 @@ Solution
           - aws s3 cp $dt-$REPOSITORY_NAME-backup.zip s3:// #substitute a valid S3 Bucket Name here
 
 
-Enterprise Read Solution
+Enterprise Ready Solution
 ------------------------------------------------------------------------------
 在企业中, 通常所有的 repo 都会放在同一个 AWS Account 和 Region 上, 而且要备份的 repo 数量会很多. 这时候为每个 repo 创建一个 CodeBuild project 就不合适了, 我们应该用一个 CodeBuild 来搞定所有的 CodeCommit. 我们可以用两种方式实现:
 
