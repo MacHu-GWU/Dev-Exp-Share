@@ -5,7 +5,7 @@
          "Sid": "allow IAM role on CodeCommit repos account to access this s3 bucket",
          "Effect": "Allow",
          "Principal": {
-            "AWS": "arn:aws:iam::${CodeCommit_aws_account_id}:root"
+            "AWS": "arn:aws:iam::${codecommit_aws_account_id}:root"
          },
          "Action": [
              "s3:ListBucket",
@@ -16,8 +16,8 @@
              "s3:DeleteObject"
          ],
          "Resource": [
-             "arn:aws:s3:::my-bucket",
-             "arn:aws:s3:::my-bucket/my-folder/*"
+             "arn:aws:s3:::${backup_bucket}",
+             "arn:aws:s3:::${backup_bucket}/${backup_folder}/*"
          ]
       }
    ]

@@ -36,16 +36,31 @@ Enterprise Read Solution
 1. 用一个运行时间较长的 build run, 然后用一个 for loop 来搞定. 这样的坏处是前面的 build 可能会让后面的 build fail, 好处是实现简单, 总体开销比 batch 低.
 2. 用 Batch build. 这样的坏处是每一个 sub build 都有 provision 阶段, 等于这段时间的开销翻了好多倍. 好处是编排管理更自动化, 同时运行一次的时间更快.
 
-我个人更喜欢第一个方法, 因为我对价格更加敏感.
+我个人更喜欢第一个方法, 因为我对价格更加敏感. 下面我来介绍一下我的详细方案.
 
-我具体的设置如下:
+**Backup account setup**
 
-Backup account
-
+也就是用来存放备份的 AWS Account 的设置. 首先你要创建一个 S3 Bucket. 然后你要给这个 S3 Bucket 创建一个 bucket policy, 用来允许 CodeBuild 来 push 文件到这个 bucket. 这个 policy 的内容如下.
 
 .. literalinclude:: ./backup_account_bucket_policy.json
    :language: python
 
+- 你需要将 ``${codecommit_aws_account_id}`` 替换成 codecommit repo 所在的 AWS Account ID
+- 以及 ``${backup_bucket}`` 替换成这个 S3 Bucket name
+- 然后 ``${backup_folder}`` 我推荐用 ``projects/codecommit-backup/${codecommit_aws_account_id}/*``. 而最终的备份文件的路径则是: ``projects/codecommit-backup/${codecommit_aws_account_id}/${codecommit_aws_region}/${repo_name}/${repo_name}-${datetime}.zip``.
+
+这个 Policy 的好处是, 很可能你这个 CodeCommit account 上的 repo 在不同的 region, 你无需修改这个 policy 就能从多个 region 备份.
+
+**CodeCommit account setup**
+
+也就是 CodeCommit repo 所在的 AWS Account 的设置. 首先你要创建一个 IAM Role 给 CodeBuild 用. 这个 Role 需要能创建 CloudWatch log group (因为要打 log 上去), 能对 backup bucket 进行基本的操作, 以及能从 codecommit 上 pull 代码. 由于 IAM Role 是 global 的, 而 CodeBuild 是 regional 的, 所以这个 IAM Policy 里的 region 信息都是用的 ``*``.
+
+.. literalinclude:: ./codebuild_iam_policy.json
+   :language: python
+
+- 你需要将 ``${codecommit_aws_account_id}`` 替换成 codecommit account id.
+- ``${codebuild_project_name}`` 替换成你这个 CodeBuild project 的名字, 我推荐就用 ``codecommit-backup`` 并在所有的 region 保持一致.
+- ``${backup_bucket}`` 和 ``${backup_folder}`` 与前面说的保持一致.
 
 Reference:
 

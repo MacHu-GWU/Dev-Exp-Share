@@ -2,6 +2,34 @@
     "Version": "2012-10-17",
     "Statement": [
         {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:logs:*:${codecommit_aws_account_id}:log-group:/aws/codebuild/${codebuild_project_name}",
+                "arn:aws:logs:*:${codecommit_aws_account_id}:log-group:/aws/codebuild/${codebuild_project_name}:*"
+            ],
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "codebuild:CreateReportGroup",
+                "codebuild:CreateReport",
+                "codebuild:UpdateReport",
+                "codebuild:BatchPutTestCases",
+                "codebuild:BatchPutCodeCoverages"
+            ],
+            "Resource": [
+                "arn:aws:codebuild:*:${codecommit_aws_account_id}:report-group/${codebuild_project_name}"
+            ]
+        },
+        {
             "Sid": "BackupS3BucketAccess",
             "Effect": "Allow",
             "Action": [
@@ -13,44 +41,17 @@
                 "s3:DeleteObject"
             ],
             "Resource": [
-                "arn:aws:s3:::my-bucket",
-                "arn:aws:s3:::my-bucket/my-folder/*"
+                "arn:aws:s3:::${backup_bucket}",
+                "arn:aws:s3:::${backup_bucket}/${backup_folder}/*"
             ]
         },
         {
-            "Sid": "CodeCommitReadActions",
+            "Sid": "CodeCommitActions",
             "Effect": "Allow",
             "Action": [
-                "codecommit:GetTree",
-                "codecommit:GetBlob",
-                "codecommit:GetReferences",
-                "codecommit:ListTagsForResource",
-                "codecommit:GetCommit",
-                "codecommit:GetComment",
-                "codecommit:GetCommitHistory",
-                "codecommit:BatchGetCommits",
-                "codecommit:GetPullRequest",
-                "codecommit:ListBranches",
-                "codecommit:GetRepositoryTriggers",
-                "codecommit:GitPull",
-                "codecommit:BatchGetRepositories",
-                "codecommit:GetObjectIdentifier",
-                "codecommit:CancelUploadArchive",
-                "codecommit:GetFolder",
-                "codecommit:BatchGetPullRequests",
-                "codecommit:GetFile",
-                "codecommit:GetRepository",
-                "codecommit:GetBranch"
+                "codecommit:*"
             ],
-            "Resource": "arn:aws:codecommit:us-east-1:807388292768:repo-name"
-        },
-        {
-            "Sid": "CodeCommitListActions",
-            "Effect": "Allow",
-            "Action": [
-                "codecommit:ListRepositories"
-            ],
-            "Resource": "*"
+            "Resource": "arn:aws:codecommit:*:${codecommit_aws_account_id}:*"
         }
     ]
 }
