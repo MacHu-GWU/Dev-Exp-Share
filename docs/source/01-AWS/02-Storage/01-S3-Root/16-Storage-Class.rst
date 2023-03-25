@@ -1,4 +1,4 @@
-Storage Class
+Using Amazon S3 storage classes
 ==============================================================================
 
 What are storage classes:
@@ -36,3 +36,5 @@ Three options for retrieving the archives:
 
 - Archive Retrieval Options: https://docs.aws.amazon.com/amazonglacier/latest/dev/downloading-an-archive-two-steps.html#api-downloading-an-archive-two-steps-retrieval-options
 - Access your Amazon Glacier data in minutes with new retrieval options: https://aws.amazon.com/about-aws/whats-new/2016/11/access-your-amazon-glacier-data-in-minutes-with-new-retrieval-options/
+
+- `Using Amazon S3 storage classes <https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html>`_:
