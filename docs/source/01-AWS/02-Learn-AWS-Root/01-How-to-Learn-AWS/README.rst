@@ -1,9 +1,14 @@
-.. _learn-aws:
-
-Learn AWS
-==============================================================================
+.. _how-to-learn-aws:
 
 How to Learn AWS
+==============================================================================
+.. contents::
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+    :depth: 1
+    :local:
+
+
+Overview
 ------------------------------------------------------------------------------
 AWS 大约有 200 多种服务, 刚入门的时候你可能会觉得无从下手. 我们在学习一门技术的时候, 通常要结合我们的目标有侧重点的学习. 例如, 我们想要用 AWS 来解决什么问题? 又或者是我的职业目标是 XYZ, 我想要学习这个职业需要知道的知识. 学习AWS 也不例外. 官方推荐按照 Role (你的角色) 和 Solution (需要解决的问题) 选择不同的 Learning Path.
 
@@ -82,6 +87,8 @@ AWS 官方将 learning level 分为了 4 个等级:
 - 了解什么是 AMI 镜像, 如何用 AMI 来备份和恢复 EC2.
 
 这三个服务学习完毕之后, 还有一个重要的服务, IAM (identity access management) 权限管理. 这个服务是使用任何其他服务的基础, 你只要需要动手, 那么基本上绕不开 IAM. **IAM 需要掌握的知识点有**:
+
+.. image:: https://github.com/MacHu-GWU/aws_icons-project/blob/main/icons/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64.png?raw=true
 
 - 什么是 IAM Group, User, Role, Policy.
 - 什么是 Role 里面的 trusted entity, 什么是 Policy Document 里的 statement.
