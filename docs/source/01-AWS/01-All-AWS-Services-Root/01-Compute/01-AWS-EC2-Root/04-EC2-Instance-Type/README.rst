@@ -8,8 +8,8 @@ Virtualization Type
 主要有 3 类虚拟机的实现方式:
 
 - **HVM**: Hardware assisted Virtual Machine. 也叫全虚拟化, EC2 的主力虚拟化方式. 全虚拟化或者叫硬件协助的虚拟化技术使用物理机CPU的虚拟化扩展来虚拟出虚拟机. 全虚拟化技术需要Intel VT或者AMD-V硬件扩展. Xen使用Qemu来仿真PC硬件, 包括BIOS, IDE硬盘控制器, VGA图形适配器(显卡), USB控制器, 网络适配器(网卡)等. 虚拟机硬件扩展被用来提高仿真的性能. 全虚拟化虚拟机不需要任何的内核支持. 这意味着, Windows操作系统可以作为Xen的全虚拟化虚拟机使用(众所周知, 除了微软没有谁可以修改Windows内核). 由于使用了仿真技术, 通常来说全虚拟化虚拟机运行效果要逊于半虚拟化虚拟机.
-- **Paravirtualization (PV)**: 也叫半虚拟化. 半虚拟化是由Xen引入的高效和轻量的虚拟化技术, 随后被其他虚拟化平台采用. 半虚拟化技术不需要物理机CPU含有虚拟化扩展. 但是, 要使虚拟机能够高效的运行在没有仿真或者虚拟仿真的硬件上, 半虚拟化技术需要一个Xen-PV-enabled内核和PV驱动. 可喜的是, Linux, NetBSD, FreeBSD和OpenSolaris都提供了Xen-PV-enabled内核. Linux内核从2.6.24版本起就使用了Linux pvops框架来支持Xen. 这意味着半虚拟化技术可以在绝大多数的Liunx发行版上工作(除了那么内核很古老的发行版). 关于半虚拟化技术的更多信息可以参考维基百科 http://wiki.xenproject.org/wiki/Paravirtualization_(PV
-- **PV on HVM**: 为了提高性能, 全虚拟化虚拟机也可以使用一些特殊的半虚拟化设备驱动(PVHVM 或者 PV-on-HVM驱动). 这些半虚拟化驱动针对全虚拟化环境进行了优化并对磁盘和网络IO仿真进行分流, 从而得到一个类似于或优于半虚拟化虚拟机性能的全虚拟化虚拟机. 这意味着, 你可以对只支持全虚拟化技术的操作系统进行优化, 比如Windows.
+- **Paravirtualization (PV)**: 也叫半虚拟化. 半虚拟化是由Xen引入的高效和轻量的虚拟化技术, 随后被其他虚拟化平台采用. 半虚拟化技术不需要物理机CPU含有虚拟化扩展. 但是, 要使虚拟机能够高效的运行在没有仿真或者虚拟仿真的硬件上, 半虚拟化技术需要一个Xen-PV-enabled内核和PV驱动. 可喜的是, Linux, NetBSD, FreeBSD和OpenSolaris都提供了Xen-PV-enabled内核. Linux内核从2.6.24版本起就使用了Linux pvops框架来支持Xen. 这意味着半虚拟化技术可以在绝大多数的Liunx发行版上工作(除了那么内核很古老的发行版). 关于半虚拟化技术的更多信息可以参考维基百科 https://wiki.xenproject.org/wiki/Paravirtualization_(PV)
+- **PV on HVM**: 为了提高性能, 全虚拟化虚拟机也可以使用一些特殊的半虚拟化设备驱动 (PVHVM 或者 PV-on-HVM驱动). 这些半虚拟化驱动针对全虚拟化环境进行了优化并对磁盘和网络IO仿真进行分流, 从而得到一个类似于或优于半虚拟化虚拟机性能的全虚拟化虚拟机. 这意味着, 你可以对只支持全虚拟化技术的操作系统进行优化, 比如Windows.
 
 
 Root Device Type
@@ -66,5 +66,9 @@ Instance Type Naming Convention:
 
 Reference:
 
-- EC2 Instance Type Look up: https://aws.amazon.com/ec2/instance-types/
-- EC2 Instance Type Document: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
+- `EC2 Instance Type Look up <https://aws.amazon.com/ec2/instance-types/>`_: 表格化的 EC2 Type 速查, 可以按分类查看每个 Type 的 vCPU, Memory, Network Bandwidth, EBS Bandwidth 信息.
+- `EC2 Instance Type Document <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html>`_: 对 EC2 Type 的详细介绍文档, 包括每个 Type family 的介绍.
+- `Amazon EC2 On-Demand Pricing <https://aws.amazon.com/ec2/pricing/on-demand/>`_: 按需付费的价格表.
+- `Amazon EC2 Spot Instances <https://aws.amazon.com/ec2/spot/>`_: 空闲虚拟机的价格表.
+- `Amazon EC2 Reserved Instances Pricing <https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/>`_: 长期合同的折扣价格表.
+- `Amazon EC2 Dedicated Hosts Pricing <https://aws.amazon.com/ec2/dedicated-hosts/pricing/>`_: 专属部署的价格表.
