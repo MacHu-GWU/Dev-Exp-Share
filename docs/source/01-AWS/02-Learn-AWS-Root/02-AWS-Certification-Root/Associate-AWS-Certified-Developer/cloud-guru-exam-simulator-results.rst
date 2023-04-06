@@ -1,1 +1,0 @@
-- 2019-12-10 exam without preparex: https://acloud.guru/exam-simulator/review?attemptId=fa69b34d-06da-4cf3-8d65-e6aceaad17bd&examId=41f19d06-7135-4787-acc4-7e19a6133c94&courseId=aws-cda-2018
