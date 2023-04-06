@@ -1,6 +1,6 @@
 S3 Data Consistency Model
 ==============================================================================
-Keywords: AWS S3 Data Consistency Model
+Keywords: Amazon AWS S3 Data Consistency Model
 
 
 Summary
