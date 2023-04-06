@@ -23,11 +23,8 @@ Reference:
 
 AWS Nitro
 ------------------------------------------------------------------------------
-AWS Nitro 是 2017 年发布的一项 AWS 专属的虚拟化技术. 它和现有的虚拟化技术的本质区别是, 现有的虚拟化技术都是要在宿主机器上运行一些组件, 即使这些组件非常底层, 但是还是要占用宿主机的资源. 无论怎么优化宿主机器, 本质上都是要在宿主机上运行软件.
+AWS Nitro 是 2017 年发布的一项 AWS 专属的虚拟化技术. 它和现有的虚拟化技术的本质区别是, 现有的虚拟化技术都是要在宿主机器上运行一些组件, 即使这些组件非常底层, 但是还是要占用宿主机的资源. 无论怎么优化宿主机器, 本质上都是要在宿主机上运行软件. 而 Nitro 则是从根上出发, 把虚拟化的程序做到了专用硬件中, 然后直接插在机器的 PCI 总线上, 把宿主机几乎 100% 的资源都交给了用户. 这项技术原本是一家以色列公司开发的, AWS 将其收购之后在此基础上进行了改进, 从而成为了 AWS Nitro.
 
 - `AWS Nitro 架构简介 <https://zhuanlan.zhihu.com/p/270522703>`_: 详细拆解 AWS Nitro 的架构.
 - `一文带你了解AWS Nitro System <https://cloud.tencent.com/developer/article/1852632>`_
 - `看 AWS 如何通过 Nitro System 构建竞争优势 <https://www.cnblogs.com/jmilkfan-fanguiju/p/16228459.html>`_
-
-
-https://www.kelsercorp.com/blog/the-7-types-of-virtualization

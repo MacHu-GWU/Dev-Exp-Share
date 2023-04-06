@@ -3,25 +3,39 @@ EC2 Instance Type
 Keywords: AWS EC2 Instance Type
 
 
-Virtualization Type
+Overview
 ------------------------------------------------------------------------------
-主要有 3 类虚拟机的实现方式:
+AWS 的 EC2 在所有云服务提供商提供的虚拟机产品线中, 可选的类型是最多的.
 
-- **HVM**: Hardware assisted Virtual Machine. 也叫全虚拟化, EC2 的主力虚拟化方式. 全虚拟化或者叫硬件协助的虚拟化技术使用物理机CPU的虚拟化扩展来虚拟出虚拟机. 全虚拟化技术需要Intel VT或者AMD-V硬件扩展. Xen使用Qemu来仿真PC硬件, 包括BIOS, IDE硬盘控制器, VGA图形适配器(显卡), USB控制器, 网络适配器(网卡)等. 虚拟机硬件扩展被用来提高仿真的性能. 全虚拟化虚拟机不需要任何的内核支持. 这意味着, Windows操作系统可以作为Xen的全虚拟化虚拟机使用(众所周知, 除了微软没有谁可以修改Windows内核). 由于使用了仿真技术, 通常来说全虚拟化虚拟机运行效果要逊于半虚拟化虚拟机.
-- **Paravirtualization (PV)**: 也叫半虚拟化. 半虚拟化是由Xen引入的高效和轻量的虚拟化技术, 随后被其他虚拟化平台采用. 半虚拟化技术不需要物理机CPU含有虚拟化扩展. 但是, 要使虚拟机能够高效的运行在没有仿真或者虚拟仿真的硬件上, 半虚拟化技术需要一个Xen-PV-enabled内核和PV驱动. 可喜的是, Linux, NetBSD, FreeBSD和OpenSolaris都提供了Xen-PV-enabled内核. Linux内核从2.6.24版本起就使用了Linux pvops框架来支持Xen. 这意味着半虚拟化技术可以在绝大多数的Liunx发行版上工作(除了那么内核很古老的发行版). 关于半虚拟化技术的更多信息可以参考维基百科 https://wiki.xenproject.org/wiki/Paravirtualization_(PV)
-- **PV on HVM**: 为了提高性能, 全虚拟化虚拟机也可以使用一些特殊的半虚拟化设备驱动 (PVHVM 或者 PV-on-HVM驱动). 这些半虚拟化驱动针对全虚拟化环境进行了优化并对磁盘和网络IO仿真进行分流, 从而得到一个类似于或优于半虚拟化虚拟机性能的全虚拟化虚拟机. 这意味着, 你可以对只支持全虚拟化技术的操作系统进行优化, 比如Windows.
-
-
-Root Device Type
-------------------------------------------------------------------------------
-存储方式:
-
-- **EBS**: EC2 主力存储方式, 使用弹性块作为存储方式, 原理上是将高性能的存储集群上的 volume 映射到 EC2 上的某个目录, 然后使用内部的高性能连接和虚拟机进行通信. **EBS 是有3 份冗余的, 而且在虚拟机关闭后, 你可以选择不删除 EBS 上的数据, 而且 EBS 上的数据可以被很容易的 Mount 到其他的 EC2 上, 或是 detach**.
-- **Instance store**: 使用虚拟机的宿主上的磁盘空间作为存储方式, **很显然宿主上的存储是没有冗余的, 如果出错或丢失了, 就永久无法恢复. 而虚拟机一旦被 terminate, 数据就会全部丢失**.
+- `Cloud comparison: AWS EC2 vs Azure Virtual Machines vs Google Compute Engine <https://acloudguru.com/blog/engineering/cloud-comparison-aws-ec2-vs-azure-virtual-machines-vs-google-compute-engine>`_: 比较了三大云服务提供商的虚拟机产品线.
 
 
 Instance Type
 ------------------------------------------------------------------------------
+AWS EC2 Instance Type 的命名是有规律的, 一般是 ``${前缀}${第几代}${后缀}`` 这样的形式.
+
+- 前缀: 一般是字母, 也可能是单词, 决定了大类别.
+- 第几代: 一般是数字, 数字越大就越新.
+- 后缀: 大类别下的小类别, 一般指的是优化方向.
+
+我们以最常用的 T 系列为例. T 系列是 General Purpose 类型, 也就是通用型, 是 Burstable 的类型 (高负载时可以 burst 到更高的性能). 从 t2 开始, 到 t3, t3a, t4g. t3 就是 t2 的下一代, 什么都不说就一般指的是 X64 架构, 也一般是 Intel 的芯片. t3a 里的 a 指的是 AMD 芯片. 一般其他型号相同, 有 a 的会便宜个 10%. 而 t4g 则是 ARM 架构, 以功耗比高为买点, 一般会便宜个 20%, 甚至 40%. 由于是用的 Graviton 这种专门的 ARM 芯片, 所以名字是 g.
+
+我们总结一下:
+
+- 前缀:
+    - General Purpose:
+        - T: burstable
+        - M: 很多机器
+- 后缀:
+    - a: AMD processors
+    - g: AWS Graviton processors, ARM 芯片
+    - i: Intel processors
+    - d: Instance store volumes, 除了 EBS 之外, 自己本身就带磁盘
+    - n: Network optimization
+    - b: Block storage optimization
+    - e: Extra storage or memory
+    - z: High frequency, 单核超高频率
+
 Instance Type Naming Convention:
 
 - a: AMD processors (AMD 的芯片)
@@ -72,3 +86,11 @@ Reference:
 - `Amazon EC2 Spot Instances <https://aws.amazon.com/ec2/spot/>`_: 空闲虚拟机的价格表.
 - `Amazon EC2 Reserved Instances Pricing <https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/>`_: 长期合同的折扣价格表.
 - `Amazon EC2 Dedicated Hosts Pricing <https://aws.amazon.com/ec2/dedicated-hosts/pricing/>`_: 专属部署的价格表.
+
+
+Root Device Type
+------------------------------------------------------------------------------
+存储方式:
+
+- **EBS**: EC2 主力存储方式, 使用弹性块作为存储方式, 原理上是将高性能的存储集群上的 volume 映射到 EC2 上的某个目录, 然后使用内部的高性能连接和虚拟机进行通信. **EBS 是有3 份冗余的, 而且在虚拟机关闭后, 你可以选择不删除 EBS 上的数据, 而且 EBS 上的数据可以被很容易的 Mount 到其他的 EC2 上, 或是 detach**.
+- **Instance store**: 使用虚拟机的宿主上的磁盘空间作为存储方式, **很显然宿主上的存储是没有冗余的, 如果出错或丢失了, 就永久无法恢复. 而虚拟机一旦被 terminate, 数据就会全部丢失**.
