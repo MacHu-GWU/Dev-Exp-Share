@@ -13,8 +13,8 @@ AWS CDK 是什么?
 一些有用的链接
 ------------------------------------------------------------------------------
 
-- CDK 的官方文档, 里面有各个编程语言的子文档: https://docs.aws.amazon.com/cdk/api/latest/
-- CDK python 文档: https://docs.aws.amazon.com/cdk/api/latest/python/index.html
+- CDK 的官方文档, 里面有各个编程语言的子文档: https://docs.aws.amazon.com/cdk/v2/guide/work-with.html
+- CDK python 文档: https://docs.aws.amazon.com/cdk/v2/guide/work-with-cdk-python.html
 
 
 CDK in Python
@@ -56,3 +56,8 @@ https://docs.aws.amazon.com/cdk/latest/guide/constructs.html#constructs_lib
 - L1 为最底层 API, 代表 CloudFormation (CFN) Resource, 所以 import name 一般是以 ``Cfn`` 开头. 你需要明确指定所有要求的 Property 的值.
 - L2 为 L1 的 Wrapper, 通常提供了比较靠谱的默认值, 你无需指定所有的 Property 值即可顺利使用.
 - L3 叫做 Pattern, 也是多个 Resource 的集合.
+
+
+AWS CDK v2
+------------------------------------------------------------------------------
+- `Migrating to AWS CDK v2 <https://docs.aws.amazon.com/cdk/v2/guide/migrating-v2.html>`_
