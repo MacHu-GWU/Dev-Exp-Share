@@ -1,4 +1,6 @@
-Poetry
+.. _python-poetry
+
+Python Poetry
 ==============================================================================
 
 .. contents::
@@ -84,3 +86,13 @@ Delete Venv:
 Add and Install
 
     poetry install --with
+
+Manage Environment
+------------------------------------------------------------------------------
+
+Reference:
+
+- `Manage Environment <https://python-poetry.org/docs/managing-environments/>`_
+
+.. autotoctree::
+    :maxdepth: 1
