@@ -8,7 +8,8 @@ packages = [{include = "poetry_demo"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-
+func-args = "^0.1.1"
+iterproxy = "*"
 
 [build-system]
 requires = ["poetry-core"]

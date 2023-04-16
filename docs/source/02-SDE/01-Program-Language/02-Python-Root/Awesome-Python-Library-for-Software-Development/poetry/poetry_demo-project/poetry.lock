@@ -1,8 +1,38 @@
-package = []
+[[package]]
+name = "func-args"
+version = "0.1.1"
+description = "Bring in sentinel ``NOTHING`` into your Python function arguments."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+docs = ["docfly (==1.0.2)", "furo (==2021.8.31)", "rstobj (==0.0.7)", "sphinx (==4.3.0)", "sphinx-copybutton (==0.4.0)", "sphinx-inline-tabs (==2021.8.17b10)", "sphinx-jinja (==1.1.1)"]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
+name = "iterproxy"
+version = "0.2.1"
+description = "Give any iterable object capability to use .one(), .one_or_none(), .many(k), .skip(k), .all() API."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+docs = ["docfly (==1.0.2)", "furo (==2021.8.31)", "rstobj (==1.2.1)", "sphinx (==4.3.0)", "sphinx-copybutton (==0.4.0)", "sphinx-inline-tabs (==2021.8.17b10)", "sphinx-jinja (==1.1.1)"]
+tests = ["pytest", "pytest-cov"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "935b488be9f11b23f14aa1ce3bed4013d88bd77462534b5e4fe5bb82b485bfe9"
+content-hash = "6cff7f91c05cd654bcbda5cc48d7e2edad589f7982048b6694e62921037e59b6"
 
 [metadata.files]
+func-args = [
+    {file = "func_args-0.1.1-py2.py3-none-any.whl", hash = "sha256:8640ffee0ae20dafa775bd012ced8b20835200bdb0e5847b9ef004acbf553993"},
+    {file = "func_args-0.1.1.tar.gz", hash = "sha256:4815248811505c6bb75fbc03059448323a4b7e58fa6fa17b525c1dae75a7565b"},
+]
+iterproxy = [
+    {file = "iterproxy-0.2.1-py2.py3-none-any.whl", hash = "sha256:299ac67f5260c2a074ca5463b7df4af242bb20338b7cf1fb1c4504880eff44ea"},
+    {file = "iterproxy-0.2.1.tar.gz", hash = "sha256:07a1271e8f481aeaeb36c2652619592d57fe25425c4fa46a08ace77328dc6348"},
+]
