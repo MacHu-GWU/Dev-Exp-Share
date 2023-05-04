@@ -25,5 +25,5 @@ def send_command(
 
 send_command(
     instance_id="i-1a2b3c4d",
-    cmd="echo 1a2b3c4d > /home/ubuntu/chore",
+    cmd="echo 1a2b3c4d > ~/chore",
 )
