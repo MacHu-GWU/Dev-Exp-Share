@@ -1,0 +1,19 @@
+{
+    "version": "1.0",
+    "timestamp": "2023-05-11T04:28:01.825Z",
+    "requestContext": {
+        "requestId": "44cea314-0ba5-4505-ab63-3e5ec33cf26e",
+        "functionArn": "arn:aws:lambda:us-east-1:111122223333:function:test-delete-soon:$LATEST",
+        "condition": "Success",
+        "approximateInvokeCount": 1
+    },
+    "requestPayload": {},
+    "responseContext": {
+        "statusCode": 200,
+        "executedVersion": "$LATEST"
+    },
+    "responsePayload": {
+        "statusCode": 200,
+        "body": "\"Hello from Lambda!\""
+    }
+}

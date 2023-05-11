@@ -1,0 +1,26 @@
+{
+    "version": "1.0",
+    "timestamp": "2023-05-11T04:22:16.845Z",
+    "requestContext": {
+        "requestId": "581cdc8b-867c-4e21-b8ad-bd8436fcff24",
+        "functionArn": "arn:aws:lambda:us-east-1:111122223333:function:test-delete-soon:$LATEST",
+        "condition": "RetriesExhausted",
+        "approximateInvokeCount": 3
+    },
+    "requestPayload": {},
+    "responseContext": {
+        "statusCode": 200,
+        "executedVersion": "$LATEST",
+        "functionError": "Unhandled"
+    },
+    "responsePayload": {
+        "errorMessage": "this is an error in hello",
+        "errorType": "ValueError",
+        "requestId": "581cdc8b-867c-4e21-b8ad-bd8436fcff24",
+        "stackTrace": [
+            "  File \"/var/task/lambda_function.py\", line 13, in lambda_handler\n    raise e\n",
+            "  File \"/var/task/lambda_function.py\", line 11, in lambda_handler\n    hello()\n",
+            "  File \"/var/task/lambda_function.py\", line 5, in hello\n    raise ValueError(\"this is an error in hello\")\n"
+        ]
+    }
+}
