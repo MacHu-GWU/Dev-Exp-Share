@@ -97,6 +97,36 @@ Deny 的部分有很多种选择, 但是通常的目的是为了默认 deny 所�
         }
     },
 
+我最常用的 Bucket Policy 设置是只允许来自于受信的 IP 地址访问. 如果是我个人则是我家的 IP 地址, 如果是公司则是公司的 VPN IP 地址. 并且 CORS 没有打开, 因为我一般不自定义 Domain. 我的 Policy 如下::
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "PublicReadGetObject",
+                "Effect": "Allow",
+                "Principal": "*",
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::${bucket_name}/*"
+            },
+            {
+                "Sid": "VpcSourceIp",
+                "Effect": "Deny",
+                "Principal": "*",
+                "Action": "s3:*",
+                "Resource": [
+                    "arn:aws:s3:::${bucket_name}",
+                    "arn:aws:s3:::${bucket_name}/*"
+                ],
+                "Condition": {
+                    "NotIpAddress": {
+                        "aws:SourceIp": "${trusted_ip_address}/32"
+                    }
+                }
+            }
+        ]
+    }
+
 至此, 你就可以访问你的 static website 了. 其中 S3 object 到网站 URL 的映射关系是: ``s3://${bucket}/${key}`` -> ``https://${bucket}.s3.amazonaws.com/${key}``
 
 Reference:

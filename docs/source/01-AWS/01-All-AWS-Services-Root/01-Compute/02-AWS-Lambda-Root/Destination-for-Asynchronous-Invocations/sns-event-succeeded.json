@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-1:111122223333:test-delete-soon:b7cb0c9c-abf1-4f4b-b029-c452c3d6c02c",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "6a38fe2f-de69-53ce-a648-a2f9af780a03",
+                "TopicArn": "arn:aws:sns:us-east-1:111122223333:test-delete-soon",
+                "Subject": null,
+                "Message": "{\"key\": \"a long succeeded message here\"}",
+                "Timestamp": "2023-05-11T04:28:01.908Z",
+                "SignatureVersion": "1",
+                "Signature": "AyuN4B1j7Rw4nyefzbAi9yWOhUthhnSKtCCpHCi1VsNw7N2niJA6e1Or4pVMea9HE1JkG+fvAIXkFWuJP9cT5g/b7LB+k3bReGllX6eoTMvhop/wIK645GuZ5iIkCucV0xyGprSaZjxwHkpaVsR29QnVjVbxyH4LBbLC2bLi2GFvkog56AGwiY8/ug9mTGEBJSRFNoNUpCGp91xz3l2jm3NsoaSw+su39oB0Yuuzklm27U4xPz7WKmHznpAMKiIvD15spVF4DsYQUggSNr3lsbxlS63E8Xav77kLa6CBpYmq1Z7+e6MtI6mLl6sknB8ddShLqldQU1WBwemfZtO45w==",
+                "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-56e67fcb41f6fec09b0196692625d385.pem",
+                "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:111122223333:test-delete-soon:b7cb0c9c-abf1-4f4b-b029-c452c3d6c02c",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
