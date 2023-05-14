@@ -1,22 +1,6 @@
 AWS Transfer Family
 ==============================================================================
+AWS Transfer Family 是一组用来在 Business 和 Business 之间 (公司和公司) 传输文件的全托管服务.
 
-
-
-IAM Role Trust Policy:
-
-.. code-block:: javascript
-
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "",
-                "Effect": "Allow",
-                "Principal": {
-                    "Service": "transfer.amazonaws.com"
-                },
-                "Action": "sts:AssumeRole"
-            }
-        ]
-    }
+.. autotoctree::
+    :maxdepth: 1

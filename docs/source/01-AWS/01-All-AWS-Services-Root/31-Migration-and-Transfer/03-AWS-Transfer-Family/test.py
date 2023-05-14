@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from io import StringIO
+from pathlib import Path
 from paramiko import AutoAddPolicy, SFTPClient, SSHClient
 from paramiko import RSAKey
-import spurplus
 
 def sftp_connect(
     sftp_hostname: str,
@@ -29,7 +29,7 @@ def sftp_connect(
     sftp_client = ssh_client.open_sftp()
     return sftp_client
 
-from pathlib import Path
+
 import spur
 path_pk = Path.home().joinpath(".ssh", "id_rsa")
 
