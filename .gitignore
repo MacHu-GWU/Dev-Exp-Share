@@ -6,6 +6,7 @@ dev_exp_share-*/
 cdk.out/
 Pipfile
 Pipfile.lock
+.drawio.bkp
 
 
 # Byte-compiled / optimized / DLL files
