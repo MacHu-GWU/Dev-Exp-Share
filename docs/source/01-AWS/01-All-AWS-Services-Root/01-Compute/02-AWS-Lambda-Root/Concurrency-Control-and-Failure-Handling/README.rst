@@ -1,5 +1,9 @@
-Concurrency Control
+Concurrency Control and Failure Handling
 ==============================================================================
+Keywords: AWS Lambda Function Concurrency Control and Failure Handling
+
+.. raw:: html
+    :file: ./AWS-Lambda-Function-Concurrency-Control-and-Failure-Handling.drawio.html
 
 
 1. 我们要解决什么问题
