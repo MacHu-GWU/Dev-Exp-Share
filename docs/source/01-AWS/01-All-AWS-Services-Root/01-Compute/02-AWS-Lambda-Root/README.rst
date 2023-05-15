@@ -1,6 +1,9 @@
 AWS Lambda Docs
 ==============================================================================
 
+ .. autotoctree::
+    :maxdepth: 1
+    :index_file:
 
 
 Monitoring and Troubleshooting Lambda Applications
