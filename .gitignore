@@ -7,6 +7,8 @@ cdk.out/
 Pipfile
 Pipfile.lock
 *.drawio.bkp
+*.drawio.dtmp
+
 
 
 # Byte-compiled / optimized / DLL files
