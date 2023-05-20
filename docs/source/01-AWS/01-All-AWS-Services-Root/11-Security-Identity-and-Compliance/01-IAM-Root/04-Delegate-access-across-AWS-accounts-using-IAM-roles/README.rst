@@ -1,6 +1,6 @@
 Delegate access across AWS accounts using IAM roles
 ==============================================================================
-Keywords:
+Keywords: AWS, IAM Role, Cross Account Access, Assume Role.
 
 
 Summary
@@ -77,4 +77,8 @@ Grantee account 上的 Principal 所需要的 IAM Policy:
 
 Best Practice
 ------------------------------------------------------------------------------
-好了我们现在来考虑一下企业级的 Best Practice. 首先我们来拆解一下需求:
+我开发了一个自动化脚本, 能够自动的为 1 个 grantee account 和多个 owner accounts 配好 cross account access. 这个 grantee account 上的 identity 可以是整个 Account, 或是一个给人用的 IAM User, 也可以是一个给机器用的 IAM Role. 而 owner accounts 上的 Role 的权限可以是各不相同的.
+
+.. literalinclude:: ./cross_account_iam_role_access_manager.py
+   :language: python
+   :linenos:
