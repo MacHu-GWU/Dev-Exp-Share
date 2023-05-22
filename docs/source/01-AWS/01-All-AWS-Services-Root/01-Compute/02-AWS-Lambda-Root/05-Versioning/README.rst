@@ -1,3 +1,5 @@
+AWS Lambda Function Versions
+==============================================================================
 
 
 本文主要探讨 在使用 AWS Lambda 作为微服务时候的版本发布运维问题.
@@ -15,3 +17,7 @@
 
 1. 开发第二个版本, 在本地进行充分测试
 2. 部署到第二个 Lambda.
+
+Reference:
+
+- `Lambda function versions <https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html>`_: AWS Lambda function versions 的官放文档.

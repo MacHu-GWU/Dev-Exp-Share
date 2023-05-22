@@ -1,117 +1,16 @@
 How can I grant internet access to my VPC Lambda function?
 ==============================================================================
+Lambda function 默认是放在由 AWS 管理的网络环境中的, 并且是有 outbound public network access 的. 你可以将其视为一个 AWS 管理着的 VPC, 只不过这个 VPC 对开发者不可见.
 
-Reference: https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/
+如果你需要 Lambda function 跟位于 VPC Private Subnet 中的资源进行通信, 例如跟位于 Private Subnet 中的 RDS 数据库通信等. 这时你就需要将 Lambda function 部署到你自己的 VPC 中, 而不是 AWS 管理的 VPC 中.
 
+将 Lambda function 部署到自己的 VPC 中要注意如下事项:
 
-Issue
-------------------------------------------------------------------------------
-I want to give my VPC-enabled AWS Lambda function internet access. How can I do this?
+- Lambda function 只能位于 Private Subnet 中, 不能位于 Public Subnet 中.
+- 位于 Private Subnet 就意味着默认是没有 outbound public network access 的, 你必须要为其配置 NAT Gateway 才能让其访问公网. 但是这取决于你的应用, 很多私有应用是不需要访问公网的.
+- 位于 Private Subnet 的 Lambda function 不能直接跟一些 AWS Service 通信. 这些 AWS Service 的共同特点是它们的客户端程序都是跟一个位于公网的 API Endpoint 通信的. 由于 Lambda function 没有公网访问权限, 所以它们无法直接跟这些 AWS Service 通信. 但你可以为这些 AWS Service 创建 VPC Endpoint, 本质上是一个位于你自己的 VPC 上的 Endpoint, 并自动将流量路由到 AWS 内部的 Endpoint 上, 从而让位于 VPC Private Subnet 中的资源能跟这些 AWS Service 通信.
+- 有些网络通信是需要 Security Group (SG) 的, 例如 RDS. 为了让两者能互相通信, 你可以为它们创建一个 SG, 其中定义了允许从自己这个 SG 的来的所有流量, 并将这个 SG 给 RDS 和 Lambda.
 
+Reference:
 
-Short Description
-------------------------------------------------------------------------------
-If your Lambda function needs to access private VPC resources (for example, an Amazon RDS DB instance or Amazon EC2 instance), you must associate the function with a VPC. If your function also requires internet access (for example, to reach a public AWS service endpoint), your function must use a NAT gateway or instance. For more information, see VPC Endpoints.
-
-To add a VPC configuration to your Lambda function, you must associate it with at least one subnet. If the function needs internet access, you need to follow two rules:
-
-- The function should only be associated with private subnets.
-- Your VPC should contain a NAT gateway or instance in a public subnet.
-
-**Whether a subnet is public or private depends on its route table**. Every route table has a default route, which determines the next hop for packets that have a public destination.
-
-- **Private subnet**: the default route points to a NAT gateway (nat-...) or NAT instance (eni-...).
-- **Public subnet**: the default route points to an internet gateway (igw-...).
-
-If your VPC already has a public subnet (with a NAT) and one or more private subnets for your Lambda function, then you only need to follow the steps in “Configure your function".
-
-
-Resolution
-------------------------------------------------------------------------------
-**Configure your function**
-
-Identify your private and public subnets:
-
-1. In the VPC console, from the navigation pane, choose **Subnets**.
-2. Select a subnet, and then choose the Route Table tab. Verify the default route:
-    - **Public subnet**: Destination: 0.0.0.0/0, Target: igw-…
-    - **Private subnet**: Destination: 0.0.0.0/0, Target: nat-… or eni-…
-
-Associate the function with private subnets:
-
-1. In the Lambda console, choose your function, and then choose **Configuration**.
-2. Expand **Advanced settings**, expand **VPC**, and then choose your VPC.
-3. Expand **Subnets** and choose only private subnets.
-4. Expand **Security Groups**, choose a security group, and then choose **Save**.
-
-**To create a public or private subnet**
-
-In the VPC console, from the navigation pane, choose Subnets.
-To create a new subnet, choose Create Subnet. Otherwise, choose an existing subnet.
-Choose the Route Table tab, and then choose Edit.
-From the Change to: drop-down menu, choose an appropriate route table:
-For a private subnet, the default route should point to a NAT gateway or NAT instance:
-
-.. code-block:: bash
-
-    Destination: 0.0.0.0/0
-    Target: nat-… (or eni-…)
-
-For a public subnet, the default route should point to an internet gateway:
-
-.. code-block:: bash
-
-    Destination: 0.0.0.0/0
-    Target: igw-…
-
-**To create a route table for a public or private subnet**
-
-1. In the VPC console, choose Route Tables, and then choose Create Route Table.
-2. In the Name tag field, enter a name that is meaningful to you, select the VPC drop-down menu and choose your VPC, and then choose Yes, Create.
-3. Select the new route table, and then choose the Routes tab.
-4. Choose Edit, and then choose Add another route.
-
-Destination: 0.0.0.0/0
-
-Target:
-
-- For a private subnet with a NAT instance: eni-…
-- For a private subnet with a NAT gateway: nat-…
-- For a public subnet: igw-…
-
-**To create an internet gateway**
-
-1. In the VPC console, from the navigation pane, choose **Internet Gateways**, and then choose **Create Internet Gateway**.
-2. In the **Name tag** field, enter a name and then choose **Yes, Create**.
-3. Select the internet gateway, and then choose **Attach to VPC**.
-
-**To create a NAT gateway**
-
-1. In the VPC console, from the navigation pane, choose **NAT Gateways**, and then choose **Create NAT Gateway**.
-2. In the **Subnet** field, choose a public subnet.
-3. In the **Elastic IP Allocation ID** field, choose an existing Elastic IP address, or select **Create New EIP**, and then choose **Create a NAT Gateway**.
-
-
-允许位于 VPC 上的 Lambda 访问公网
-==============================================================================
-
-逻辑上决定一个 Subnet 是公网还是私网的是 Route Table, Route Table 只为 Outbound Traffic 服务. 管理 Inbound Traffic 是 Security Group 和 Network ACLs.
-
-- Private Subnet: 通往 VPC IP 以外的流量导向 NAT Gateway / Instance
-- Public Subnet: 通往 VPC IP 以外的流量导向 Internet Gateway
-
-通往 VPC IP 的流量导向 Local, 也就是 VPC 本身.
-
-
-Route Table
-------------------------------------------------------------------------------
-
-- 对于 1 个 VPC 只能有一个 Main Route Table. 通常这个 Main Route Table 是为 Private Subnet 服务的. 也就是将所有流量导向 NAT Gateway
-- 所有没有定义 Route Table 的 Subnet 都会默认继承 Main Route Table 的设置 (非 Main Route Table 的设置不会被继承).
-- 对于 Public Subnet, 需要设置 Route Table, 将流量导向 Internet Gateway.
-
-
-Security Group
-------------------------------------------------------------------------------
-
-- Lambda 所在的 Security Group 要允许和 Outbound
+- `Repost - How do I give internet access to a Lambda function that's connected to an Amazon VPC? <https://repost.aws/knowledge-center/internet-access-lambda-function>`_
