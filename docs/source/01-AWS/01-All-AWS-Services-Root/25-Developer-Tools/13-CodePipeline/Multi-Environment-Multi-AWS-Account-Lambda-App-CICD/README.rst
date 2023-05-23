@@ -15,7 +15,9 @@ What is the problem?
 总结下来, 我想要设计的架构应该能解决以下问题:
 
 - 一个 repo 中可以同时拥有多个 deployment units, 它们要能分开部署也能单独部署
+OrganizationAccountAccessRole
 
+https://signin.aws.amazon.com/switchrole?roleName=OrganizationAccountAccessRole&account=bmt-app-dev
 
 ::
 
