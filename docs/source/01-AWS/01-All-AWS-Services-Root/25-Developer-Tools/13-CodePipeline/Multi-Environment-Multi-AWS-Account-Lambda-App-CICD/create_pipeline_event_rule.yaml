@@ -1,0 +1,22 @@
+#----------------------------------------------------------------------#
+# EventRule to trigger LambdaPipeline lambda
+#----------------------------------------------------------------------#
+  CreatePipelineRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "EventRule"
+      EventPattern:
+        source:
+          - aws.codecommit
+        detail-type:
+          - 'CodeCommit Repository State Change'
+        detail:
+          event:
+              - referenceDeleted
+              - referenceCreated
+          referenceType:
+            - branch
+      State: ENABLED
+      Targets:
+      - Arn: !GetAtt CreatePipeline.Arn
+        Id: CreatePipeline
