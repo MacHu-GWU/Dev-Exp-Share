@@ -5,6 +5,11 @@ AWS ECR Push and Pull Private Image
 Keywords: AWS ECR, Docker, Login, Auth, Authentication, Push, Pull, Private, Image
 
 
+What's the Problem?
+------------------------------------------------------------------------------
+AWS ECR 是一个私有的 Container Registry, 你当然是要鉴权才能够 Pull 和 Pull Container Image 了. AWS 支持用 Docker CLI 客户端来做这件事.
+
+
 Overview
 ------------------------------------------------------------------------------
 执行下面的命令获得一个 token 用于登录某个 aws account, 某个 aws region 下的 ecr::
@@ -28,3 +33,12 @@ Overview
     aws ecr get-login --no-include-email --region ${AWS_REGION} --profile ${AWS_PROFILE} | awk '{printf $6}' | docker login -u AWS ${ecr_uri} --password-stdin
 
 在这之后, ``docker pull`` 或是 ``docker push`` 就会有操作权限了.
+
+
+Shell Script
+------------------------------------------------------------------------------
+这里我写了一个脚本, 可以非常方便地让 docker cli login 到 ECR. 脚本内容如下:
+
+.. literalinclude:: ./ecr_login.py
+   :language: python
+   :linenos:
