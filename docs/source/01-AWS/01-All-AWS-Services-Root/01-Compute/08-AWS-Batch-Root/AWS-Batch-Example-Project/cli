@@ -1,0 +1,194 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+This shell script can:
+
+- build container image for AWS Batch
+- push container image to AWS ECR
+- test image locally
+
+Requirements:
+
+- update the "Your project configuration here" part at beginning of this script
+- Python3.7+
+- `fire>=0.1.3,<1.0.0 <https://pypi.org/project/fire/>`_
+- `s3pathlib>=2.0.1,<3.0.0 <https://pypi.org/project/s3pathlib/>`_
+- `boto_session_manager>=1.5.3,<2.0.0 <https://pypi.org/project/boto-session-manager/>`_
+- make sure you have run ``chmod +x ecr_login`` to make this script executable
+
+Usage:
+
+.. code-block:: bash
+
+    # show help info
+    $ ./cli -h
+
+    # build image
+    $ ./cli build-image
+
+    # push image
+    $ ./cli push-image
+
+    # test image
+    $ ./cli test-image
+"""
+
+import typing as T
+import os
+import subprocess
+import contextlib
+import dataclasses
+from pathlib import Path
+
+from s3pathlib import S3Path, context
+from boto_session_manager import BotoSesManager
+
+# ------------------------------------------------------------------------------
+# Your project configuration here
+aws_profile = "bmt_app_dev_us_east_1"
+aws_region = "us-east-1"
+repo_name = "aws-batch-example"
+repo_tag = "latest"
+
+
+# ------------------------------------------------------------------------------
+
+
+@contextlib.contextmanager
+def temp_cwd(path: T.Union[str, Path]):
+    """
+    Temporarily set the current working directory (CWD) and automatically
+    switch back when it's done.
+
+    Example:
+
+    .. code-block:: python
+
+        with temp_cwd(Path("/path/to/target/working/directory")):
+            # do something
+    """
+    path = Path(path).absolute()
+    if not path.is_dir():
+        raise NotADirectoryError(f"{path} is not a dir!")
+    cwd = os.getcwd()
+    os.chdir(str(path))
+    try:
+        yield path
+    finally:
+        os.chdir(cwd)
+
+
+@dataclasses.dataclass
+class EcrContext:
+    aws_account_id: str
+    aws_region: str
+    repo_name: str
+    repo_tag: str
+    path_dockerfile: Path
+
+    @property
+    def dir_dockerfile(self) -> Path:
+        return self.path_dockerfile.parent
+
+    @property
+    def image_uri(self) -> str:
+        return f"{self.aws_account_id}.dkr.ecr.{self.aws_region}.amazonaws.com/{self.repo_name}:{self.repo_tag}"
+
+    def build_image(self):
+        with temp_cwd(self.dir_dockerfile):
+            args = ["docker", "build", "-t", self.image_uri, "."]
+            subprocess.run(args, check=True)
+
+    def push_image(self):
+        with temp_cwd(self.dir_dockerfile):
+            args = [
+                "docker",
+                "push",
+                self.image_uri,
+            ]
+            subprocess.run(args, check=True)
+
+    def test_image(self):
+        with temp_cwd(dir_here):
+            s3bucket = f"{bsm.aws_account_id}-{bsm.aws_region}-data"
+            s3dir_source = S3Path(f"s3://{s3bucket}/projects/aws_batch_example/source/")
+            s3dir_target = S3Path(f"s3://{s3bucket}/projects/aws_batch_example/target/")
+            s3dir_source.delete()
+            s3dir_target.delete()
+            s3dir_source.joinpath("test.txt").write_text("hello-world")
+            print(f"preview source: {s3dir_source.console_url}")
+            print(f"preview target: {s3dir_target.console_url}")
+
+            args = [
+                "docker",
+                "run",
+                "--rm",
+                self.image_uri,
+                "--region",
+                "us-east-1",
+                "--s3uri_source",
+                s3dir_source.uri,
+                "--s3uri_target",
+                s3dir_target.uri,
+            ]
+            subprocess.run(args, check=True)
+
+
+dir_here = Path(__file__).absolute().parent
+path_dockerfile = dir_here.joinpath("Dockerfile")
+
+IS_LOCAL = False
+IS_CI = False
+IS_C9 = False
+if "CI" in os.environ or "CODEBUILD_CI" in os.environ:
+    IS_CI = True
+elif "C9_USER" in os.environ:
+    IS_C9 = True
+else:
+    IS_LOCAL = True
+
+if IS_LOCAL:
+    bsm = BotoSesManager(profile_name=aws_profile)
+elif IS_CI:
+    bsm = BotoSesManager(region_name=aws_region)
+elif IS_C9:
+    bsm = BotoSesManager(region_name=aws_region)
+else:
+    raise RuntimeError
+
+context.attach_boto_session(bsm.boto_ses)
+
+ecr_context = EcrContext(
+    aws_account_id=bsm.aws_account_id,
+    aws_region=aws_region,
+    repo_name=repo_name,
+    repo_tag=repo_tag,
+    path_dockerfile=path_dockerfile,
+)
+
+
+class Main:
+    def build_image(self):
+        """
+        Build the docker image.
+        """
+        ecr_context.build_image()
+
+    def push_image(self):
+        """
+        Push the docker image to ECR.
+        """
+        ecr_context.push_image()
+
+    def test_image(self):
+        """
+        Test the docker image.
+        """
+        ecr_context.test_image()
+
+
+if __name__ == "__main__":
+    import fire
+
+    fire.Fire(Main)
