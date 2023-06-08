@@ -67,12 +67,6 @@ App 的源代码 ``main.py`` 文件:
 
 **Build and Publish Container Image**
 
-
-
-
-
-    ./cli -h
-
 - CD 到 Dockerfile 所在的目录.
 - 参考 ``./ecr_login`` 脚本的内容, 运行它用 Docker 对 AWS ECR 进行登录. 记得先用 ``chmod +x ecr_login`` 命令将其变为可执行文件. 脚本内容如下:
 

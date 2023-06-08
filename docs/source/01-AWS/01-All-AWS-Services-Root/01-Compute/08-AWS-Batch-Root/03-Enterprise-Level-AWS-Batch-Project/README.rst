@@ -30,4 +30,7 @@ Keywords: AWS Batch, Job, Enterprise, DevOps, Architecture.
 下面是一个设计架构图:
 
 .. raw:: html
+    :file: ./diagram.drawio.html
+
+.. raw:: html
     :file: ./enterprise-level-aws-batch-job-project.drawio.html
