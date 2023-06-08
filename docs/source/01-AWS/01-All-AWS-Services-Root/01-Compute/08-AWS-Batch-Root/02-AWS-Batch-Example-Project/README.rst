@@ -1,5 +1,8 @@
+.. _aws-batch-example-project:
+
 AWS Batch Example Project
 ==============================================================================
+Keywords: AWS Batch Example Project
 
 
 Summary
