@@ -7,7 +7,7 @@ Keywords: AWS Batch Example Project
 
 Summary
 ------------------------------------------------------------------------------
-本文我在了解了 AWS Batch 的基本概念和功能后, 做的第一个实验性质的项目, 同时也为我今后做 AWS Batch Project 提供了参考.
+本文我在了解了 AWS Batch 的基本概念和功能后, 做的第一个实验性质的项目, 同时也为我今后做 AWS Batch Project 提供了参考. 在这个项目中我们刻意让业务逻辑极简化但是又有一定的业务代表性.
 
 在这个项目中我们创建了一个 Container App, 只要给定一个 Source S3 folder 和一个 Target S3 folder 作为参数, 就能将在 Source 下的所有文件拷贝到 Target 上.
 
@@ -26,6 +26,8 @@ Reference:
 
 Prepare Container Image
 ------------------------------------------------------------------------------
+首先我们要准备好我们的业务代码和容器镜像.
+
 **App Code**
 
 我们这个 App 非常简单. 它是用 Python 实现的, ``requirements.txt`` 定义了用到的依赖:
@@ -49,10 +51,13 @@ App 的源代码 ``main.py`` 文件:
     # CD to where the main.py is
     # create a virtualenv at .venv folder
     virtualenv -p python3.9 .venv
+
     # activate virtualenv
     source .venv/bin/activate
+
     # install dependencies
     pip install -r requirements.txt
+
     # try to run the CLI
     python main.py --region ${aws_region} --s3uri_source s3://${aws_account_id}-${aws_region}-data/projects/lambda_project1/sbx/source/ --s3uri_target s3://${aws_account_id}-${aws_region}-data/projects/lambda_project1/sbx/final/
 
@@ -82,8 +87,10 @@ App 的源代码 ``main.py`` 文件:
 
 现在我们的 Container 已经就绪了, 可以开始配置我们的 Batch Job 了.
 
+
 Configuration
 ------------------------------------------------------------------------------
+这一节里我们来配置 Compute Environment, Job Queue 和 Job Definition.
 
 
 Computer Environment
@@ -158,3 +165,12 @@ Test by Submitting a Job
     - Additional configuration -> Parameters: because we set two parameters in job definition, so we have to give them a value here.
         - s3uri_source: ``s3://${aws_account_id}-${aws_region}-data/projects/aws_batch_example/source/``
         - s3uri_target: ``s3://${aws_account_id}-${aws_region}-data/projects/aws_batch_example/target/``
+
+等待几秒钟, 你就可以看到 Job 从 Submitted 状态变成 Ready -> Running -> Succeeded. 然后你还可以在 S3 的 ``target`` folder 看到输出的数据了.
+
+
+Recap
+------------------------------------------------------------------------------
+下面我们来简单总结一下. 总体来说, 做一个 AWS batch 项目的主要时间都花在了写业务逻辑, 构建容器镜像, 测试镜像上. 这也是 Batch 这个服务的价值所在, 能让你专注于业务逻辑. 而其他的步骤基本上都是在 Console 界面上点击, 花不了多少时间. 这些在 Console 上的 configuration 我们在实验项目中可以用人工点击. 但是在生产项目中, 我们会需要用 CloudFormation 工具来管理这些 configuration, 而不是人工点击.
+
+下一步, 可能你会想将一个实验性质的项目变成一个可重复利用, 具有自动化构建, 测试, 部署的企业级成熟应用. 这时候你就需要用到 CI/CD 工具了. 我们会在下一篇文章里介绍这一企业级的架构.
