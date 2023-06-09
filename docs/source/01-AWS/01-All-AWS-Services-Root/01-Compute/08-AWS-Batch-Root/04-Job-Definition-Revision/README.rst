@@ -1,5 +1,6 @@
 AWS Batch Job Definition Revision
 ==============================================================================
+Keywords: AWS Batch Job Definition Revision, Version.
 
 
 如何能判断你要创建的 Revision 和之前的有没有区别?
