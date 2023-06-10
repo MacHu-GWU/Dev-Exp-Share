@@ -1,4 +1,3 @@
-
 .. _aws-opensearch-root:
 
 AWS OpenSearch
@@ -12,7 +11,6 @@ AWS OpenSearch
 Links:
 
 - `AWS OpenSearch Document <https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html>`_
-
 
 
 AWS OpenSearch vs ElasticSearch

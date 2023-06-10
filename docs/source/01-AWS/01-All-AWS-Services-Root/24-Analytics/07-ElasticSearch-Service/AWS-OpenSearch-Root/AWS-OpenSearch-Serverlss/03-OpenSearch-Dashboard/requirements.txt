@@ -1,0 +1,6 @@
+opensearch-py                       # official opensearch Python client
+requests_aws4auth                   # authentication for AWS Opensearch
+boto3                               # official AWS Python SDK
+boto_session_manager>=1.5.3,<2.0.0  # AWS boto3 session manager
+rich                                # better colored printer
+Faker                               # data faker
