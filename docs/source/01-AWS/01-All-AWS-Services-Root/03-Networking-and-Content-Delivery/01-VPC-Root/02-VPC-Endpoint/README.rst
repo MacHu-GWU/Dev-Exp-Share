@@ -4,11 +4,6 @@ VPC Endpoint, Private Link
 ==============================================================================
 Keywords: AWS VPC Endpoint, Private Link
 
-.. contents::
-    :class: this-will-duplicate-information-and-it-is-still-useful-here
-    :depth: 1
-    :local:
-
 Private Link is just another name of VPC Endpoint.
 
 
@@ -25,6 +20,7 @@ A VPC endpoint enables you to privately connect your VPC to supported AWS servic
 
 Ref:
 
+- https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html
 - https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html
 
 
