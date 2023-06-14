@@ -1,5 +1,6 @@
-Host Your Docs For OpenSource Project
+Host Your Docs on ReadTheDocs For OpenSource Project
 ==============================================================================
+Keywords: ReadTheDocs, Read, The, Doc, Docs
 
 
 Read The Docs Org
@@ -29,3 +30,12 @@ Reference:
 
 - `Configuration file v2 <https://docs.readthedocs.io/en/stable/config-file/v2.html>`_
 - `Migrate your project to .readthedocs.yaml configuration file v2 <https://blog.readthedocs.com/migrate-configuration-v2/>`_
+
+
+Python 项目文件结构
+------------------------------------------------------------------------------
+可以参考这个模板项目. 我所有带文档的开源项目都是用这个模板生成的. 其中最重要的是以下三个文件.
+
+- `requirements-doc.txt <https://github.com/MacHu-GWU/cookiecutter-pyproject/blob/main/%7B%7B%20cookiecutter.package_name%20%7D%7D-project/requirements-doc.txt>`_
+- `docs/source/conf.py <https://github.com/MacHu-GWU/cookiecutter-pyproject/blob/main/%7B%7B%20cookiecutter.package_name%20%7D%7D-project/docs/source/conf.py>`_
+- `readthedocs.yml <https://github.com/MacHu-GWU/cookiecutter-pyproject/blob/main/%7B%7B%20cookiecutter.package_name%20%7D%7D-project/readthedocs.yml>`_
