@@ -188,7 +188,8 @@ if __name__ == "__main__":
         Path(__file__).absolute().parent.joinpath("long_running_script.sh")
     )
     name = "long_running_script"
+
     # run_script(path_long_running_script_sh, name)
     # list_session()
+    # enter_session(name)
     # stop_script(name)
-    enter_session(name)
