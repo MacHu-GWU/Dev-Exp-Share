@@ -71,6 +71,11 @@ AWS System Manager 是一个历史悠久的 AWS 服务, 主要用于批量管理
 - SSM Run Command 功能 `免费 <https://aws.amazon.com/systems-manager/pricing/>`_, 且支持非常高的并发量.
 - SSM Run Command 可以捕获 Return Code, Stdout, Stderr, 使得我们可以满足上面的所有需求.
 
+SSM Run Command 本身有一些限制.
+
+- 通过 API 发送的 Run Command 也是有限制的, 不能超过 100KB. 如果你需要发送大量数据, 那么你需要修改你的远程命令程序, 让它接受 S3 uri 为参数, 然后到 S3 uri 去读输入数据.
+- Stdout 是有大小限制的, API 最多显示 24000 个字符. 如果需要捕获大量数据, 那么你需要修改你的远程命令程序, 将结果保存在 S3 上.
+
 这里我不详细展开说 SSM Run Command 这个功能, 建议先看看一下 :ref:`run-remote-command-on-ec2-via-ssm` 这边博文, 对其有个简单的了解
 
 
