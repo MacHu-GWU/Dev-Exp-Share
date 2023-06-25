@@ -87,14 +87,13 @@ if __name__ == "__main__":
     mwaa_client = boto3.session.Session(profile_name=aws_profile).client("mwaa")
     cli_token, webserver_hostname = get_airflow_cli_token(mwaa_client, mwaa_env_name)
 
-    # cmd_and_arg = "dags trigger dag1"
-    cmd_and_arg = "dags list -o json"
+    cmd_and_arg = "dags trigger dag1"
+    # cmd_and_arg = "dags list -o json"
     mwaa_stderr_message, mwaa_stdout_message = run_cli(cli_token, webserver_hostname, cmd_and_arg)
     print("--- stderr ---")
     print(mwaa_stderr_message)
     print("--- stdout ---")
     print(mwaa_stdout_message)
-
 
     # run_api(
     #     cli_token,
