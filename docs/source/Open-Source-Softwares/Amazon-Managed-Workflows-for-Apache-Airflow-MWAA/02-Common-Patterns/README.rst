@@ -1,61 +1,34 @@
-MWAA Hands on Practice
+Airflow Common Patterns
 ==============================================================================
+首先我想讨论一下如何能高效的学习 Airflow. 因为在我的职业生涯中, 我几乎市面上所有的编排系统都使用过, 不过我比较精通的是 Airflow 和 AWS StepFunction. 如何能快速上手并达到一个比较高的水平这件事其实是有规律可循的. 我认为从入门到精通, 你必须要经历三个阶段:
 
+1. 快速上手, 学会编写你的第一个应用
+2. 进行较为全面的学习, 把所有常见的使用场景, 常用的主打的功能都用一遍
+3. 回头进行总结, 结合生产环境中的实践进一步深入
 
-配置 Airflow DAG 的开发环境
-------------------------------------------------------------------------------
-1. 首先推荐你在 Virtualenv 中进行本地开发.
-2. 其次你如果使用的是 AWS MWAA, 那么推荐你使用跟 Airflow 相对应版本的 Python 版本 (你创建 MWAA environment 的时候就会让你选 Airflow 的版本), 具体的对应关系可以参考 `这篇官方文档 <https://docs.aws.amazon.com/mwaa/latest/userguide/mwaa-faqs.html#python-version>`_
+本文主要介绍的是 #2.
 
-.. code-block:: bash
+其实对于编排处理系统, 主要考虑的是三个大点, 流程图和依赖关系, 数据处理, 异常处理. 每个大点下又分很多子问题. 如果能数量掌握全部的大点和子问题, 基本上任意复杂的业务逻辑也只是它们的排列组合而已.
 
-    # Quick Start
-    export AIRFLOW_HOME=~/airflow
+1. 流程图和依赖关系
+    - 顺序执行
+    - 串行执行
+    - 条件分支
+    - 分支
+    - 合并
+    - 异步调用和等待
+2. 数据处理, 各个 Task 之间的数据如何互通
+    - 数据传递 (在两个 Task 之间传递数据)
+    - 数据共享 (相当于是一个大家都能访问的全局变量)
+    - 数据存储 (外部存储)
+3. 异常处理
+    - 单个任务的异常和重试
+    - 多个并行执行的任务的异常处理
+    - 多个串行执行的任务的异常处理
 
-    AIRFLOW_VERSION=2.5.1
-
-    # Extract the version of Python you have installed. If you're currently using Python 3.11 you may want to set this manually as noted above, Python 3.11 is not yet supported.
-    PYTHON_VERSION="$(python --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
-
-    CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
-    # For example this would install 2.5.1 with python 3.8: https://raw.githubusercontent.com/apache/airflow/constraints-2.5.1/constraints-3.8.txt
-
-    pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
-
-    virtualenv -p python3.8 .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
-
-    aws s3 cp dag1.py s3://807388292768-us-east-1-airflow/dags/dag1.py
-
-    # 将所有的 DAG 文件上传到 S3
-    aws s3 sync ./dags s3://807388292768-us-east-1-airflow/dags/ --profile awshsh_app_dev_us_east_1
-
-
-如何定义依赖关系
-
-如何定义复杂的 DAG 编排
-
-如何在 Task 之间传递数据
-
-如何定义 Schedule
-
-
-1. 简单的单步任务.
-2. 简单的两步任务, 串行.
-3. 简单的两步任务, 并行.
-4. 在 Task 中使用第三方包, 也就是使用 Virtualenv 来运行 Task.
-5. 如何在相邻的两个 Task 之间传递数据, 同时定义它们的依赖关系 (接收数据的 Task 依赖于发送数据的 Task).
-6. 如何在任意两个 Task 之间传递数据, 而不要求相邻, 使用 XCom 的来传递可序列化的小型数据.
-7. 如何在任意两个 Task 之间传递数据, 而不要求相邻, 使用 S3 来传递大型数据.
-8. 如何实现 Long Polling 的模式, 也就是启动一个 Task 之后, 等待这个 Task 成功, 失败, 或超时.
-
-
-Airflow 实战基础篇
-------------------------------------------------------------------------------
 
 1. 简单的单步任务
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 直接看例子.
 
 .. literalinclude:: ./dags/dag1.py
@@ -64,7 +37,7 @@ Airflow 实战基础篇
 
 
 2. 简单的两步任务, 串行
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 直接看例子.
 
 .. literalinclude:: ./dags/dag2.py
@@ -73,7 +46,7 @@ Airflow 实战基础篇
 
 
 3. 简单的两步任务, 并行
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 直接看例子.
 
 .. literalinclude:: ./dags/dag3.py
@@ -82,18 +55,20 @@ Airflow 实战基础篇
 
 
 4. 使用第三方 Python 包
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 直接看例子.
 
 .. literalinclude:: ./dags/dag4.py
    :language: python
    :linenos:
 
+
 5. 在相邻的两个 Task 之间传递数据
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
+
 
 6. 在任意的两个 Task 之间传递小数据
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 在编排任务中, 在任意两个 Task 之间, 包括不相邻的两个 Task 之间传递数据是很常见的需求. 从 Airflow 1.X 起, 就自带 XComs (Cross Communication) 这一功能, 能在 Tasks 之间传递数据. 它的原理其实是在 Scheduler 上维护一个 Key Value Store, 其中 Key 是 dag_id + task_id 合起来的一个 compound key. 你可以把 value 存在里面, 自然也可以在任何其他的 task 中引用这个 value. 而从 Airflow 2.X 起, 引入了 TaskFlow 这一更加人类友好的 API. 在 TaskFlow API 下, 所有的 PythonOperator Task 的返回值都会默认被包装为一个 XComs, 而你可以直接像写 Python 函数一样在 Tasks 之间传递参数, 而无需显式在其他 Task 引用之前的 Task 的返回值.
 
 但是注意, 能被 XComs 传递的数据必须要是可序列化的对象, 例如 Str, Int, 或是 JSON dict. 而且大小不能超过 48KB. 但这不是什么问题. 对于复杂数据结构, 你只要自己定义一套轻量的 JSON 序列化接口来返回 Task 的输出即可, 你甚至可以用 pickle 或是 JSONPickle 将其 dump 成二进制数据然后 base64 编码. 而对于体积很大的数据, 你可以将数据写入到 AWS S3, 然后返回一个 S3 uri, 传递给后续的 task, 然后后续的 task 再从 S3 读取数据即可.
@@ -105,7 +80,7 @@ Reference:
 
 
 7. 在任意的两个 Task 之间传递大数据
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 有时候一个 Task 返回的数据量非常大, 由于 XComs 又 48KB 的限制, 这时就要另外想办法了. XComs 被设计为用来传递小数据的, 它不允许你用它来储存任意大的数据, 占用服务器资源.
 
 一个比较直观的解决方案是利用全局可用的 context 对象. 它是一个字典的数据结构, 在整个 DAG 执行的生命周期内都存在. 记录了一些全局变量之类的信息. 其中就有一个 ``run_id`` 的字段, 它的值是一个包含时间戳的唯一的值, 看起来像这样 ``manual__2023-01-01T01:23:45.123456+00:00`` 或 ``scheduled__2021-01-01T00:00:00+00:00``. 精确到微秒. 其中 manual 代表你手动运行的, 而 scheduled 代表按照 scheduler 的调度规则执行的. 你可以用它和 DAG ID 合起来作为一个唯一的 Key, 然后用任何 Key Value Store 的 backend 来储存这个数据. 例如 AWS S3 或 DynamoDB 都可以. 如果你的需要访问这个数据的并发性高 (例如你用到了 Map 并行, 所有并行 Task 都需要读写同一个数据) 且数据量不大 (48KB - 400KB) 之间, 那么用 DynamoDB 就比较合适, 能确保读写的原子性. 而如果你仅仅是进行数据传递但数据量很大, 那么用 S3 就比较合适.
@@ -118,7 +93,7 @@ Reference:
 
 
 8. Poll for Job Status 模式
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 Poll for Job 模式常用于你有一个异步执行, 耗时较长的 Task 的情况. 举例来说, 你要用 AWS Glue 来运行一个耗时在 1 - 5 分钟的 ETL Job. 如果 Glue Job 成功, 则继续后面的步骤. 如果 Glue Job 失败, 则停止整个 DAG. 如果 Glue Job 超时, 则视为失败, 也停止 DAG. 这个模式就叫做 Poll for Job.
 
 这个模式的一个通用解决方案是, 在异步执行这个 Task 后 (我们继续拿 AWS Glue Job 举例) 隔一段时间就去查询一下运行状态, 如果是 in progress 就等下一次, 如果是 succeeded 就继续后面的步骤, 如果是 failed 或 timeout 就停止 DAG.
@@ -211,7 +186,7 @@ Poll for Job 模式常用于你有一个异步执行, 耗时较长的 Task 的�
 
 
 9. Fan out and Fan in 模式
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------------------
 Fan out 指的是一个任务之后, 并行的执行多个任务.
 
 而 Fan in 指的是只有多个任务都完成之后, 才能继续执行下一个任务. 这里有一些变化, 例如你想要 3 个任务里的至少 2 个完成才执行下一个. 又或者你想要 1 号任务必须完成, 而 2 和 3 之中至少有一个完成. 这种复杂的情况该怎么做呢? 简单来说, `BaseOperator <https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/baseoperator/index.html#airflow.models.baseoperator.BaseOperator>`_ 有一个参数 ``trigger_rule`` 可以是 ``{ all_success | all_failed | all_done | all_skipped | one_success | one_done | one_failed | none_failed | none_failed_min_one_success | none_skipped | always }`` 中的一个, 可以决定某个人物是否执行的条件是前置的多个任务全部成功,  全部失败, 有一个失败, 等等. 可以应对大部分的业务情况. 而对于超级复杂的情况, 你可以简单的把所有的前置 task 都用 try except 包裹起来自己做异常处理, 然后返回一个 status. 然后后续任务使用 all_done, 然后把所有前置 task 的返回值作为参数传入, 然后自己用 if else 判断分析即可实现任何复杂逻辑.
