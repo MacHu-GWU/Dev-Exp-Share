@@ -1,9 +1,9 @@
 """
 本模块是一个封装了 airflow API 的 wrapper, 用于调用各种 MWAA 所管理的 airflow 的 API.
 
-原生 Airflow 有两种 API: 用 CLI 调用的 API 和用 HTTP Request 调用的 Rest API. 但 MWAA
-只支持用 Request API 调用 CLI, 有一点点别扭. 相当于用 Rest API submit 一个 CLI command 的远程命令
-到 MWAA 的服务器上远程执行.
+原生 Airflow 有两种 API: 用 CLI 调用的 API 和用 HTTP Request 调用的 Rest API. 但
+ 根据我跟 AWS 的客服确认, MWAA 只支持用 Request API 调用 CLI, 有一点点别扭. 相当于用
+ Rest API submit 一个 CLI command 的远程命令到 MWAA 的服务器上远程执行.
 
 - `Using a Python script <https://docs.aws.amazon.com/mwaa/latest/userguide/call-mwaa-apis-cli.html#create-cli-token-python>`_:
     这段代码原本出自于这个 AWS 官方文档的例子. 我将它优化了, 更容易理解, 方便扩展.
@@ -19,6 +19,7 @@ import json
 import requests
 import base64
 
+
 def get_airflow_cli_token(
     mwaa_client,
     mwaa_env_name: str,
@@ -30,7 +31,6 @@ def get_airflow_cli_token(
     cli_token = res["CliToken"]
     webserver_hostname = res["WebServerHostname"]
     return cli_token, webserver_hostname
-
 
 
 def run_cli(
@@ -45,10 +45,7 @@ def run_cli(
     endpoint = f"https://{webserver_hostname}/aws_mwaa/cli"
     mwaa_response = requests.post(
         endpoint,
-        headers={
-            "Authorization": mwaa_auth_token,
-            "Content-Type": 'text/plain'
-        },
+        headers={"Authorization": mwaa_auth_token, "Content-Type": "text/plain"},
         data=cmd_and_arg,
     )
     # print(mwaa_response.text)
@@ -58,46 +55,22 @@ def run_cli(
     return mwaa_stderr_message, mwaa_stdout_message
 
 
-def run_api(
-    cli_token: str,
-    webserver_hostname: str,
-    resource: str,
-    http_method: T.Callable,
-    payload: T.Optional[T.Any] = None,
-):
-    """
-    Todo: this is not working yet.
-    """
-    mwaa_auth_token = f"Bearer {cli_token}"
-    endpoint = f"https://{webserver_hostname}/api/v1/{resource}"
-    mwaa_response = http_method(
-        endpoint,
-        headers={
-            "Authorization": mwaa_auth_token,
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-    )
-    print(mwaa_response.text)
-
-
 if __name__ == "__main__":
     mwaa_env_name = "MyAirflowEnvironment"
     aws_profile = "awshsh_app_dev_us_east_1"
     mwaa_client = boto3.session.Session(profile_name=aws_profile).client("mwaa")
     cli_token, webserver_hostname = get_airflow_cli_token(mwaa_client, mwaa_env_name)
 
-    cmd_and_arg = "dags trigger dag1"
+    # 把 Airflow CLI 的命令放在这里, 具体命令可以参考
+    # https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#section/Overview
+
     # cmd_and_arg = "dags list -o json"
-    mwaa_stderr_message, mwaa_stdout_message = run_cli(cli_token, webserver_hostname, cmd_and_arg)
+    cmd_and_arg = "dags trigger dag1"
+
+    mwaa_stderr_message, mwaa_stdout_message = run_cli(
+        cli_token, webserver_hostname, cmd_and_arg
+    )
     print("--- stderr ---")
     print(mwaa_stderr_message)
     print("--- stdout ---")
     print(mwaa_stdout_message)
-
-    # run_api(
-    #     cli_token,
-    #     webserver_hostname,
-    #     resource="dags",
-    #     http_method=requests.get,
-    # )

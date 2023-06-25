@@ -10,9 +10,14 @@ from airflow.decorators import dag, task
 dag_id = "dag1"
 
 @dag(
+    # 每个 DAG 都必须要有一个全局唯一的 ID
     dag_id=dag_id,
+    # 每个 DAG 都必须要有一个 ``start date``, 因为 Airflow 的调度逻辑是,
+    # 从 ``start date`` 开始, 每发生一次你定义的 ``schedule`` 的事件, 就运行一次 DAG
     start_date=datetime(2021, 1, 1),
-    schedule="@once",
+    # 这个 Schedule 可以是 None, 表示不会被自动调度. 或者是 "@once", 表示只调度一次
+    # 还可以是一个 cron 表达式, 表示定时执行. 还可以是一个 timedelta, 表示每隔多久执行一次.
+    schedule=None,
     catchup=False,
 )
 def dag1():
@@ -50,6 +55,7 @@ def dag1():
             "value": value,
             "datetime": datetime.now().isoformat(),
         }
+        # 记得确保你的 MWAA 的 IAM Role 里有这个 bucket 的读写权限
         boto3.client("s3").put_object(
             Bucket=f"{aws_account_id}-{aws_region}-data",
             Key=f"projects/mwaa-poc/{dag_id}/{task1_id}.output.json",

@@ -56,24 +56,66 @@ Airflow 实战基础篇
 
 1. 简单的单步任务
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+直接看例子.
+
+.. literalinclude:: ./dags/dag1.py
+   :language: python
+   :linenos:
+
 
 2. 简单的两步任务, 串行
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+直接看例子.
+
+.. literalinclude:: ./dags/dag2.py
+   :language: python
+   :linenos:
+
 
 3. 简单的两步任务, 并行
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+直接看例子.
+
+.. literalinclude:: ./dags/dag3.py
+   :language: python
+   :linenos:
+
 
 4. 使用第三方 Python 包
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+直接看例子.
+
+.. literalinclude:: ./dags/dag4.py
+   :language: python
+   :linenos:
 
 5. 在相邻的两个 Task 之间传递数据
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 6. 在任意的两个 Task 之间传递小数据
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在编排任务中, 在任意两个 Task 之间, 包括不相邻的两个 Task 之间传递数据是很常见的需求. 从 Airflow 1.X 起, 就自带 XComs (Cross Communication) 这一功能, 能在 Tasks 之间传递数据. 它的原理其实是在 Scheduler 上维护一个 Key Value Store, 其中 Key 是 dag_id + task_id 合起来的一个 compound key. 你可以把 value 存在里面, 自然也可以在任何其他的 task 中引用这个 value. 而从 Airflow 2.X 起, 引入了 TaskFlow 这一更加人类友好的 API. 在 TaskFlow API 下, 所有的 PythonOperator Task 的返回值都会默认被包装为一个 XComs, 而你可以直接像写 Python 函数一样在 Tasks 之间传递参数, 而无需显式在其他 Task 引用之前的 Task 的返回值.
+
+但是注意, 能被 XComs 传递的数据必须要是可序列化的对象, 例如 Str, Int, 或是 JSON dict. 而且大小不能超过 48KB. 但这不是什么问题. 对于复杂数据结构, 你只要自己定义一套轻量的 JSON 序列化接口来返回 Task 的输出即可, 你甚至可以用 pickle 或是 JSONPickle 将其 dump 成二进制数据然后 base64 编码. 而对于体积很大的数据, 你可以将数据写入到 AWS S3, 然后返回一个 S3 uri, 传递给后续的 task, 然后后续的 task 再从 S3 读取数据即可.
+
+Reference:
+
+- `XComs (Cross Communication) <https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html>`_
+- `TaskFlow <https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html>`_
+
 
 7. 在任意的两个 Task 之间传递大数据
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+有时候一个 Task 返回的数据量非常大, 由于 XComs 又 48KB 的限制, 这时就要另外想办法了. XComs 被设计为用来传递小数据的, 它不允许你用它来储存任意大的数据, 占用服务器资源.
+
+一个比较直观的解决方案是利用全局可用的 context 对象. 它是一个字典的数据结构, 在整个 DAG 执行的生命周期内都存在. 记录了一些全局变量之类的信息. 其中就有一个 ``run_id`` 的字段, 它的值是一个包含时间戳的唯一的值, 看起来像这样 ``manual__2023-01-01T01:23:45.123456+00:00`` 或 ``scheduled__2021-01-01T00:00:00+00:00``. 精确到微秒. 其中 manual 代表你手动运行的, 而 scheduled 代表按照 scheduler 的调度规则执行的. 你可以用它和 DAG ID 合起来作为一个唯一的 Key, 然后用任何 Key Value Store 的 backend 来储存这个数据. 例如 AWS S3 或 DynamoDB 都可以. 如果你的需要访问这个数据的并发性高 (例如你用到了 Map 并行, 所有并行 Task 都需要读写同一个数据) 且数据量不大 (48KB - 400KB) 之间, 那么用 DynamoDB 就比较合适, 能确保读写的原子性. 而如果你仅仅是进行数据传递但数据量很大, 那么用 S3 就比较合适.
+
+我们稍微的扩展一下, 其实我们可以不限定只使用一个 Key, 而是基于 DAG ID 和 ``run_id`` 可以创造出多个 Key, 然后将 Key 作为参数用 XComs 返回即可. 基于这种策略你可以几乎做到任何事.
+
+Reference:
+
+- `Accessing current context <https://airflow.apache.org/docs/apache-airflow/2.0.0/concepts.html#accessing-current-context>`_
+
 
 8. Poll for Job Status 模式
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
