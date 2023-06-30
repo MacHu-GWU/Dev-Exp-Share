@@ -171,3 +171,19 @@ Orchestrating large-scale parallel workloads in your state machines
 
 - Tolerated failure percentage: 最多百分之多少的可以允许失败. 0 就是不允许失败, 100 是允许全部失败.
 - Tolerated failure count: 最多多少个 item 可以允许失败
+
+
+Manage continuous deployments with versions and aliases
+------------------------------------------------------------------------------
+Step Function 作为一个 Serverless 的服务, 它的本质就是 Workflow Definition. 一个简单的 JSON 文件以及相关的配置. 这种轻量化部署的行为就使得对其进行版本管理变得可行. Step Function 的版本管理机制和 Lambda 一摸一样, 都是用 Version 和 Alias 来管理. 我们简单的介绍一下这种机制:
+
+- 每次你更新 Step Function, 它的 Workflow Definition 和配置都被视为 ``$LATEST``.
+- 你可以在任何时候用 ``$LATEST`` 的版本创建一个 Snapshot, 这个 Snapshot 就是一个 Version. 这个 Version 是 immutable 的, 并且每次更新后会自动按照 1, 2, 3, ... 递增. 注意, ``$LATEST`` 本也是一个特殊的 Version.
+- 而 Alias 只是一个指向单个 Version 或多个 Version 的的指针. 如果是指向多个 Version, 则你需要配置每个 Version 的权重.
+- 在开发阶段部署的时候, 都只是更新 ``$LATEST`` 但不创建新版本. 而每次发布新版本时, 则自动创建一个 Version.
+- 我们维护一个长期的叫做 ``LIVE`` 的 Alias, 默认指向 production 中的 $LATEST. 如果实在需要回滚, 则我们更改配置文件将 Alias 指向上一个 Version 即可.
+- 如果我们需要滚动发布, 那么可以用 ``LIVE`` 的 Alias 将 80% 的流量指向旧版本, 20% 的流量指向新版本. 然后定时查看它的错误率, 如果没有问题则提高新版本的权重.
+
+Reference:
+
+- https://docs.aws.amazon.com/step-functions/latest/dg/concepts-cd-aliasing-versioning.html
