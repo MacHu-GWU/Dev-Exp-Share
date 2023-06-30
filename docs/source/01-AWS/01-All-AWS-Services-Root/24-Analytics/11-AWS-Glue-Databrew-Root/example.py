@@ -11,7 +11,7 @@ import awswrangler as wr
 from boto_session_manager import BotoSesManager
 from s3pathlib import S3Path, context
 
-bsm = BotoSesManager(profile_name="bmt_app_dev_us_east_1")
+bsm = BotoSesManager(profile_name="awshsh_app_dev_us_east_1")
 context.attach_boto_session(bsm.boto_ses)
 fake = Faker()
 
