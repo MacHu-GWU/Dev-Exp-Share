@@ -1,12 +1,13 @@
 How Step Functions Works
 ==============================================================================
+本文是我阅读 `How Step Functions Works <https://docs.aws.amazon.com/step-functions/latest/dg/how-step-functions-works.html>`_ 官方文档的笔记. 基本涵盖了 SFN 的大部分重要知识点.
 
 
 Standard vs Express Workflows
 ------------------------------------------------------------------------------
-Standard 主要是用于长时间运行的, 也符合 orchestration tool 的本质, 只能被 async execute, 按照 transition 的次数计费. 而 Express 主要用于短时间运行, 用完就走, 相当于是把一堆短时间运行的 worker 编排到一起, 可以被 async 和 sync execute, 按照 duration / memory 计费.
+你创建 State Machine 的时候有两个选项, Standard 和 Express. Standard 主要是用于长时间运行的, 也符合 orchestration tool 的本质, 只能被 async execute, 按照 transition 的次数计费. 而 Express 主要用于短时间运行, 用完就走, 相当于是把一些短时间运行的 worker 编排到一起, 可以被 async 或 sync execute, 按照 duration / memory 计费.
 
-这里有几个主要指标:
+它两在这几个指标上有重大区别:
 
 - max duration:
     - standard: 1 year
@@ -29,9 +30,9 @@ Reference:
 
 **Execution guarantees**
 
-- Standard Workflows: exact once
-- Express Workflows Async: at least once
-- Express Sync: at most once
+- Standard Workflows: exact once, 当你 Start Execution 的时候, Standard workflow 会保证只被执行一次.
+- Express Workflows Async: at least once, 对于 async start execution, 这个 workflow 可能会被调用多次. 因为异步调用的原理就是用一个内部的 Queue (只不过循环速度很快) 来存储你的请求, 如果你的请求失败了, 它会重试. 所以这种情况下的你需要保证你的 Workflow 业务逻辑幂等. (里面的 Task 还是只被调用了一次)
+- Express Sync: at most once, 如果是 sync start execution, 那么这个 workflow 要么只被调用一次, 要么直接失败, 这也符合你的逻辑. 所以在你运行 SFN 的代码中, 你自己要保证它运行成功了.
 
 这个对于业务还是很重要的. 因为对于编排来说, 很重要的一个事情就是幂等, 如果不实现幂等, 你发送了多个 API Call 就可能会导致不同的结果.
 
@@ -54,14 +55,14 @@ Reference:
 - 如果你使用 Standard workflow, 你处理 1000 个订单大约需要花费 4 + 2 (start 和 end 也算) 乘以 1000 个 transition 也就是 $0.15 美元.
 - 如果你使用 Express workflow, 你大约需要花费 12 秒 * 64 MB (都是远程调用, 内存消耗很小) 乘以 1000 个 invoke, 一共是 12 * 64 * 1000 / 1024 = $0.0125 美元. 再加上 $1 * 1000 / 1000000 = $0.001 的 api request 开销, 以供花费了 $0.0135 美元.
 
-可以看出来, 如果 State Machine 中的每个 Task 都是短时间运行, 而且基本上都是同步调用 (你需要等它结束), 那么使用 Express Workflow 会比较划算.
+**可以看出来, 如果 State Machine 中的每个 Task 都是短时间运行, 而且基本上都是同步调用 (你需要等它结束), 那么使用 Express Workflow 会比较划算**.
 
 我们再来看一个案例: 你有一个数据处理的工作流, 一共有 2 步. 第一步进行数据处理大约需要运行 3 分钟, 第二步将结果发送给开发者, 这一步速度很快, 跟 3 分钟比起来可以忽略不计. 我们要运行 1000 次. 我们来看看这个案例中两种 Workflow 分别需要花费多少:
 
 - Standard workflow: 以供需要 (2 + 2) * 1000 * 0.025 = $0.1
 - Express workflow: 180 * 64 * 1000 / 1024 * 0.00001667 = $0.1875375
 
-可以看出来, 对于需要异步调用, 然后挂起等待的这种运行模式, 用 Standard Workflow 比较划算.
+**可以看出来, 对于需要异步调用, 然后挂起等待的这种运行模式, 用 Standard Workflow 比较划算**.
 
 根据以上观察, 我们可以得到两个优化成本的原则:
 
@@ -122,7 +123,7 @@ Data I/O 可以说是 Step Function 中最复杂的部分了. 但是这种复杂
 
 **Context Object**
 
-这里还有一个重要的概念就是 Context Object. 这是对于所有的 State 全局可见的一个 JSON 对象. 你可以用 ``$$`` 语法来访问它. 它的格式是这样的:
+这里还有一个重要的概念就是 Context Object. 这是对于所有的 State 全局可见的一个 JSON 对象. 你可以用 ``$$`` 语法来访问它, 从而用里面的数据来构造你的 Task 的 URI, 也可以用来构造你的 Task 的 Parameter. 它的格式是这样的:
 
 .. code-block:: javascript
 
@@ -150,8 +151,7 @@ Data I/O 可以说是 Step Function 中最复杂的部分了. 但是这种复杂
 
 **Data flow simulator**
 
-AWS StepFunction 还提供了一个可视化界面来让你 debug input output data handling.
-
+AWS StepFunction 还提供了一个可视化界面来让你 debug input output data handling. 非常好用, 推荐使用.
 
 Reference:
 
@@ -170,7 +170,9 @@ Orchestrating large-scale parallel workloads in your state machines
 在 Step Function 中有两种机制可以控制 Map 的并行计算是否视为失败:
 
 - Tolerated failure percentage: 最多百分之多少的可以允许失败. 0 就是不允许失败, 100 是允许全部失败.
-- Tolerated failure count: 最多多少个 item 可以允许失败
+- Tolerated failure count: 最多多少个 item 可以允许失败.
+
+而对于 Parallel 的并行计算, 你需要自己确保每个 Parallel 的 Task 自己进行了 Cath Error 的处理, 如果不进行处理, 那么任意一个 branch fail 了就会导致整个 branch fail.
 
 
 Manage continuous deployments with versions and aliases

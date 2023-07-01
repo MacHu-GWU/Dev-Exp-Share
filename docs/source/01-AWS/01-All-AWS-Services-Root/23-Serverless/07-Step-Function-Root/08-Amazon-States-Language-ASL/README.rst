@@ -1,5 +1,6 @@
 亚马逊状态机语言
 ==============================================================================
+Keywords: Amazon Stage / Stages Language ASL,
 
 翻译: `Amazon States Language <https://states-language.net/spec.html>`_
 
