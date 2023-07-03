@@ -116,6 +116,12 @@ def encode_tag(tags: T.Dict[str, str]) -> T.List[T.Dict[str, str]]:
 @dataclasses.dataclass
 class Plan:
     """
+    一个 Plan 对象代表了一个跨账号访问的计划, 包含了一个 grantee 账号上的一个 principal
+    和多个 owner 账号. 它会在 grantee 账号上创建 1 个 policy 并给这个 principal,
+    policy 的内容主要允许他 assume owner accounts 上面的 role. 它还会再每个 owner
+    account 上创建一个 role, 这个 role 里定义了它的权限, 并且允许 grantee 上的 principal
+    assume 这个 role.
+
     :param grantee_boto_ses: the boto3 session of the grantee account
     :param owner_boto_ses_list: list of boto3 sessions of the owner accounts
     :param grantee_identity_arn: the arn of the identity on grantee account
@@ -142,7 +148,7 @@ class Plan:
     )
 
     def __post_init__(self):
-        if len(owner_boto_ses_list) != len(owner_policy_document_list):
+        if len(self.owner_boto_ses_list) != len(self.owner_policy_document_list):
             raise ValueError(
                 "owner_boto_ses_list and owner_policy_document_list must have the same length"
             )
@@ -335,8 +341,8 @@ class Plan:
         self.setup_grantee_account()
         self.setup_owner_account()
 
-    def cleanup_owner_account(self):
-        print("Clean up owner accounts ...")
+    def detach_policies_in_owner_account(self):
+        print("Detach policies in owner accounts ...")
         for (
             owner_account_id,
             owner_iam_client,
@@ -348,11 +354,13 @@ class Plan:
             self.owner_policy_arn_list,
             self.owner_role_arn_list,
         ):
-            print(f"  Clean up owner account {owner_account_id}")
+            print(f"  Detach policy in owner account {owner_account_id}")
             role = IamRole.get(owner_iam_client, self.owner_role_name)
-            print("    Detach policy from role")
             try:
                 if role is not None:
+                    print(
+                        f"      Detach policy {owner_policy_arn} from role {role.Arn}"
+                    )
                     owner_iam_client.detach_role_policy(
                         RoleName=self.owner_role_name,
                         PolicyArn=owner_policy_arn,
@@ -363,16 +371,8 @@ class Plan:
                 else:
                     raise e
 
-            print(f"    Delete policy {owner_policy_arn}")
-            if IamManagedPolicy.get(owner_iam_client, owner_policy_arn) is not None:
-                owner_iam_client.delete_policy(PolicyArn=owner_policy_arn)
-
-            print(f"    Delete role {owner_role_arn}")
-            if role is not None:
-                owner_iam_client.delete_role(RoleName=self.owner_role_name)
-
-    def cleanup_grantee_account(self):
-        print(f"Clean up grantee account {self.grantee_account_id} ...")
+    def detach_policies_in_grantee_account(self):
+        print(f"Detach policies in grantee account {self.grantee_account_id} ...")
         print("  Detach policy from grantee identity")
         if ":group/" in self.grantee_identity_arn:
             raise ValueError("You cannot use IAM group as grantee identity")
@@ -404,6 +404,35 @@ class Plan:
         else:
             raise NotImplementedError
 
+    def detach(self):
+        self.detach_policies_in_owner_account()
+        self.detach_policies_in_grantee_account()
+
+    def delete_iam_resources_in_owner_account(self):
+        print("Delete IAM resources in owner accounts ...")
+        for (
+            owner_account_id,
+            owner_iam_client,
+            owner_policy_arn,
+            owner_role_arn,
+        ) in zip(
+            self.owner_account_id_list,
+            self.owner_iam_client_list,
+            self.owner_policy_arn_list,
+            self.owner_role_arn_list,
+        ):
+            print(f"  Clean up owner account {owner_account_id}")
+            print(f"    Delete policy {owner_policy_arn}")
+            if IamManagedPolicy.get(owner_iam_client, owner_policy_arn) is not None:
+                owner_iam_client.delete_policy(PolicyArn=owner_policy_arn)
+
+            print(f"    Delete role {owner_role_arn}")
+            role = IamRole.get(owner_iam_client, self.owner_role_name)
+            if role is not None:
+                owner_iam_client.delete_role(RoleName=self.owner_role_name)
+
+    def delete_iam_resources_in_grantee_account(self):
+        print(f"Delete IAM resources in grantee account {self.grantee_account_id} ...")
         print(f"  Delete policy {self.grantee_policy_arn}")
         if (
             IamManagedPolicy.get(self.grantee_iam_client, self.grantee_policy_arn)
@@ -412,11 +441,14 @@ class Plan:
             self.grantee_iam_client.delete_policy(PolicyArn=self.grantee_policy_arn)
 
     def delete(self):
-        self.cleanup_owner_account()
-        self.cleanup_grantee_account()
+        self.delete_iam_resources_in_owner_account()
+        self.delete_iam_resources_in_grantee_account()
 
 
-def verify(plan: Plan):
+def verify(
+    plan: Plan,
+    grantee_boto_ses: boto3.session.Session,
+):
     from boto_session_manager import BotoSesManager
 
     print("Verify cross account assume role ...")
@@ -441,16 +473,16 @@ if __name__ == "__main__":
     # update the following variables to your own values
     #  --------------------------------------------------------------------------
     # the boto3 session of the grantee account
-    grantee_boto_ses = boto3.session.Session(profile_name="bmt_infra_us_east_1")
+    grantee_boto_ses = boto3.session.Session(profile_name="bmt_app_dev_us_east_1")
 
     # list of boto3 sessions of the owner accounts
     owner_boto_ses_list = [
         boto3.session.Session(profile_name="bmt_app_dev_us_east_1"),
+        boto3.session.Session(profile_name="bmt_app_prod_us_east_1"),
     ]
 
     # the arn of the identity on grantee account you want to grant cross account access to
     grantee_account_id = get_aws_account_id(grantee_boto_ses.client("sts"))
-    grantee_identity_arn = f"arn:aws:iam::{grantee_account_id}:user/sanhe"
 
     # the name of the policy to be created on grantee account
     grantee_policy_name = "cross-account-deployer-policy"
@@ -469,29 +501,42 @@ if __name__ == "__main__":
         "Version": "2012-10-17",
         "Statement": [
             {
-                "Sid": "VisualEditor1",
                 "Effect": "Allow",
-                "Action": "sts:GetCallerIdentity",
+                "Action": "*",
                 "Resource": "*",
-            }
+            },
         ],
     }
     owner_policy_document_list = [
+        owner_policy_document,
         owner_policy_document,
     ]
     # --------------------------------------------------------------------------
     # end of configuration
     # --------------------------------------------------------------------------
-    plan = Plan(
-        grantee_boto_ses=grantee_boto_ses,
-        owner_boto_ses_list=owner_boto_ses_list,
-        grantee_identity_arn=grantee_identity_arn,
-        grantee_policy_name=grantee_policy_name,
-        owner_role_name=owner_role_name,
-        owner_policy_name=owner_policy_name,
-        owner_policy_document_list=owner_policy_document_list,
-    )
+    grantee_identity_arn_list = [
+        f"arn:aws:iam::{grantee_account_id}:user/sanhe",
+    ]
+    plan_list = []
+    for grantee_identity_arn in grantee_identity_arn_list:
+        plan = Plan(
+            grantee_boto_ses=grantee_boto_ses,
+            owner_boto_ses_list=owner_boto_ses_list,
+            grantee_identity_arn=grantee_identity_arn,
+            grantee_policy_name=grantee_policy_name,
+            owner_role_name=owner_role_name,
+            owner_policy_name=owner_policy_name,
+            owner_policy_document_list=owner_policy_document_list,
+        )
+        plan_list.append(plan)
 
-    plan.deploy() # deploy it
-    # plan.delete() # clean up everything
-    # verify(plan) # verify the cross account assume role works
+    # --- deploy
+    for plan in plan_list:
+        plan.deploy()  # deploy it
+        verify(plan, grantee_boto_ses)  # verify the cross account assume role works
+
+    # --- clean up
+    # for plan in plan_list:
+    #     plan.detach()
+    # for plan in plan_list:
+    #     plan.delete()
