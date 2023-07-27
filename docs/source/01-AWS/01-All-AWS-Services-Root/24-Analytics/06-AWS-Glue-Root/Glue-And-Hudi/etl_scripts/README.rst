@@ -1,0 +1,1 @@
+这个文件夹下放的都是 Glue ETL Script, 需要用普通的 Glue Job 来运行. 里面的代码无法再 Glue Notebook 模式下运行. 因为 Glue Notebook 的底层实现跟 Glue Job 不完全一样, 并且 Notebook 的版本比较落后, 只有 3.0, 对 Hudi 的支持不是很好, 所以我建议用 Glue ETL Script 来学习和测试最新的 Hudi 功能. 不过由于它不是 interactive 的, 所以每次改动一点代码都需要大约 2-3 分钟来运行这个 Glue Job.
