@@ -13,3 +13,9 @@ Docs:
 - Getting start: https://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html
 - **Database developer guide**: https://docs.aws.amazon.com/redshift/latest/dg/welcome.html
 - Cluster management guide: https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html
+
+
+
+- Redshift Management
+- Database Developer
+    -
