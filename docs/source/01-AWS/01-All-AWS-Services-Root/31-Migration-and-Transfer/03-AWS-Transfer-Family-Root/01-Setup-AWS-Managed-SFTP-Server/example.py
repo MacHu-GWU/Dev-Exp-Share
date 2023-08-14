@@ -34,7 +34,7 @@ def sftp_connect(
 
 
 if __name__ == "__main__":
-    host = "s-1a2b3c4d.server.transfer.us-east-1.amazonaws.com"
+    host = "s-a1b2c3.server.transfer.${aws_region}.amazonaws.com"
     port = 22
     username = "username" # 你 SFTP 的用户名
     path_pk = Path.home().joinpath(".ssh", "id_rsa") # 你的私钥文件
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     )
 
     # 你创建 SFTP server 的时候设置的后台 bucket 和 prefix
-    bucket = "your-bucket-name"
-    prefix = ""
+    bucket = "your_s3_bucket"
+    prefix = "your_s3_prefix"
     if prefix.endswith("/"):
         prefix = prefix[:-1]
     if prefix:
@@ -57,7 +57,18 @@ if __name__ == "__main__":
     else:
         sftp_home_path = f"/{bucket}"
 
+    # write test.txt
     sftp.open(f"{sftp_home_path}/{username}/test.txt", "w").write("hello alice")
+    # read test.txt
     print(sftp.open(f"{sftp_home_path}/{username}/test.txt", "r").read())
+
+    # write test.txt
     sftp.open(f"{sftp_home_path}/{username}/test.txt", "w").write("hello bob")
+    # read test.txt
     print(sftp.open(f"{sftp_home_path}/{username}/test.txt", "r").read())
+
+    console_url = (
+        f"https://console.aws.amazon.com/s3/buckets"
+        f"/{bucket}?prefix={prefix}/{username}/"
+    )
+    print(f"preview the file on SFTP at: {console_url}")
