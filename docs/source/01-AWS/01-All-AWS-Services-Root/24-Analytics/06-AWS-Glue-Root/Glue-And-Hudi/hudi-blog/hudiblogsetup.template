@@ -1,0 +1,69 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Apache Hudi AWS Glue blog template",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "BucketNameParam" : {
+        "Type" : "String",
+        "AllowedPattern": "[a-z0-9]+",
+        "ConstraintDescription": "Lowercase letters and numbers only!",
+        "Description" : "Enter a bucket name, must only include letters and numbers"
+      }
+    },
+    "Mappings": {
+    	"bucket" : {
+	      "blogcodelocation": {
+         	 "s3bucket": "aws-bigdata-blog",
+       	         "s3bucketfolder": "artifacts/get-started-with-hudi-bestpractices-blog/scripts"
+      	      }
+        }     
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "GlueRoleStack":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+          "TemplateURL": { "Fn::Join": [ "", ["https://s3.amazonaws.com/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucket"]}, "/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucketfolder"]}, "/gluerole.template" ]] },
+          "Parameters":{
+            "BucketNameParam":{"Ref":"BucketNameParam"},
+            "BlogLocation":{ "Fn::Join": [ "", [ { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucket"]}, "/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucketfolder"]} ]] }
+          }
+        }
+      },
+      "GlueStack":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+          "TemplateURL": { "Fn::Join": [ "", ["https://s3.amazonaws.com/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucket"]}, "/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucketfolder"]}, "/glue.template" ]] },
+          "Parameters":{
+            "GlueRoleArnParam":{"Fn::GetAtt":["GlueRoleStack", "Outputs.GlueRoleArn"]},
+            "BucketNameParam":{"Ref":"BucketNameParam"}
+          }
+        },
+	"DependsOn" : "BucketStack"
+      },
+      "BucketStack": {
+         "Type": "AWS::CloudFormation::Stack",
+         "Properties": {
+          "TemplateURL": { "Fn::Join": [ "", ["https://s3.amazonaws.com/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucket"]}, "/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucketfolder"]}, "/bucketstack.template" ]] },
+          "Parameters": {
+              "BucketNameParam": {"Ref": "BucketNameParam"},
+              "ParentStackName": {"Fn::Sub":"${AWS::StackName}"}
+            }
+          }
+       },
+       "AthenaStack": {
+          "Type": "AWS::CloudFormation::Stack",
+          "Properties": {
+          "TemplateURL": { "Fn::Join": [ "", ["https://s3.amazonaws.com/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucket"]}, "/", { "Fn::FindInMap" : [ "bucket", "blogcodelocation", "s3bucketfolder"]}, "/athena.template" ]] },
+          "Parameters": {
+               "AthenaBucketName": {"Fn::GetAtt":["BucketStack", "Outputs.AthenaBucketName"]}
+             }
+           },
+           "DependsOn":"BucketStack"
+        }
+    }
+  }
