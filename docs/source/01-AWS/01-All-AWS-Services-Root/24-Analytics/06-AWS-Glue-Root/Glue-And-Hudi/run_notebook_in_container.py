@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-"""
-$ JUPYTER_WORKSPACE_LOCATION=/local_path_to_workspace/jupyter_workspace/
-$ docker run -it -v ~/.aws:/home/glue_user/.aws -v $JUPYTER_WORKSPACE_LOCATION:/home/glue_user/workspace/jupyter_workspace/
--e AWS_PROFILE=$PROFILE_NAME -e DISABLE_SSL=true --rm -p 4040:4040 -p 18080:18080 -p 8998:8998 -p 8888:8888 --name glue_jupyter_lab amazon/aws-glue-libs:glue_libs_3.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
-"""
-
-import os
 import subprocess
 from pathlib import Path
 from boto_session_manager import BotoSesManager
@@ -16,7 +8,7 @@ from boto_session_manager import BotoSesManager
 # Enter your AWS profile name here
 aws_profile = "awshsh_app_dev_us_east_1"
 dir_project_root = Path(__file__).absolute().parent
-image = "amazon/aws-glue-libs:glue_libs_3.0.0_image_01-arm64"
+image = "amazon/aws-glue-libs:glue_libs_4.0.0_image_01-arm64"
 # ------------------------------------------------------------------------------
 
 bsm = BotoSesManager(profile_name=aws_profile)
