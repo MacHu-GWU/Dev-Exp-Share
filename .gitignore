@@ -8,7 +8,7 @@ Pipfile
 Pipfile.lock
 *.drawio.bkp
 *.drawio.dtmp
-
+.whoosh_index/
 
 
 # Byte-compiled / optimized / DLL files
