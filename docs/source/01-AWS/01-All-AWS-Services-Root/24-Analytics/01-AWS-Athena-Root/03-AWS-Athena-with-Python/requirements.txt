@@ -1,8 +1,0 @@
-# test dependencies for pyathena
-pyathena
-PyAthena[Pandas]
-PyAthena[SQLAlchemy]
-pandas
-sqlalchemy
-s3pathlib
-smart_open
