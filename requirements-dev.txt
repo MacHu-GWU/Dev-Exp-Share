@@ -34,7 +34,7 @@ invsearch==0.0.2
 
 # s3
 s3iotools==0.0.3
-pyarrow==0.13.0
+pyarrow==0.15.1
 
 # aws
 boto3
